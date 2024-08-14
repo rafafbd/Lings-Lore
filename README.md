@@ -1,0 +1,2 @@
+# Lings Lore
+ Funny game 
