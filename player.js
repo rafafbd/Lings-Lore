@@ -1,21 +1,18 @@
 import { ctx } from "./index.js";// passes the canvas context to the player class
 
 export class Player {
-    constructor(x, y) {
+    constructor(x, y, imgSource) {
          
         const image = new Image()
         this.image = image
-        this.image.src = "./Assets/Ling-Prototipo.png"
-        this.position = { // player's position
-            x,
-            y
-        };
+        this.image.src = imgSource;
+        this.position = {x,y};
         this.width = 100;
         this.height = 100;
 
-        this.velocity = {
-            x: 0, // x axis velocity
-            y: 0  // y axis velocity
+        this.velocity = {// velocity in each axis
+            x: 0, 
+            y: 0  
         };
 
         this.speed = { // values wich modify the velocity values
@@ -34,16 +31,11 @@ export class Player {
         };
 
         this.isOnFloor = false;
-
-
         this.hp = 100;
-
     }
 
-    draw() {
+    draw() { // draws player every frame (called in a loop)
         ctx.drawImage(this.image, this.position.x, this.position.y)
-        //ctx.fillStyle = "red"
-        //ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 
     resetLookingDirection() {
@@ -79,6 +71,7 @@ export class Player {
             this.resetLookingDirection();
             this.looking.down = true;
         }
+
         // jump
         if (this.position.y >= 450){
             this.isOnFloor = true

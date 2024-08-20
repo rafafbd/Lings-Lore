@@ -2,13 +2,15 @@ import { Player } from "./player.js";
 
 const canvas = document.getElementById('canvas');
 export const ctx = canvas.getContext('2d');
+ctx.canvas.width = window.innerWidth; // set canvas to full window size
+ctx.canvas.height = window.innerHeight;
 
-const player = new Player(100, 100); // creates the player=
+const player = new Player(100, 100, "./Assets/Ling-Prototipo.png"); // creates the player
 
 // world constants
-const gravity = 0.5;
+const gravity = 0.7;
 
-// game
+// input related stuff
 const keys = { // keys status (pressed or released)
     right: {
         pressed: false
@@ -28,63 +30,62 @@ const keys = { // keys status (pressed or released)
 }
 
 
-function animationLoop() {
-    requestAnimationFrame(animationLoop);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = '#3b3b4f';
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-    player.update(keys, gravity)
-}
-animationLoop()
-
 addEventListener('keydown', ({ code }) => { // gets key pressed event
     switch (code) {
-        case 'KeyD': // key 'D'
+        case 'KeyD': 
             keys.right.pressed = true;
             break;
         
-        case 'KeyA': // key 'A'
+        case 'KeyA': 
             keys.left.pressed = true;
             break;
             
-        case 'KeyW': // key 'W'
+        case 'KeyW': 
             keys.up.pressed = true;
             break;
 
-        case 'KeyS': // key 'S'
+        case 'KeyS': 
             keys.down.pressed = true;
             break;
 
-        case 'Space': // key 'Space'
+        case 'Space': 
             keys.jump.pressed = true;
-            break;
     }
 })
 
 addEventListener('keyup', ({ code }) => { // gets key released event
     switch (code) {
-        case 'KeyD': // key 'D'
+        case 'KeyD': 
             keys.right.pressed = false;
             break;
         
-        case 'KeyA': // key 'A'
+        case 'KeyA': 
             keys.left.pressed = false;
             break;
             
-        case 'KeyW': // key 'W'
+        case 'KeyW': 
             keys.up.pressed = false;
             break;
 
-        case 'KeyS': // key 'S'
+        case 'KeyS': 
             keys.down.pressed = false;
             break;
 
-        case 'Space': // key 'Space'
+        case 'Space': 
             keys.jump.pressed = false;
-            break;
     }
 })
 
+// perpetual loop of the running game
+function animationLoop() {
+    requestAnimationFrame(animationLoop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    ctx.fillStyle = '#3b3b4f';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#000000'
+    ctx.fillRect(0, 520, canvas.width, canvas.height - 520);
+
+    player.update(keys, gravity)
+}
+animationLoop()
