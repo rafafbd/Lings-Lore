@@ -1,5 +1,5 @@
 import { Player } from "./player.js";
-console.log("Chega em index.js pós importacao")
+
 const canvas = document.getElementById('canvas');
 export const ctx = canvas.getContext('2d');
 
