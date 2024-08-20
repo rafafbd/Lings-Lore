@@ -6,7 +6,7 @@ export const ctx = canvas.getContext('2d');
 const player = new Player(100, 100); // creates the player=
 
 // world constants
-const gravity = 2;
+const gravity = 0.5;
 
 // game
 const keys = { // keys status (pressed or released)
