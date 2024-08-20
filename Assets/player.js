@@ -1,6 +1,8 @@
+import { ctx } from "./index.js";// passes the canvas context to the player class
+
 export class Player {
-    constructor(x, y, ctx) {
-        this.ctx; // passes the canvas context to the player class
+    constructor(x, y) {
+         
 
         this.position = { // player's position
             x,
@@ -37,6 +39,7 @@ export class Player {
     }
 
     draw() {
+        ctx.fillStyle = "red"
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 

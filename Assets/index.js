@@ -1,9 +1,9 @@
 import { Player } from "./player.js";
-
+console.log("Chega em index.js pós importacao")
 const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+export const ctx = canvas.getContext('2d');
 
-const Player = new Player(100, 100, ctx); // creates the player=
+const player = new Player(100, 100); // creates the player=
 
 // world constants
 const gravity = 2;
@@ -35,7 +35,7 @@ function animationLoop() {
     ctx.fillStyle = '#3b3b4f';
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    Player.update(keys, gravity)
+    player.update(keys, gravity)
 }
 animationLoop()
 
