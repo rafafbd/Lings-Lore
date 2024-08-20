@@ -3,7 +3,9 @@ import { ctx } from "./index.js";// passes the canvas context to the player clas
 export class Player {
     constructor(x, y) {
          
-
+        const image = new Image()
+        this.image = image
+        this.image.src = "./Assets/Ling-Prototipo.png"
         this.position = { // player's position
             x,
             y
@@ -39,8 +41,9 @@ export class Player {
     }
 
     draw() {
-        ctx.fillStyle = "red"
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.drawImage(this.image, this.position.x, this.position.y)
+        //ctx.fillStyle = "red"
+        //ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 
     resetLookingDirection() {
