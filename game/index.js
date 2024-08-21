@@ -35,6 +35,9 @@ const keys = { // keys status (pressed or released)
     },
     jump: {
         pressed: false
+    },
+    dash: {
+        pressed: false
     }
 }
 
@@ -60,7 +63,6 @@ function animationLoop() {
 animationLoop()
 
 // input listeners
-
 addEventListener('keydown', ({ code }) => { // gets key pressed event
     switch (code) {
         case 'KeyD': 
@@ -81,6 +83,9 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
 
         case 'Space': 
             keys.jump.pressed = true;
+            break;
+        case 'KeyK':
+            keys.dash.pressed = true;
     }
 })
 
@@ -104,5 +109,8 @@ addEventListener('keyup', ({ code }) => { // gets key released event
 
         case 'Space': 
             keys.jump.pressed = false;
+            break;
+        case 'KeyK':
+            keys.dash.pressed = false;
     }
 })
