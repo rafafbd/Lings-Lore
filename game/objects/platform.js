@@ -1,4 +1,4 @@
-import { ctx } from "../index";// passes the canvas context to the platform class
+import { ctx } from "../index.js";// passes the canvas context to the platform class
 
 export class Platform {
     constructor(x, y, width, height, /*imgSource*/) {

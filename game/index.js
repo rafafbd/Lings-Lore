@@ -13,8 +13,8 @@ export default player;
 const enemy = new Enemy(800, 100, player); // creates enemy
 
 var platforms = {
-    floor1: new platform(0, innerHeight - 200, innerWidth, 200)
-}
+    floor1: new Platform(0, innerHeight - 200, innerWidth, 200)
+};
 
 // world constants
 const gravity = 0.5;
@@ -48,7 +48,7 @@ function animationLoop() {
     ctx.fillStyle = '#3b3b4f';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#000000'
-    floor1.update()
+    platforms.floor1.update()
 
     ctx.font = "50px Times new Roman";
     ctx.fillStyle = "red";
