@@ -1,4 +1,5 @@
 import { Player } from "./player.js";
+import { Enemy } from "./enemy.js";
 
 const canvas = document.getElementById('canvas');
 export const ctx = canvas.getContext('2d');
@@ -6,6 +7,8 @@ ctx.canvas.width = window.innerWidth; // set canvas to full window size
 ctx.canvas.height = window.innerHeight;
 
 const player = new Player(100, 100, "./Assets/Ling-Prototipo.png"); // creates the player
+export default player;
+const enemy = new Enemy(800, 100, player); // creates enemy
 
 // world constants
 const gravity = 0.7;
@@ -81,11 +84,18 @@ function animationLoop() {
     requestAnimationFrame(animationLoop);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+
+
     ctx.fillStyle = '#3b3b4f';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#000000'
     ctx.fillRect(0, 520, canvas.width, canvas.height - 520);
 
+    ctx.font = "50px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText("Ling's Lore", 800, 100);
+
     player.update(keys, gravity)
+    enemy.update(gravity)
 }
 animationLoop()
