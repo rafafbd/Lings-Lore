@@ -86,7 +86,7 @@ export class Player {
             this.isOnFloor = false
         }
 
-        if (this.isOnFloor == false){
+        if (!this.isOnFloor){
             this.velocity.y += gravity;
         }
         else if (keys.jump.pressed && this.isOnFloor) {

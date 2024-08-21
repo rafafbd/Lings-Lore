@@ -63,7 +63,7 @@ export class Enemy {
             this.isOnFloor = false
         }
 
-        if (this.isOnFloor == false){
+        if (!this.isOnFloor){
             this.velocity.y += gravity;
         }
         else if (this.isPlayerHigher() && this.isOnFloor) {
