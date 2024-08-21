@@ -1,14 +1,20 @@
 import { Player } from "./player/player.js";
 import { Enemy } from "./enemies/enemy.js";
+import { Platform } from "./objects/platform.js";
 
 const canvas = document.getElementById('canvas');
 export const ctx = canvas.getContext('2d');
-ctx.canvas.width = window.innerWidth - 20; // set canvas to full window size
-ctx.canvas.height = window.innerHeight - 20;
+ctx.canvas.width = innerWidth - 20; // set canvas to full window size
+ctx.canvas.height = innerHeight - 20;
 
+// instanciates objects
 const player = new Player(100, 100, "./Assets/Ling-Prototipo.png"); // creates the player
 export default player;
 const enemy = new Enemy(800, 100, player); // creates enemy
+
+var platforms = {
+    floor1: new platform(0, innerHeight - 200, innerWidth, 200)
+}
 
 // world constants
 const gravity = 0.5;
@@ -31,6 +37,29 @@ const keys = { // keys status (pressed or released)
         pressed: false
     }
 }
+
+// perpetual loop of the running game
+function animationLoop() {
+    requestAnimationFrame(animationLoop);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+
+    ctx.fillStyle = '#3b3b4f';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#000000'
+    floor1.update()
+
+    ctx.font = "50px Times new Roman";
+    ctx.fillStyle = "red";
+    ctx.fillText("Ling's Lore", 800, 100);
+
+    player.update(keys, gravity)
+    enemy.update(gravity)
+}
+animationLoop()
+
+// input listeners
 
 addEventListener('keydown', ({ code }) => { // gets key pressed event
     switch (code) {
@@ -77,24 +106,3 @@ addEventListener('keyup', ({ code }) => { // gets key released event
             keys.jump.pressed = false;
     }
 })
-
-// perpetual loop of the running game
-function animationLoop() {
-    requestAnimationFrame(animationLoop);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-
-
-    ctx.fillStyle = '#3b3b4f';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#000000'
-    ctx.fillRect(0, 520, canvas.width, canvas.height - 520);
-
-    ctx.font = "50px Times new Roman";
-    ctx.fillStyle = "red";
-    ctx.fillText("Ling's Lore", 800, 100);
-
-    player.update(keys, gravity)
-    enemy.update(gravity)
-}
-animationLoop()
