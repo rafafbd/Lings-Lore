@@ -3,8 +3,8 @@ import { Enemy } from "./enemy.js";
 
 const canvas = document.getElementById('canvas');
 export const ctx = canvas.getContext('2d');
-ctx.canvas.width = window.innerWidth; // set canvas to full window size
-ctx.canvas.height = window.innerHeight;
+ctx.canvas.width = window.innerWidth - 20; // set canvas to full window size
+ctx.canvas.height = window.innerHeight - 20;
 
 const player = new Player(100, 100, "./Assets/Ling-Prototipo.png"); // creates the player
 export default player;
@@ -91,7 +91,7 @@ function animationLoop() {
     ctx.fillStyle = '#000000'
     ctx.fillRect(0, 520, canvas.width, canvas.height - 520);
 
-    ctx.font = "50px Arial";
+    ctx.font = "50px Times new Roman";
     ctx.fillStyle = "red";
     ctx.fillText("Ling's Lore", 800, 100);
 
