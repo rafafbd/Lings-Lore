@@ -32,7 +32,6 @@ const keys = { // keys status (pressed or released)
     }
 }
 
-
 addEventListener('keydown', ({ code }) => { // gets key pressed event
     switch (code) {
         case 'KeyD': 

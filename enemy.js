@@ -8,6 +8,10 @@ export class Enemy {
         //this.image = image
         //this.image.src = imgSource;
         this.position = {x,y};
+        this.centerPosition = { // used for detection
+            x: x + (this.width / 2),
+            y: y + (this.height / 2)
+        }
         this.width = 100;
         this.height = 100;
 
@@ -33,17 +37,17 @@ export class Enemy {
     }
 
     playerWhere() { // detects wheter the enemy will detect the player 
-        if (this.position.x > player.position.x ){
+        if (this.centerPosition.x > player.centerPosition.x ){
            return "playerAtLeft";
         }
-        if (player.position.x > this.position.x ){
+        if (player.centerPosition.x > this.centerPosition.x ){
             return "playerAtRight";
         }
         return "dontSeePlayer";
     }
 
     isPlayerHigher() {
-        if (player.position.y < this.position.y){
+        if (player.centerPosition.y < this.centerPosition.y){
             return true;
         }
         return false;

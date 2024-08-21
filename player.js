@@ -7,6 +7,12 @@ export class Player {
         this.image = image
         this.image.src = imgSource;
         this.position = {x,y};
+
+        this.centerPosition = { // used for detection
+            x: x + (width / 2),
+            y: y + (height / 2)
+        }
+
         this.width = 100;
         this.height = 100;
 
