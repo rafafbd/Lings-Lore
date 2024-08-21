@@ -18,7 +18,7 @@ export class Enemy {
 
         this.speed = { // values wich modify the velocity values
             x: 5, // walk speed
-            y: 50 // jump speed
+            y: 10 // jump speed
         };
 
         // ^^^^^^ physics ^^^^^^^^
@@ -32,8 +32,8 @@ export class Enemy {
         ctx.fillRect(this.position.x, this.position.y, 10, 30)
     }
 
-    playerWhere() { // detects wheter the enemy will detect the player
-        if (this.position.x < player.position.x ){
+    playerWhere() { // detects wheter the enemy will detect the player 
+        if (this.position.x > player.position.x ){
            return "playerAtLeft";
         }
         if (player.position.x > this.position.x ){
@@ -43,7 +43,7 @@ export class Enemy {
     }
 
     isPlayerHigher() {
-        if (player.position.y > this.position.y){
+        if (player.position.y < this.position.y){
             return true;
         }
         return false;
@@ -69,7 +69,8 @@ export class Enemy {
     }
 
     update(gravity) {
-
+        let where = this.playerWhere();
+        console.log(where);
         if (this.playerWhere() === "playerAtLeft") {
             this.velocity.x = -this.speed.x;
         }

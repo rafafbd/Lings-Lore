@@ -11,7 +11,7 @@ export default player;
 const enemy = new Enemy(800, 100, player); // creates enemy
 
 // world constants
-const gravity = 0.7;
+const gravity = 0.5;
 
 // input related stuff
 const keys = { // keys status (pressed or released)
