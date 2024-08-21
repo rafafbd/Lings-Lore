@@ -1,5 +1,5 @@
-import { Player } from "./player.js";
-import { Enemy } from "./enemy.js";
+import { Player } from "./player/player.js";
+import { Enemy } from "./enemies/enemy.js";
 
 const canvas = document.getElementById('canvas');
 export const ctx = canvas.getContext('2d');

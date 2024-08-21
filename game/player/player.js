@@ -1,4 +1,4 @@
-import { ctx } from "./index.js";// passes the canvas context to the player class
+import { ctx } from "../index.js";// passes the canvas context to the player class
 
 export class Player {
     constructor(x, y, imgSource) {
@@ -6,15 +6,16 @@ export class Player {
         const image = new Image()
         this.image = image
         this.image.src = imgSource;
-        this.position = {x,y};
-
-        this.centerPosition = { // used for detection
-            x: x + (width / 2),
-            y: y + (height / 2)
-        }
 
         this.width = 100;
         this.height = 100;
+
+        this.position = {x,y};
+
+        this.centerPosition = { // used for detection
+            x: this.position.x + (this.width / 2),
+            y: this.position.y + (this.height / 2)
+        }
 
         this.velocity = {// velocity in each axis
             x: 0, 
@@ -52,7 +53,6 @@ export class Player {
     }
 
     update(keys, gravity) {
-
         // basic movements
         if (keys.left.pressed) {
             this.velocity.x = -this.speed.x;
@@ -79,7 +79,7 @@ export class Player {
         }
 
         // jump
-        if (this.position.y >= 450){
+        if (this.position.y + this.height >= 450){
             this.isOnFloor = true
         }
         else{
@@ -99,6 +99,11 @@ export class Player {
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
+
+        // updates center position
+
+        this.centerPosition.x = this.position.x + (this.width / 2);
+        this.centerPosition.y = this.position.y + (this.height / 2)
 
         this.draw();
     }

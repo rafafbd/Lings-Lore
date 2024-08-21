@@ -1,5 +1,5 @@
-import { ctx } from "./index.js";// passes the canvas context to the player class
-import player from "./index.js";
+import { ctx } from "../index.js";// passes the canvas context to the player class
+import player from "../index.js";
 
 export class Enemy {
     constructor(x, y, /*imgSource,*/) {
@@ -7,13 +7,15 @@ export class Enemy {
         //const image = new Image()
         //this.image = image
         //this.image.src = imgSource;
-        this.position = {x,y};
-        this.centerPosition = { // used for detection
-            x: x + (this.width / 2),
-            y: y + (this.height / 2)
-        }
+
         this.width = 100;
         this.height = 100;
+
+        this.position = {x,y};
+        this.centerPosition = { // used for detection
+            x: this.position.x + (this.width / 2),
+            y: this.position.y + (this.height / 2)
+        }
 
         this.velocity = {// velocity in each axis
             x: 0, 
@@ -54,7 +56,7 @@ export class Enemy {
     }
 
     jump(gravity) {
-        if (this.position.y >= 450){
+        if ((this.position.y + this.height) >= 450){
             this.isOnFloor = true
         }
         else{
@@ -81,10 +83,18 @@ export class Enemy {
         else if (this.playerWhere() === "playerAtRight"){
             this.velocity.x = this.speed.x;
         }
+        else {
+            this.velocity.x = 0;
+        }
         this.jump(gravity); // verifies if need to jump and tries to do so
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
+
+        // updates center position
+
+        this.centerPosition.x = this.position.x + (this.width / 2);
+        this.centerPosition.y = this.position.y + (this.height / 2)
 
         this.draw();
     }
