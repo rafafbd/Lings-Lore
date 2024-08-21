@@ -24,7 +24,8 @@ export class Player {
 
         this.speed = { // values wich modify the velocity values
             x: 10, // walk speed
-            y: 15 // jump speed
+            y: 15, // jump speed
+            dash: 60
         };
 
         // ^^^^^^ physics ^^^^^^^^
@@ -39,6 +40,9 @@ export class Player {
 
         this.isOnFloor = false;
         this.hp = 100;
+        this.dashed = false;
+        let d = new Date()
+        this.dashTimer = d.getTime()/1000; // time in seconds
     }
 
     draw() { // draws player every frame (called in a loop)
@@ -50,6 +54,16 @@ export class Player {
         this.looking.left = false;
         this.looking.up = false;
         this.looking.down = false;
+    }
+
+    dash(direction){
+        let d = new Date();
+        let time = d.getTime()/1000;
+        if (time - this.dashTimer > 0.5){
+            this.position.x += this.speed.dash * direction;
+            this.dashTimer = time;
+        }
+        
     }
 
     update(keys, gravity) {
@@ -79,7 +93,7 @@ export class Player {
         }
 
         // jump
-        if (this.position.y + this.height >= 450){
+        if (this.position.y + this.height >= 750){
             this.isOnFloor = true
         }
         else{
@@ -94,6 +108,21 @@ export class Player {
         }
         else {
             this.velocity.y = 0;
+        }
+
+        // dash
+        if (keys.dash.pressed && this.dashed === false){
+            if (this.looking.right){
+                this.dash(1);
+                this.dashed = true;
+            }
+            if (this.looking.left){
+                this.dash(-1);
+                this.dashed = true;
+            }
+        }
+        if (this.isOnFloor){
+            this.dashed = false;
         }
 
 
