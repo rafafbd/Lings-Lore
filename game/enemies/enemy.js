@@ -5,8 +5,8 @@ class Enemy {
         //this.image = image
         //this.image.src = imgSource;
 
-        this.width = 100;
-        this.height = 100;
+        this.width = 10;
+        this.height = 30;
 
         this.position = {x,y};
         this.centerPosition = { // used for detection
@@ -29,11 +29,13 @@ class Enemy {
 
         this.isOnFloor = false;
         this.hp = 100;
+        this.dead = false;
+
     }
 
     draw() { // draws enemy every frame (called in a loop)
         ctx.fillStyle = 'red';
-        ctx.fillRect(this.position.x, this.position.y, 10, 30)
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 
     playerWhere() { // detects wheter the enemy will detect the player 
@@ -74,7 +76,6 @@ class Enemy {
 
     update() {
         let where = this.playerWhere();
-        console.log(where);
         if (this.playerWhere() === "playerAtLeft") {
             this.velocity.x = -this.speed.x;
         }
@@ -92,9 +93,30 @@ class Enemy {
         // updates center position
 
         this.centerPosition.x = this.position.x + (this.width / 2);
-        this.centerPosition.y = this.position.y + (this.height / 2)
+        this.centerPosition.y = this.position.y + (this.height / 2);
 
-        this.draw();
+        // if (player.looking.down || player.looking.up) {
+        //     if (player.fork.attackCoordinates.x2 >= this.position.x &&
+        //         player.fork.attackCoordinates.x <= this.position.x 
+
+        //     )
+        // }
+        // else {
+            if (player.fork.attackCoordinates.x2 >= this.position.x &&
+                player.fork.attackCoordinates.x <= this.position.x - this.width &&
+                player.fork.attackCoordinates.y2 >= this.position.y  &&
+                player.fork.attackCoordinates.y <= this.position.y + this.height) {
+                this.hp -= player.fork.damage;
+                console.log(this.hp)
+            }
+        // }
+        if (this.hp <= 0) {
+            this.dead = true
+        }
+        if (!this.dead) {
+            this.draw();
+        }
+        
     }
 
 }

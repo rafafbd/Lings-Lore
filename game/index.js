@@ -43,6 +43,9 @@ const keys = { // keys status (pressed or released)
     },
     dash: {
         pressed: false
+    },
+    attack: {
+        pressed: false
     }
 }
 
@@ -95,16 +98,21 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
         case 'Space': 
             keys.jump.pressed = true;
             break;
+
         case 'KeyK':
             keys.dash.pressed = true;
             break;
+
         case 'KeyP':
             enemies.push(new Enemy({
                 x: 800,
                 y: 100
-            }),
-            )
+            }))
+            break;
         
+        case 'KeyJ':
+            keys.attack.pressed = true;
+            break;
     }
 })
 
@@ -129,7 +137,13 @@ addEventListener('keyup', ({ code }) => { // gets key released event
         case 'Space': 
             keys.jump.pressed = false;
             break;
+
         case 'KeyK':
             keys.dash.pressed = false;
+            break;
+
+        case 'KeyJ':
+            keys.attack.pressed = false;
+            break;
     }
 })

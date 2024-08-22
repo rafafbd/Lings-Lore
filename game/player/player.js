@@ -5,8 +5,8 @@ class Player {
         this.image = image
         this.image.src = imgSource;
 
-        this.width = 100;
-        this.height = 100;
+        this.width = 64;
+        this.height = 64;
 
         this.position = {x,y};
 
@@ -138,6 +138,7 @@ class Player {
         this.centerPosition.x = this.position.x + (this.width / 2);
         this.centerPosition.y = this.position.y + (this.height / 2)
 
+        this.fork.update();
         this.draw();
     }
 }

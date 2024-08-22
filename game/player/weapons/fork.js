@@ -17,8 +17,8 @@ class Fork {
         }
 
         this.attackRange = {
-            width: 80,
-            height: 30
+            width: 100,
+            height: 40
         };
 
         this.damage = 10;
@@ -36,70 +36,76 @@ class Fork {
         ctx.fillStyle = 'green';
         switch (direction) {
             case 'l':
-                ctx.fillRect(this.position.x, this.position.y, this.position.x - this.attackRange.width, this.position.y + this.attackRange.height);
                 this.attackCoordinates.x = this.position.x;
                 this.attackCoordinates.y = this.position.y;
-                this.attackCoordinates.x2 = this.position.x - this.attackRange.width;
-                this.attackCoordinates.y2 =  this.position.y + this.attackRange.height;
+                this.attackCoordinates.x2 = -this.attackRange.width;
+                this.attackCoordinates.y2 = this.attackRange.height;
+                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackCoordinates.x2, this.attackCoordinates.y2);
                 break;
 
             case 'r':
-                ctx.fillRect(this.position.x, this.position.y, this.position.x + this.attackRange.width, this.position.y + this.attackRange.height);
-                this.attackCoordinates.x = this.position.x;
+                this.attackCoordinates.x = this.position.x + 35;
                 this.attackCoordinates.y = this.position.y;
-                this.attackCoordinates.x2 = this.position.x + this.attackRange.width;
-                this.attackCoordinates.y2 =  this.position.y + this.attackRange.height;
+                this.attackCoordinates.x2 = this.attackRange.width;
+                this.attackCoordinates.y2 = this.attackRange.height;
+                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackCoordinates.x2, this.attackCoordinates.y2);      
                 break;
                 
             case 'u':
-                ctx.fillRect((Player.position.x + (Player.width / 2) - (this.attackRange.height / 2)), Player.position.y - 40, (Player.position.x + (Player.width / 2) + (this.attackRange.height / 2)), Player.position.y - 40 + this.attackRange.width);
-                this.attackCoordinates.x = (Player.position.x + (Player.width / 2) - (this.attackRange.height / 2));
-                this.attackCoordinates.y = this.position.y - 40;
-                this.attackCoordinates.x2 = (Player.position.x + (Player.width / 2) + (this.attackRange.height / 2));
-                this.attackCoordinates.y2 = Player.position.y - 40 - this.attackRange.width;
+                this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.height / 2));
+                this.attackCoordinates.y = this.position.y;
+                this.attackCoordinates.x2 = this.attackRange.height;
+                this.attackCoordinates.y2 = - this.attackRange.width;
+                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackCoordinates.x2, this.attackCoordinates.y2);
                 break;
             case 'd':
-                ctx.fillRect((Player.position.x + (Player.width / 2) - (this.attackRange.height / 2)), Player.position.y + 40, (Player.position.x + (Player.width / 2) + (this.attackRange.height / 2)), Player.position.y + 40 + this.attackRange.width);
-                this.attackCoordinates.x = (Player.position.x + (Player.width / 2) - (this.attackRange.height / 2));
-                this.attackCoordinates.y = this.position.y + 40 + Player.height;
-                this.attackCoordinates.x2 = (Player.position.x + (Player.width / 2) + (this.attackRange.height / 2));
-                this.attackCoordinates.y2 = Player.position.y + 40 + this.attackRange.width + Player.height;
+                this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.height / 2));
+                this.attackCoordinates.y = this.position.y + 30;
+                this.attackCoordinates.x2 = this.attackRange.height;
+                this.attackCoordinates.y2 = this.attackRange.width;
+                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackCoordinates.x2, this.attackCoordinates.y2);
                 break;
         }
         ctx.restore()
     }
     
-    update(keys) {
+    update() {
         if (this.isEquiped) {
-            if (Player.looking.left) {
-                this.position.x = Player.centerPosition.x - 50;
+            this.position.y = player.position.y + 20;
+            if (player.looking.left) {
+                this.position.x = player.centerPosition.x - 50;
             }
             else {
-                this.position.x = Player.centerPosition.x + 50;
+                this.position.x = player.centerPosition.x + 30;
             }
         }
         else { // is not equiped
-            this.position.x = Player.position.x;
-            this.position.y = Player.position.y;
+            this.position.x = player.position.x;
+            this.position.y = player.position.y;
         }
         if (keys.attack.pressed) {
-            if (Player.looking.left) {
+            if (player.looking.left) {
                 this.attack('l')
             }
-            else if (Player.looking.right) {
+            else if (player.looking.right) {
                 this.attack('r')
             }
-            else if (Player.looking.up) {
+            else if (player.looking.up) {
+                this.position.x = player.position.x + (this.attackRange.height / 2);
+                this.position.y -= 40 
                 this.attack('u')
             }
             else { // down
+                this.position.x = player.position.x + (this.attackRange.height / 2);
+                this.position.y += 40 
                 this.attack('d')
             }
         }
         else {
-            this.attackCoordinates.forEach(coordinate => {
-                coordinate = null;
-            });
+            this.attackCoordinates.x = null;
+            this.attackCoordinates.x2 = null;
+            this.attackCoordinates.y = null;
+            this.attackCoordinates.y2 = null;
         }
         this.draw()
     }
