@@ -1,7 +1,5 @@
-import { ctx } from "game/index.js";
-import { Player } from ".../index.js";
-export class Fork {
-    constructor(x, y) {
+class Fork {
+    constructor({x, y}) {
         const image = new Image();
         this.image = image;
         this.image.src = "./Assets/Fork.png";
@@ -26,7 +24,7 @@ export class Fork {
         this.damage = 10;
         this.cd = 0.5; // fork attack colldown in seconds
 
-        this.isEquiped = True; // var. to check if fork is being used
+        this.isEquiped = true; // var. to check if fork is being used
     }
 
     draw() {

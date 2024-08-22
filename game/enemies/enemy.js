@@ -1,8 +1,5 @@
-import { ctx } from "../index.js";// passes the canvas context to the player class
-import player from "../index.js";
-
-export class Enemy {
-    constructor(x, y, /*imgSource,*/) {
+class Enemy {
+    constructor({x, y} /*imgSource,*/) {
          
         //const image = new Image()
         //this.image = image
@@ -35,6 +32,7 @@ export class Enemy {
     }
 
     draw() { // draws enemy every frame (called in a loop)
+        ctx.fillStyle = 'red';
         ctx.fillRect(this.position.x, this.position.y, 10, 30)
     }
 
@@ -74,7 +72,7 @@ export class Enemy {
         }
     }
 
-    update(gravity) {
+    update() {
         let where = this.playerWhere();
         console.log(where);
         if (this.playerWhere() === "playerAtLeft") {

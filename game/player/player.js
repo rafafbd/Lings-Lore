@@ -1,7 +1,5 @@
-import { ctx } from "../index.js";// passes the canvas context to the player class
-
-export class Player {
-    constructor(x, y, imgSource) {
+class Player {
+    constructor({x, y, imgSource}) {
          
         const image = new Image()
         this.image = image
@@ -43,6 +41,13 @@ export class Player {
         this.dashed = false;
         let d = new Date()
         this.dashTimer = d.getTime()/1000; // time in seconds
+
+        // equipment
+
+        this.fork = new Fork({
+            x: this.position.x,
+            y: this.position.y
+        });
     }
 
     draw() { // draws player every frame (called in a loop)
@@ -60,13 +65,13 @@ export class Player {
         let d = new Date();
         let time = d.getTime()/1000;
         if (time - this.dashTimer > 0.5){
-            this.position.x += this.speed.dash * direction;
+            this.velocity.x = this.speed.dash * direction;
             this.dashTimer = time;
         }
         
     }
 
-    update(keys, gravity) {
+    update() {
         // basic movements
         if (keys.left.pressed) {
             this.velocity.x = -this.speed.x;
@@ -79,7 +84,7 @@ export class Player {
             this.looking.right = true;
         }
         else {
-            this.velocity.x = 0;
+            this.velocity.x *= 0.8;
         }
 
         // looking inputs
@@ -124,7 +129,6 @@ export class Player {
         if (this.isOnFloor){
             this.dashed = false;
         }
-
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;

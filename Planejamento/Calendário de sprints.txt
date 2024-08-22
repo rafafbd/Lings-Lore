@@ -1,3 +1,11 @@
+Equipe:
+Júlio - 24137
+Eduardo - 24126
+Rafael Fazion - 24150
+
+Ideia do jogo: O dumpling chinês Ling deve proteger o restaurante de sua família dos americanos capitalistas que querem o comprar. Lute com o poder do comunismo e seu garfo para resistir à opressão dos capitalistas.
+				2d plataformer
+
 28/8:
 	*Mecânicas básicas:
 		- Movimentação
@@ -21,6 +29,5 @@
 18/9:
 
 	*Implementar animação
-	*Polir
-		- Deixar mais smooth, etc
+	*Polimento
 

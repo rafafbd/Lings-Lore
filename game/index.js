@@ -1,20 +1,25 @@
-import { Player } from "./player/player.js";
-import { Enemy } from "./enemies/enemy.js";
-import { Platform } from "./objects/platform.js";
-
 const canvas = document.getElementById('canvas');
-export const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 ctx.canvas.width = innerWidth - 20; // set canvas to full window size
 ctx.canvas.height = innerHeight - 20;
 
 // instanciates objects
-const player = new Player(100, 100, "./Assets/Ling-Prototipo.png"); // creates the player
-export default player;
-const enemy = new Enemy(800, 100, player); // creates enemy
+const player = new Player({
+    x: 100, 
+    y: 0,
+    imgSource: "./Assets/Ling-Prototipo.png"
+}); // creates the player
 
-var platforms = {
-    floor1: new Platform(0, innerHeight - 200, innerWidth, 200)
-};
+var enemies = []  // creates enemy
+
+var platforms = [
+    floor1 = new Platform({
+        x: 0,
+        y: innerHeight - 200,
+        width: innerWidth, 
+        height: 200
+    })
+];
 
 // world constants
 const gravity = 0.5;
@@ -50,15 +55,21 @@ function animationLoop() {
 
     ctx.fillStyle = '#3b3b4f';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#000000'
-    platforms.floor1.update()
 
     ctx.font = "50px Times new Roman";
     ctx.fillStyle = "red";
     ctx.fillText("Ling's Lore", 800, 100);
 
-    player.update(keys, gravity)
-    enemy.update(gravity)
+    ctx.fillStyle = '#000000'
+    for (let i = platforms.length - 1; i >= 0; i--){
+        platforms[i].update()
+    };
+
+    for (let i = enemies.length - 1; i >= 0; i--){
+        enemies[i].update()
+    };
+
+    player.update()
 }
 animationLoop()
 
@@ -86,6 +97,14 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
             break;
         case 'KeyK':
             keys.dash.pressed = true;
+            break;
+        case 'KeyP':
+            enemies.push(new Enemy({
+                x: 800,
+                y: 100
+            }),
+            )
+        
     }
 })
 
