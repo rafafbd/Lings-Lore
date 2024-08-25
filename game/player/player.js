@@ -29,6 +29,11 @@ class Player {
         // ^^^^^^ physics ^^^^^^^^
         // vvvvvv states vvvvvvvvv 
 
+        this.isEndOfScreen = {
+            right: false,
+            left: false
+        };
+
         this.looking = {
             right: false,
             left: false,
@@ -71,17 +76,41 @@ class Player {
         
     }
 
+    move(direction){
+        this.resetLookingDirection();
+        switch (direction){
+            case "r":
+                this.looking.right = true;
+                if (this.position.x < 1100){
+                    this.velocity.x = this.speed.x;
+                }
+                else {
+                    this.isEndOfScreen.right = true;
+                }
+            case "l":
+                this.looking.left = true;
+                if (this.position.x > 200){
+                    this.velocity.x = -this.speed.x;
+                }
+                else {
+                    this.isEndOfScreen.left = false;
+                }
+        }
+    }
+
     update() {
         // basic movements
         if (keys.left.pressed) {
             this.velocity.x = -this.speed.x;
             this.resetLookingDirection();
             this.looking.left = true;
+            //move("l");
         }
         else if (keys.right.pressed) {
             this.velocity.x = this.speed.x;
             this.resetLookingDirection();
             this.looking.right = true;
+            //move("r");
         }
         else {
             this.velocity.x *= 0.8;
@@ -132,6 +161,7 @@ class Player {
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
+
 
         // updates center position
 

@@ -3,6 +3,15 @@ class Platform {
         //const image = new Image()
         //this.image = image
         //this.image.src = imgSource;
+
+        this.velocity = {// velocity in each axis
+            x: 0
+        };
+
+        this.speed = { // values wich modify the velocity values
+            x: 10 // walk speed
+        };
+
         this.position = {x, y};
 
         this.proportions = {width, height};
@@ -29,6 +38,16 @@ class Platform {
             }
         }
         return colisions;
+    }
+
+    move(direction){ // player movement trick
+        if (direction === "r"){
+            this.velocity.x = this.speed.x;
+        }
+        else {
+            this.velocity.x = -this.speed.y;
+        }
+        this.position.x += this.velocity.x;
     }
 
     draw() {

@@ -10,16 +10,27 @@ const player = new Player({
     imgSource: "./Assets/Ling-remodel.png"
 }); // creates the player
 
+
 var enemies = []  // creates enemy
 
 var platforms = [
-    floor1 = new Platform({
+    /*floor1 = new Platform({
         x: 0,
         y: innerHeight - 200,
         width: innerWidth, 
         height: 200
+    }),*/
+    platform1 = new Platform({
+        x: 600,
+        y: 200,
+        width: 40,
+        height: 3
     })
 ];
+var components = [
+    enemies, platforms
+]
+
 
 // world constants
 const gravity = 0.5;
@@ -49,6 +60,14 @@ const keys = { // keys status (pressed or released)
     }
 }
 
+function moveComponents(direction){ // Moves the whole screen, called when player is at border
+    for (let i=0; i<components.length; i++){
+        components[i].forEach(function(object) { // takes all the objects in the screen
+            object.move(direction); // a method that all objects will need (still not working)
+        })
+    }
+}
+
 // perpetual loop of the running game
 function animationLoop() {
     requestAnimationFrame(animationLoop);
@@ -72,6 +91,13 @@ function animationLoop() {
         enemies[i].update()
     };
 
+    /*if (player.isEndOfScreen.right === true){
+        moveComponents("l");
+    }
+    else if (player.isEndOfScreen.left === true){
+        moveComponents("r");
+    }*/
+   
     player.update()
 }
 animationLoop()
