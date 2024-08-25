@@ -7,7 +7,7 @@ ctx.canvas.height = innerHeight - 20;
 const player = new Player({
     x: 100, 
     y: 0,
-    imgSource: "./Assets/Ling-Prototipo.png"
+    imgSource: "./Assets/Ling-remodel.png"
 }); // creates the player
 
 var enemies = []  // creates enemy
