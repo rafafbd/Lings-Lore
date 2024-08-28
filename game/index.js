@@ -5,7 +5,7 @@ ctx.canvas.height = innerHeight - 20;
 
 // instanciates objects
 const player = new Player({
-    x: 100, 
+    x: 600, 
     y: 0,
     imgSource: "./Assets/Ling-remodel.png"
 }); // creates the player
@@ -34,7 +34,7 @@ var components = {
     
 
 // world constants
-const gravity = 0.5;
+const gravity = 0.01;
 
 // input related stuff
 const keys = { // keys status (pressed or released)

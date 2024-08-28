@@ -102,13 +102,6 @@ class Enemy {
         //     )
         // }
         // else {
-            if (player.fork.attackCoordinates.x2 >= this.position.x &&
-                player.fork.attackCoordinates.x <= this.position.x - this.width &&
-                player.fork.attackCoordinates.y2 >= this.position.y  &&
-                player.fork.attackCoordinates.y <= this.position.y + this.height) {
-                this.hp -= player.fork.damage;
-                console.log(this.hp)
-            }
         // }
         if (this.hp <= 0) {
             this.dead = true

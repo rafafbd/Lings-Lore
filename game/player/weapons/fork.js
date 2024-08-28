@@ -11,9 +11,7 @@ class Fork {
 
         this.attackCoordinates = { // coordinates for attack hitbox
             x: null,
-            y: null,
-            x2: null,
-            y2: null
+            y: null
         }
 
         this.attackRange = {
@@ -38,32 +36,24 @@ class Fork {
             case 'l':
                 this.attackCoordinates.x = this.position.x;
                 this.attackCoordinates.y = this.position.y;
-                this.attackCoordinates.x2 = -this.attackRange.width;
-                this.attackCoordinates.y2 = this.attackRange.height;
-                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackCoordinates.x2, this.attackCoordinates.y2);
+                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, -this.attackRange.width,this.attackRange.height);
                 break;
 
             case 'r':
                 this.attackCoordinates.x = this.position.x + 35;
                 this.attackCoordinates.y = this.position.y;
-                this.attackCoordinates.x2 = this.attackRange.width;
-                this.attackCoordinates.y2 = this.attackRange.height;
-                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackCoordinates.x2, this.attackCoordinates.y2);      
+                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.width, this.attackRange.height);
                 break;
                 
             case 'u':
                 this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.height / 2));
-                this.attackCoordinates.y = this.position.y;
-                this.attackCoordinates.x2 = this.attackRange.height;
-                this.attackCoordinates.y2 = - this.attackRange.width;
-                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackCoordinates.x2, this.attackCoordinates.y2);
+                this.attackCoordinates.y = this.position.y - this.attackRange.width;
+                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.height, this.attackRange.width);
                 break;
             case 'd':
                 this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.height / 2));
                 this.attackCoordinates.y = this.position.y + 30;
-                this.attackCoordinates.x2 = this.attackRange.height;
-                this.attackCoordinates.y2 = this.attackRange.width;
-                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackCoordinates.x2, this.attackCoordinates.y2);
+                ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.height,this.attackRange.width);
                 break;
         }
         ctx.restore()
