@@ -102,7 +102,7 @@ class Player {
     }
 
     isTopOfPlatform(leftPoint, rightPoint){
-        if (this.position.y + this.height > leftPoint[1] || 
+        if (this.position.y + this.height > leftPoint[1]+10 || 
             this.position.y + this.height < leftPoint[1]-10){  // the [1] refers to y
             return false;
         }

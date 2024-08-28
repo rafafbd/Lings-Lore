@@ -20,6 +20,12 @@ var platforms = [
         width: 200,
         height: 50
     }),
+    platform2 = new Platform({
+        x: 1100,
+        y: 300,
+        width: 100,
+        height: 30
+    }),
     floor1 = new Platform({
         x: 0,
         y: canvas.height - 200,
