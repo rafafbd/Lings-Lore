@@ -34,7 +34,7 @@ var components = {
     
 
 // world constants
-const gravity = 0.01;
+const gravity = 0.3;
 
 // input related stuff
 const keys = { // keys status (pressed or released)

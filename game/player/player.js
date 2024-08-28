@@ -49,8 +49,8 @@ class Player {
         this.dashTimer = d.getTime()/1000; // time in seconds
 
         // equipment
-        this.currentWeapon = "fork";
-        this.fork = new Fork({
+        this.currentWeapon = "Fork";
+        this.Fork = new Fork({
             x: this.position.x,
             y: this.position.y
         });
@@ -103,7 +103,7 @@ class Player {
 
     isTopOfPlatform(leftPoint, rightPoint){
         if (this.position.y + this.height > leftPoint[1] || 
-            this.position.y + this.height < leftPoint[1]-3){  // the [1] refers to y
+            this.position.y + this.height < leftPoint[1]-10){  // the [1] refers to y
             return false;
         }
         if (this.position.x + this.width >= leftPoint[0] &&     // the [0] refers to x
@@ -127,15 +127,14 @@ class Player {
     }
 
     fixPositionOnFloor(){
-        console.log(!this.position.y + this.height == this.floorY)
         if (this.isOnFloor && this.position.y + this.height !== this.floorY){
-            console.log("Isso eh true")
             this.position.y = this.floorY - this.height;
         }
     }
 
 
     update(platforms) {
+        console.log(this.isOnFloor);
         // basic movements
         if (keys.left.pressed) {
             this.velocity.x = -this.speed.x;
@@ -200,7 +199,7 @@ class Player {
         this.centerPosition.x = this.position.x + (this.width / 2);
         this.centerPosition.y = this.position.y + (this.height / 2)
 
-        this.fork.update();
+        this.Fork.update();
         this.draw();
     }
 }
