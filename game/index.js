@@ -1,3 +1,6 @@
+var audio = new Audio("/game/Assets/chinese-beat-190047.mp3");
+audio.play();
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 ctx.canvas.width = innerWidth - 20; // set canvas to full window size
