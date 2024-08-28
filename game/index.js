@@ -101,20 +101,27 @@ function animationLoop() {
                 case "fork":
                     if (player.looking.up || player.looking.down) { // vertical attack
                         // checks collision
-                        if (player.fork.position.x < enemies[i].position.x + enemies[i].width &&
-                            player.fork.position.x + player.fork.attackRange.height > enemies[i].position.x &&
-                            player.fork.position.y < enemies[i].position.y + enemies.height &&
-                            player.fork.position.y + player.fork.attackRange.width > enemies[i].position.y
-                        )
-                        enemies[i].takesDamage(player.fork.damage);
+                        console.log("ataque vertical")
+                        if (player.fork.attackCoordinates.x < enemies[i].position.x + enemies[i].width &&
+                            player.fork.attackCoordinates.x + player.fork.attackRange.height > enemies[i].position.x &&
+                            player.fork.attackCoordinates.y < enemies[i].position.y + enemies[i].height &&
+                            player.fork.attackCoordinates.y + player.fork.attackRange.width > enemies[i].position.y
+                        ){
+                            enemies[i].takesDamage(player.fork.damage);
+                        }
+                        else {
+
+                        }
                     }
                     else { // horizontal attack
-                        if (player.fork.position.x < enemies[i].position.x + enemies[i].width &&
-                            player.fork.position.x + player.fork.attackRange.width > enemies[i].position.x &&
-                            player.fork.position.y < enemies[i].position.y + enemies.height &&
-                            player.fork.position.y + player.fork.attackRange.height > enemies[i].position.y
-                        )
-                        enemies[i].takesDamage(player.fork.damage);
+                        console.log("ataque horizontal")
+                        if (player.fork.attackCoordinates.x < enemies[i].position.x + enemies[i].width &&
+                            player.fork.attackCoordinates.x + player.fork.attackRange.width > enemies[i].position.x &&
+                            player.fork.attackCoordinates.y < enemies[i].position.y + enemies[i].height &&
+                            player.fork.attackCoordinates.y + player.fork.attackRange.height > enemies[i].position.y
+                        ){
+                            enemies[i].takesDamage(player.fork.damage);
+                        }
                     }
                     break;
             }

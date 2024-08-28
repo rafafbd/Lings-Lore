@@ -49,8 +49,8 @@ class Player {
         this.dashTimer = d.getTime()/1000; // time in seconds
 
         // equipment
-        this.currentWeapon = "Fork";
-        this.Fork = new Fork({
+        this.currentWeapon = "fork";
+        this.fork = new Fork({
             x: this.position.x,
             y: this.position.y
         });
@@ -115,7 +115,7 @@ class Player {
 
     }
 
-    setIsOnFloor(platforms){
+    setIsOnFloor(){
         let onFloor = false;
         for (let i = 0; i<platforms.length; i++){
             onFloor = this.isTopOfPlatform(platforms[i].colisions.top.left, platforms[i].colisions.top.right);
@@ -133,8 +133,7 @@ class Player {
     }
 
 
-    update(platforms) {
-        console.log(this.isOnFloor);
+    update() {
         // basic movements
         if (keys.left.pressed) {
             this.velocity.x = -this.speed.x;
@@ -163,7 +162,7 @@ class Player {
         }
 
         // jump
-        this.setIsOnFloor(platforms);
+        this.setIsOnFloor();
         if (!this.isOnFloor){
             this.velocity.y += gravity;
         }
@@ -199,7 +198,7 @@ class Player {
         this.centerPosition.x = this.position.x + (this.width / 2);
         this.centerPosition.y = this.position.y + (this.height / 2)
 
-        this.Fork.update();
+        this.fork.update();
         this.draw();
     }
 }

@@ -5,8 +5,10 @@ class Enemy {
         //this.image = image
         //this.image.src = imgSource;
 
-        this.width = 10;
-        this.height = 30;
+        this.shape = "rec";
+
+        this.width = 50;
+        this.height = 80;
 
         this.position = {x,y};
         this.centerPosition = { // used for detection
@@ -28,6 +30,11 @@ class Enemy {
         // vvvvvv states vvvvvvvvv 
 
         this.isOnFloor = false;
+
+        let d = new Date();
+        this.damageTimer = d.getTime()/1000; // time in seconds
+        this.damageCd = 0.5
+
         this.hp = 100;
         this.dead = false;
 
@@ -39,7 +46,13 @@ class Enemy {
     }
 
     takesDamage(damage) {
-        this.hp -= damage;
+        let d = new Date();
+        let time = d.getTime()/1000;
+        if (time - this.damageTimer > this.damageCd){
+            this.hp -= damage;
+            this.damageTimer = time;
+        }
+        
         if (this.hp <= 0) {
             this.dead = true;
         }
@@ -102,14 +115,6 @@ class Enemy {
         this.centerPosition.x = this.position.x + (this.width / 2);
         this.centerPosition.y = this.position.y + (this.height / 2);
 
-        // if (player.looking.down || player.looking.up) {
-        //     if (player.fork.attackCoordinates.x2 >= this.position.x &&
-        //         player.fork.attackCoordinates.x <= this.position.x 
-
-        //     )
-        // }
-        // else {
-        // }
         if (!this.dead) {
             this.draw();
         }
