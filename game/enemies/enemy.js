@@ -38,6 +38,13 @@ class Enemy {
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 
+    takesDamage(damage) {
+        this.hp -= damage;
+        if (this.hp <= 0) {
+            this.dead = true;
+        }
+    }
+
     playerWhere() { // detects wheter the enemy will detect the player 
         if (this.centerPosition.x > player.centerPosition.x ){
            return "playerAtLeft";
@@ -103,9 +110,6 @@ class Enemy {
         // }
         // else {
         // }
-        if (this.hp <= 0) {
-            this.dead = true
-        }
         if (!this.dead) {
             this.draw();
         }

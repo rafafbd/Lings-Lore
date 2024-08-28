@@ -83,13 +83,36 @@ function animationLoop() {
     ctx.fillStyle = "red";
     ctx.fillText("Ling's Lore", 800, 100);
 
-    ctx.fillStyle = '#000000'
+    ctx.fillStyle = '#000000';
     for (let i = platforms.length - 1; i >= 0; i--){
-        platforms[i].update()
+        platforms[i].update();
     };
 
     for (let i = enemies.length - 1; i >= 0; i--){
-        enemies[i].update()
+        enemies[i].update();
+        if (keys.attack.pressed) { // checks if the player is attacking
+            switch (player.currentWeapon) { // different hitbox and damage based on current weapon
+                case "fork":
+                    if (player.looking.up || player.looking.down) { // vertical attack
+                        // checks collision
+                        if (Fork.position.x < enemies[i].position.x + enemies[i].width &&
+                            Fork.position.x + Fork.attackRange.height > enemies[i].position.x &&
+                            Fork.position.y < enemies[i].position.y + enemies.height &&
+                            Fork.position.y + Fork.attackRange.width > enemies[i].position.y
+                        )
+                        enemies[i].takesDamage(Fork.damage);
+                    }
+                    else { // horizontal attack
+                        if (Fork.position.x < enemies[i].position.x + enemies[i].width &&
+                            Fork.position.x + Fork.attackRange.width > enemies[i].position.x &&
+                            Fork.position.y < enemies[i].position.y + enemies.height &&
+                            Fork.position.y + Fork.attackRange.height > enemies[i].position.y
+                        )
+                        enemies[i].takesDamage(Fork.damage);
+                    }
+                    break;
+            }
+        }
     };
 
     /*if (player.isEndOfScreen.right === true){
