@@ -101,20 +101,20 @@ function animationLoop() {
                 case "fork":
                     if (player.looking.up || player.looking.down) { // vertical attack
                         // checks collision
-                        if (Fork.position.x < enemies[i].position.x + enemies[i].width &&
-                            Fork.position.x + Fork.attackRange.height > enemies[i].position.x &&
-                            Fork.position.y < enemies[i].position.y + enemies.height &&
-                            Fork.position.y + Fork.attackRange.width > enemies[i].position.y
+                        if (player.fork.position.x < enemies[i].position.x + enemies[i].width &&
+                            player.fork.position.x + player.fork.attackRange.height > enemies[i].position.x &&
+                            player.fork.position.y < enemies[i].position.y + enemies.height &&
+                            player.fork.position.y + player.fork.attackRange.width > enemies[i].position.y
                         )
-                        enemies[i].takesDamage(Fork.damage);
+                        enemies[i].takesDamage(player.fork.damage);
                     }
                     else { // horizontal attack
-                        if (Fork.position.x < enemies[i].position.x + enemies[i].width &&
-                            Fork.position.x + Fork.attackRange.width > enemies[i].position.x &&
-                            Fork.position.y < enemies[i].position.y + enemies.height &&
-                            Fork.position.y + Fork.attackRange.height > enemies[i].position.y
+                        if (player.fork.position.x < enemies[i].position.x + enemies[i].width &&
+                            player.fork.position.x + player.fork.attackRange.width > enemies[i].position.x &&
+                            player.fork.position.y < enemies[i].position.y + enemies.height &&
+                            player.fork.position.y + player.fork.attackRange.height > enemies[i].position.y
                         )
-                        enemies[i].takesDamage(Fork.damage);
+                        enemies[i].takesDamage(player.fork.damage);
                     }
                     break;
             }
