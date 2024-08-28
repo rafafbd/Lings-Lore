@@ -42,6 +42,7 @@ class Player {
         };
 
         this.isOnFloor = false;
+        this.floorY = 0;
         this.hp = 100;
         this.dashed = false;
         let d = new Date()
@@ -98,7 +99,33 @@ class Player {
         }
     }
 
-    update() {
+    isTopOfPlatform(leftPoint, rightPoint){
+        if (this.position.y + this.height > leftPoint[1] || 
+            this.position.y + this.height < leftPoint[1] - 10){  // the [1] refers to y
+            return false;
+        }
+        if (this.position.x + this.width >= leftPoint[0] &&     // the [0] refers to x
+            this.position.x <= rightPoint[0]){
+                this.floorY = leftPoint[1];
+                return true;
+        } 
+        return false;
+
+    }
+
+    setIsOnFloor(platforms){
+        let onFloor = false;
+        for (let i = 0; i<platforms.length; i++){
+            onFloor = this.isTopOfPlatform(platforms[i].colisions.top.left, platforms[i].colisions.top.right);
+            if (onFloor === true){
+                break;
+            }
+        }
+        this.isOnFloor = onFloor;
+    }
+
+
+    update(platforms) {
         // basic movements
         if (keys.left.pressed) {
             this.velocity.x = -this.speed.x;
@@ -127,22 +154,19 @@ class Player {
         }
 
         // jump
-        if (this.position.y + this.height >= 750){
-            this.isOnFloor = true
-        }
-        else{
-            this.isOnFloor = false
-        }
-
+        this.setIsOnFloor(platforms);
         if (!this.isOnFloor){
             this.velocity.y += gravity;
         }
-        else if (keys.jump.pressed && this.isOnFloor) {
+        else if (keys.jump.pressed) {
             this.velocity.y = -this.speed.y;
         }
         else {
             this.velocity.y = 0;
         }
+        //if (this.position.y + this.height <= this.floorY && this.isOnFloor){
+        //    this.position.y = this.floorY -this.height;
+        //}
 
         // dash
         if (keys.dash.pressed && this.dashed === false){

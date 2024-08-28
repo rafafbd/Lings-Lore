@@ -14,23 +14,24 @@ const player = new Player({
 var enemies = []  // creates enemy
 
 var platforms = [
-    /*floor1 = new Platform({
-        x: 0,
-        y: innerHeight - 200,
-        width: innerWidth, 
-        height: 200
-    }),*/
     platform1 = new Platform({
-        x: 600,
-        y: 200,
-        width: 40,
-        height: 3
+        x: 800,
+        y: 600,
+        width: 200,
+        height: 50
+    }),
+    floor1 = new Platform({
+        x: 0,
+        y: canvas.height - 200,
+        width: canvas.width, 
+        height: 200
     })
 ];
-var components = [
-    enemies, platforms
-]
-
+var components = {
+    platforms: platforms,
+    enemies: enemies
+}
+    
 
 // world constants
 const gravity = 0.5;
@@ -98,7 +99,7 @@ function animationLoop() {
         moveComponents("r");
     }*/
    
-    player.update()
+    player.update(platforms);
 }
 animationLoop()
 

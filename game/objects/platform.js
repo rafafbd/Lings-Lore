@@ -16,10 +16,7 @@ class Platform {
 
         this.proportions = {width, height};
         
-    }
-    
-    collisionShape(){ // returns the points of each side of the reactangle for collision detection
-        let colisions = {
+        this.colisions = {
             left: {
                 top: [this.position.x, this.position.y], // top point of the left side
                 bottom: [this.position.x, this.position.y + this.proportions.height] // bottom point
@@ -37,8 +34,11 @@ class Platform {
                 right: [this.position.x + this.proportions.width, this.position.y + this.proportions.height]
             }
         }
-        return colisions;
     }
+    
+    
+         
+        
 
     move(direction){ // player movement trick
         if (direction === "r"){
@@ -51,7 +51,7 @@ class Platform {
     }
 
     draw() {
-        ctx.fillRect(this.position.x, this.position.y, this.position.x + this.proportions.width, this.position.y + this.proportions.height)
+        ctx.fillRect(this.position.x, this.position.y, this.proportions.width, this.proportions.height)
     }
     update() {
         this.draw()
