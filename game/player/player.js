@@ -1,9 +1,9 @@
 class Player {
     constructor({x, y, imgSource}) {
          
-        const image = new Image()
-        this.image = image
-        this.image.src = imgSource;
+        // const image = new Image()
+        // this.image = image
+        // this.image.src = imgSource;
 
         this.width = 64;
         this.height = 64;
@@ -49,7 +49,7 @@ class Player {
         this.dashTimer = d.getTime()/1000; // time in seconds
 
         // equipment
-
+        this.currentWeapon = "fork";
         this.fork = new Fork({
             x: this.position.x,
             y: this.position.y
@@ -57,7 +57,9 @@ class Player {
     }
 
     draw() { // draws player every frame (called in a loop)
-        ctx.drawImage(this.image, this.position.x, this.position.y)
+        //ctx.drawImage(this.image, this.position.x, this.position.y)
+        ctx.fillStyle = 'gold';
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 
     resetLookingDirection() {
@@ -101,7 +103,7 @@ class Player {
 
     isTopOfPlatform(leftPoint, rightPoint){
         if (this.position.y + this.height > leftPoint[1] || 
-            this.position.y + this.height < leftPoint[1] - 10){  // the [1] refers to y
+            this.position.y + this.height < leftPoint[1]-3){  // the [1] refers to y
             return false;
         }
         if (this.position.x + this.width >= leftPoint[0] &&     // the [0] refers to x
@@ -122,6 +124,14 @@ class Player {
             }
         }
         this.isOnFloor = onFloor;
+    }
+
+    fixPositionOnFloor(){
+        console.log(!this.position.y + this.height == this.floorY)
+        if (this.isOnFloor && this.position.y + this.height !== this.floorY){
+            console.log("Isso eh true")
+            this.position.y = this.floorY - this.height;
+        }
     }
 
 
@@ -164,9 +174,7 @@ class Player {
         else {
             this.velocity.y = 0;
         }
-        //if (this.position.y + this.height <= this.floorY && this.isOnFloor){
-        //    this.position.y = this.floorY -this.height;
-        //}
+        
 
         // dash
         if (keys.dash.pressed && this.dashed === false){
@@ -182,7 +190,7 @@ class Player {
         if (this.isOnFloor){
             this.dashed = false;
         }
-
+        this.fixPositionOnFloor();
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
