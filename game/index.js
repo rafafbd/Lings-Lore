@@ -1,5 +1,6 @@
 var audio = new Audio("/game/Assets/chinese-beat-190047.mp3");
-audio.play();
+
+
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -213,3 +214,16 @@ addEventListener('keyup', ({ code }) => { // gets key released event
             break;
     }
 })
+var canplaythrough = false;
+audio.addEventListener('canplaythrough', function() { 
+    console.log("Entrou aqui")
+    canplaythrough = true;
+ }, false);
+
+ if (canplaythrough){
+    audio.play();
+ }
+
+ audio.addEventListener('ended', function(){
+    audio.play();
+ })
