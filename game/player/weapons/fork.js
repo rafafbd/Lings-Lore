@@ -69,7 +69,7 @@ class Fork {
     
     update() {
         if (this.isEquiped) {
-            this.position.y = player.position.y + 20;
+            this.position.y = player.position.y - 30;
             if (player.looking.left) {
                 this.position.x = player.centerPosition.x - 50;
             }
