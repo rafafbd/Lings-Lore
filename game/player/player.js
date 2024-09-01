@@ -43,10 +43,13 @@ class Player {
 
         this.isOnFloor = false;
         this.floorY = 0;
+
         this.hp = 100;
         this.dashed = false;
+
         let d = new Date()
         this.dashTimer = d.getTime()/1000; // time in seconds
+        this.damageTimer = d.getTime()/1000;
 
         // equipment
         this.currentWeapon = "fork";
@@ -76,7 +79,6 @@ class Player {
             this.velocity.x = this.speed.dash * direction;
             this.dashTimer = time;
         }
-        
     }
 
     move(direction){
