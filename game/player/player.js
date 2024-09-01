@@ -8,6 +8,8 @@ class Player {
         this.width = 64;
         this.height = 64;
 
+        this.shape = "rectangle";
+
         this.position = {x,y};
 
         this.centerPosition = { // used for detection
@@ -138,8 +140,7 @@ class Player {
 
     collided(source) {
         if (source instanceof Enemy){
-            takeDamage(source.damage);
-            
+            this.takeDamage(source.damage);
         }
     }
 
@@ -153,6 +154,7 @@ class Player {
         }
         if (this.hp <= 0){
             // gameOver(); // set to dead state and end game through index.js?
+            console.log("game over");   
         }
     }
 

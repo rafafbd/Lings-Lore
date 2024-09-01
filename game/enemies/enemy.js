@@ -5,7 +5,7 @@ class Enemy {
         //this.image = image
         //this.image.src = imgSource;
 
-        this.shape = "rec";
+        this.shape = "rectangle";
 
         this.width = 50;
         this.height = 80;
@@ -35,6 +35,8 @@ class Enemy {
         this.damageTimer = d.getTime()/1000; // time in seconds
         this.damageCd = 0.5
 
+        // atributes
+        this.damage = 20;
         this.hp = 100;
         this.dead = false;
 
@@ -96,7 +98,7 @@ class Enemy {
 
     collided(source) {
         if (source instanceof Fork) {
-            source.takeDamage(source.damage);
+            this.takeDamage(source.damage);
         }
     }
 

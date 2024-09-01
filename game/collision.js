@@ -14,7 +14,7 @@ class Collision {
         this.object2Values = {object2X, object2Y, object2Width, object2Height, object2Shape};
     }
     checkCollision() {
-        if (this.object1Shape === 'rectangle' && this.object2Shape === 'rectangle') {
+        if (this.object1Values.object1Shape === 'rectangle' && this.object2Values.object2Shape === 'rectangle') {
             if (this.object1Values.object1X < this.object2Values.object2X + this.object2Values.object2Width &&
                 this.object1Values.object1X + this.object1Values.object1Width > this.object2Values.object2X &&
                 this.object1Values.object1Y < this.object2Values.object2Y + this.object2Values.object2Height &&
@@ -23,6 +23,9 @@ class Collision {
                 this.object1.collided(this.object2);
                 this.object2.collided(this.object1);
             }
+            // else {
+            //     console.log("no collision");
+            // }
         }
     }
 }

@@ -13,7 +13,7 @@ const player = new Player({
     y: 0,
     imgSource: "./Assets/Ling-remodel.png"
 }); // creates the player
-
+const collision = new Collision(); // creates collision object
 
 var enemies = []  // creates enemy
 
@@ -100,32 +100,71 @@ function animationLoop() {
 
     for (let i = enemies.length - 1; i >= 0; i--){
         enemies[i].update();
+        collision.setObjects(
+            player, 
+            {
+                object1X: player.position.x,
+                object1Y: player.position.y,
+                object1Width: player.width,
+                object1Height: player.height,
+                object1Shape: player.shape
+            },
+            enemies[i],
+            {
+                object2X: enemies[i].position.x,
+                object2Y: enemies[i].position.y,
+                object2Width: enemies[i].width,
+                object2Height: enemies[i].height,
+                object2Shape: enemies[i].shape
+            }
+        );
+        collision.checkCollision();
+
         if (keys.attack.pressed) { // checks if the player is attacking
             switch (player.currentWeapon) { // different hitbox and damage based on current weapon
                 case "fork":
                     if (player.looking.up || player.looking.down) { // vertical attack
                         // checks collision
-                        console.log("ataque vertical")
-                        if (player.fork.attackCoordinates.x < enemies[i].position.x + enemies[i].width &&
-                            player.fork.attackCoordinates.x + player.fork.attackRange.height > enemies[i].position.x &&
-                            player.fork.attackCoordinates.y < enemies[i].position.y + enemies[i].height &&
-                            player.fork.attackCoordinates.y + player.fork.attackRange.width > enemies[i].position.y
-                        ){
-                            enemies[i].takesDamage(player.fork.damage);
-                        }
-                        else {
-
-                        }
+                        collision.setObjects(
+                            player.fork, 
+                            {
+                                object1X: player.fork.attackCoordinates.x,
+                                object1Y: player.fork.attackCoordinates.y,
+                                object1Width: player.fork.attackRange.height,
+                                object1Height: player.fork.attackRange.width,
+                                object1Shape: 'rectangle'
+                            },
+                            enemies[i],
+                            {
+                                object2X: enemies[i].position.x,
+                                object2Y: enemies[i].position.y,
+                                object2Width: enemies[i].width,
+                                object2Height: enemies[i].height,
+                                object2Shape: enemies[i].shape
+                            }
+                        );
+                        collision.checkCollision();
                     }
                     else { // horizontal attack
-                        console.log("ataque horizontal")
-                        if (player.fork.attackCoordinates.x < enemies[i].position.x + enemies[i].width &&
-                            player.fork.attackCoordinates.x + player.fork.attackRange.width > enemies[i].position.x &&
-                            player.fork.attackCoordinates.y < enemies[i].position.y + enemies[i].height &&
-                            player.fork.attackCoordinates.y + player.fork.attackRange.height > enemies[i].position.y
-                        ){
-                            enemies[i].takesDamage(player.fork.damage);
-                        }
+                        collision.setObjects(
+                            player.fork, 
+                            {
+                                object1X: player.fork.attackCoordinates.x,
+                                object1Y: player.fork.attackCoordinates.y,
+                                object1Width: player.fork.attackRange.width,
+                                object1Height: player.fork.attackRange.height,
+                                object1Shape: 'rectangle'
+                            },
+                            enemies[i],
+                            {
+                                object2X: enemies[i].position.x,
+                                object2Y: enemies[i].position.y,
+                                object2Width: enemies[i].width,
+                                object2Height: enemies[i].height,
+                                object2Shape: enemies[i].shape
+                            }
+                        );
+                        collision.checkCollision();
                     }
                     break;
             }
@@ -139,7 +178,7 @@ function animationLoop() {
         moveComponents("r");
     }*/
    
-    player.update(platforms);
+    player.update();
 }
 animationLoop()
 

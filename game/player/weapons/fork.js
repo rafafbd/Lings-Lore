@@ -66,6 +66,10 @@ class Fork {
         }
         
     }
+
+    collided(source) {
+        console.log("fork collided with something freaky"); 
+    }
     
     update() {
         if (this.isEquiped) {
