@@ -45,7 +45,7 @@ class Enemy {
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 
-    takesDamage(damage) {
+    takeDamage(damage) {
         let d = new Date();
         let time = d.getTime()/1000;
         if (time - this.damageTimer > this.damageCd){
@@ -75,7 +75,7 @@ class Enemy {
         return false;
     }
 
-    jump(gravity) {
+    jump() {
         if ((this.position.y + this.height) >= 450){
             this.isOnFloor = true
         }
@@ -94,6 +94,12 @@ class Enemy {
         }
     }
 
+    collided(source) {
+        if (source instanceof Fork) {
+            source.takeDamage(source.damage);
+        }
+    }
+
     update() {
         let where = this.playerWhere();
         if (this.playerWhere() === "playerAtLeft") {
@@ -105,7 +111,7 @@ class Enemy {
         else {
             this.velocity.x = 0;
         }
-        this.jump(gravity); // verifies if need to jump and tries to do so
+        this.jump(); // verifies if need to jump and tries to do so
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;

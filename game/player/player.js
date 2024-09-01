@@ -49,7 +49,9 @@ class Player {
 
         let d = new Date()
         this.dashTimer = d.getTime()/1000; // time in seconds
+        this.dashCd = 0.75;
         this.damageTimer = d.getTime()/1000;
+        this.damageCd = 1;
 
         // equipment
         this.currentWeapon = "fork";
@@ -75,7 +77,7 @@ class Player {
     dash(direction){
         let d = new Date();
         let time = d.getTime()/1000;
-        if (time - this.dashTimer > 0.5){
+        if (time - this.dashTimer > this.dashCd){
             this.velocity.x = this.speed.dash * direction;
             this.dashTimer = time;
         }
@@ -134,6 +136,25 @@ class Player {
         }
     }
 
+    collided(source) {
+        if (source instanceof Enemy){
+            takeDamage(source.damage);
+            
+        }
+    }
+
+    takeDamage(damage){
+        let d = new Date();
+        let time = d.getTime()/1000;
+
+        if (time - this.damageTimer > this.damageCd && this.hp > 0){
+            this.hp -= damage;
+            this.damageTimer = time;
+        }
+        if (this.hp <= 0){
+            // gameOver(); // set to dead state and end game through index.js?
+        }
+    }
 
     update() {
         // basic movements
