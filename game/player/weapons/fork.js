@@ -2,7 +2,7 @@ class Fork {
     constructor({x, y}) {
         const image = new Image();
         this.image = image;
-        this.image.src = "./Assets/Fork-Melhorado.png";
+        this.image.src = "./Assets/fork3.png";
 
         this.position = {
             x,
