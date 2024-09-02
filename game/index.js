@@ -96,31 +96,11 @@ function animationLoop() {
     ctx.fillStyle = '#000000';
     for (let i = platforms.length - 1; i >= 0; i--){
         platforms[i].update();
-        collision.setObjects(
-            player, 
-            {
-                object1X: player.position.x,
-                object1Y: player.position.y,
-                object1Width: player.width,
-                object1Height: player.height,
-                object1Shape: player.shape
-            },
-            platforms[i],
-            {
-                object2X: platforms[i].position.x,
-                object2Y: platforms[i].position.y,
-                object2Width: platforms[i].proportions.width,
-                object2Height: platforms[i].proportions.height,
-                object2Shape: platforms[i].shape
-            }
-        );
-        collision.checkCollision();
-
     };
 
     for (let i = enemies.length - 1; i >= 0; i--){
         enemies[i].update();
-        collision.setObjects( // player collision with enemies
+        collision.setObjects(
             player, 
             {
                 object1X: player.position.x,
@@ -138,28 +118,7 @@ function animationLoop() {
                 object2Shape: enemies[i].shape
             }
         );
-        for (let j = platforms.length - 1; j >= 0; j--){
-            collision.checkCollision();
-            collision.setObjects(
-                enemies[i], 
-                {
-                    object1X: enemies[i].position.x,
-                    object1Y: enemies[i].position.y,
-                    object1Width: enemies[i].width,
-                    object1Height: enemies[i].height,
-                    object1Shape: enemies[i].shape
-                },
-                platforms[j],
-                {
-                    object2X: platforms[j].position.x,
-                    object2Y: platforms[j].position.y,
-                    object2Width: platforms[j].proportions.width,
-                    object2Height: platforms[j].proportions.height,
-                    object2Shape: platforms[j].shape
-                }
-            );
-        }
-        
+        collision.checkCollision();
 
         if (keys.attack.pressed) { // checks if the player is attacking
             switch (player.currentWeapon) { // different hitbox and damage based on current weapon
