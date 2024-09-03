@@ -135,24 +135,36 @@ function animationLoop() {
             if (player.position.y + player.height >= platforms[i].position.y &&
                 player.position.y + player.height <= platforms[i].position.y + platforms[i].proportions.height
             ) {
-                player.isOnFloor = true;
+                platforms[i].playerOn = true;
                 player.velocity.y = 0;
                 player.position.y = platforms[i].position.y - player.height;
             }
             else if (player.position.y <= platforms[i].position.y + platforms[i].proportions.height &&
                 player.position.y >= platforms[i].position.y
             ) {
+                platforms[i].playerOn = false;
                 player.velocity.y = 0;
                 player.position.y = platforms[i].position.y + platforms[i].proportions.height;
+            }
+            else {
+                platforms[i].playerOn = false;
             }
 
         }
         else {
-            player.isOnFloor = false;
-        }
-            
-        
+            platforms[i].playerOn = false;
+        }   
     };
+    if (platforms.findIndex((platform) => {
+        return platform.playerOn == true;
+    }) >= 0) {
+        console.log("tanochao")
+        player.isOnFloor = true;
+    }
+    else {
+        console.log("naotanochao")
+        player.isOnFloor = false;
+    }
 
     for (let i = enemies.length - 1; i >= 0; i--){
         enemies[i].update();

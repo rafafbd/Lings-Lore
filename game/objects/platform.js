@@ -15,6 +15,8 @@ class Platform {
         this.position = {x, y};
 
         this.proportions = {width, height};
+
+        this.playerOn = false;
         
         this.colisions = {
             left: {
