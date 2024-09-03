@@ -78,7 +78,7 @@ class Enemy {
     }
 
     jump() {
-        if ((this.position.y + this.height) >= 450){
+        if ((this.position.y + this.height) >= 700){
             this.isOnFloor = true
         }
         else{
