@@ -67,41 +67,28 @@ class Player {
         this.nextDashTime = 0; // Time when the player can dash again
     }
 
-    isTopOfPlatform(leftPoint, rightPoint){
-        if (this.position.y + this.height > leftPoint[1]+10 || 
-            this.position.y + this.height < leftPoint[1]-10){  // the [1] refers to y
-            return false;
-        }
-        if (this.position.x + this.width >= leftPoint[0] &&     // the [0] refers to x
-            this.position.x <= rightPoint[0]){
-                this.floorY = leftPoint[1];
-                return true;
-        } 
-        return false;
-    }
-
-    setIsOnFloor(){
-        let onFloor = false;
-        for (let i = 0; i<platforms.length; i++){
-            onFloor = this.isTopOfPlatform(platforms[i].colisions.top.left, platforms[i].colisions.top.right);
-            if (onFloor === true){
-                break;
-            }
-        }
-        this.isOnFloor = onFloor;
-    }
-
-    fixPositionOnFloor(){
-        if (this.isOnFloor && this.position.y + this.height !== this.floorY){
-            this.position.y = this.floorY - this.height;
-        }
-    }
-
     // collision and damage functions
 
-    collided(source) {
+    collided(source, platformSide){ // source is the object that collided with the player
         if (source instanceof Enemy){
             this.takeDamage(source.damage);
+        }
+        else if (source instanceof Platform){
+            if (platformSide === 'top'){
+                this.velocity.y = 0;
+                this.isOnFloor = true;
+                if (source.position.y + source.proportions.height < this.position.y + this.height){
+                    console.log('top2');
+                    this.position.y = source.position.y - this.height;
+                }
+            }
+            else if (platformSide === 'bottom'){
+                this.position.y = source.position.y + source.proportions.height;
+                this.velocity.y = 0;
+            }
+            else if (platformSide === 'side'){
+                this.velocity.x = 0;
+            }
         }
     }
 
@@ -205,12 +192,12 @@ class Player {
         }
 
         // jump
-        this.setIsOnFloor();
         if (!this.isOnFloor && !this.isDashing) {
             this.velocity.y += gravity;
         }
         else if (keys.jump.pressed && this.isOnFloor) {
             this.velocity.y = -this.speed.y;
+            this.isOnFloor = false;
         }
         else {
             this.velocity.y = 0;
@@ -223,7 +210,7 @@ class Player {
         }
         this.dash();
 
-        this.fixPositionOnFloor();
+        // updates player position
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
