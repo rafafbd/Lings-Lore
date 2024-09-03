@@ -1,4 +1,34 @@
-var audio = new Audio("/game/Assets/chinese-beat-190047.mp3");
+var audio = new Audio();
+audio.src = "/game/Assets/chinese-beat-190047.mp3";
+audio.autoplay = true;
+audio.playing  = false;
+audio.canPlay = false;
+
+addEventListener("keypress", function(){
+    console.log("Clicou")
+    audio.canPlay = true;
+    tryPlayAudio()
+})
+
+addEventListener("mousedown", function(){
+    console.log("Mexeu")
+    audio.canPlay = true;
+    tryPlayAudio()
+})
+function tryPlayAudio(){
+    if (audio.canPlay && audio.playing == false){
+        console.log("Ta liberado");
+        audio.play().then (()=>{
+            audio.playing = true;
+        })
+        
+}
+
+}
+audio.addEventListener("ended", function(){
+    console.log("acabou")
+    audio.play()
+})
 
 
 
@@ -253,16 +283,16 @@ addEventListener('keyup', ({ code }) => { // gets key released event
             break;
     }
 })
-var canplaythrough = false;
-audio.addEventListener('canplaythrough', function() { 
-    console.log("Entrou aqui")
-    canplaythrough = true;
- }, false);
+// var canplaythrough = false;
+// audio.addEventListener('canplaythrough', function() { 
+//     console.log("Entrou aqui")
+//     canplaythrough = true;
+//  }, false);
 
- if (canplaythrough){
-    audio.play();
- }
+//  if (canplaythrough){
+//     audio.play();
+//  }
 
- audio.addEventListener('ended', function(){
-    audio.play();
- })
+//  audio.addEventListener('ended', function(){
+//     audio.play();
+//  })
