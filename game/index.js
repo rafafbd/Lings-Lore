@@ -1,7 +1,5 @@
 var audio = new Audio("/game/Assets/chinese-beat-190047.mp3");
 
-
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 ctx.canvas.width = innerWidth - 20; // set canvas to full window size
@@ -13,7 +11,6 @@ const player = new Player({
     y: 0,
     imgSource: "./Assets/Ling-remodel.png"
 }); // creates the player
-const collision = new Collision(); // creates collision object
 
 var enemies = []  // creates enemy
 
@@ -26,9 +23,15 @@ var platforms = [
     }),
     platform2 = new Platform({
         x: 1100,
-        y: 300,
+        y: 400,
         width: 100,
         height: 30
+    }),
+    platform3 = new Platform({
+        x: 200,
+        y: 100,
+        width: 200,
+        height: 500
     }),
     floor1 = new Platform({
         x: 0,
@@ -96,68 +99,36 @@ function animationLoop() {
     ctx.fillStyle = '#000000';
     for (let i = platforms.length - 1; i >= 0; i--){
         platforms[i].update();
-        collision.setObjects(
-            player, 
-            {
-                object1X: player.position.x,
-                object1Y: player.position.y,
-                object1Width: player.width,
-                object1Height: player.height,
-                object1Shape: player.shape
-            },
-            platforms[i],
-            {
-                object2X: platforms[i].position.x,
-                object2Y: platforms[i].position.y,
-                object2Width: platforms[i].proportions.width,
-                object2Height: platforms[i].proportions.height,
-                object2Shape: platforms[i].shape
-            }
-        );
-        collision.checkCollision();
+        if (player.position.x + player.width > platforms[i].position.x && 
+            player.position.x < platforms[i].position.x + platforms[i].proportions.width) {
 
+            if (player.position.y + player.height >= platforms[i].position.y &&
+                player.position.y + player.height <= platforms[i].position.y + platforms[i].proportions.height
+            ) {
+                player.isOnFloor = true;
+                player.velocity.y = 0;
+                player.position.y = platforms[i].position.y - player.height;
+            }
+            else if (player.position.y <= platforms[i].position.y + platforms[i].proportions.height &&
+                player.position.y >= platforms[i].position.y
+            ) {
+                player.velocity.y = 0;
+                player.position.y = platforms[i].position.y + platforms[i].proportions.height;
+            }
+
+        }
+        else {
+            player.isOnFloor = false;
+        }
+            
+        
     };
 
     for (let i = enemies.length - 1; i >= 0; i--){
         enemies[i].update();
-        collision.setObjects( // player collision with enemies
-            player, 
-            {
-                object1X: player.position.x,
-                object1Y: player.position.y,
-                object1Width: player.width,
-                object1Height: player.height,
-                object1Shape: player.shape
-            },
-            enemies[i],
-            {
-                object2X: enemies[i].position.x,
-                object2Y: enemies[i].position.y,
-                object2Width: enemies[i].width,
-                object2Height: enemies[i].height,
-                object2Shape: enemies[i].shape
-            }
-        );
+        
         for (let j = platforms.length - 1; j >= 0; j--){
-            collision.checkCollision();
-            collision.setObjects(
-                enemies[i], 
-                {
-                    object1X: enemies[i].position.x,
-                    object1Y: enemies[i].position.y,
-                    object1Width: enemies[i].width,
-                    object1Height: enemies[i].height,
-                    object1Shape: enemies[i].shape
-                },
-                platforms[j],
-                {
-                    object2X: platforms[j].position.x,
-                    object2Y: platforms[j].position.y,
-                    object2Width: platforms[j].proportions.width,
-                    object2Height: platforms[j].proportions.height,
-                    object2Shape: platforms[j].shape
-                }
-            );
+
         }
         
 
@@ -166,46 +137,10 @@ function animationLoop() {
                 case "fork":
                     if (player.looking.up || player.looking.down) { // vertical attack
                         // checks collision
-                        collision.setObjects(
-                            player.fork, 
-                            {
-                                object1X: player.fork.attackCoordinates.x,
-                                object1Y: player.fork.attackCoordinates.y,
-                                object1Width: player.fork.attackRange.height,
-                                object1Height: player.fork.attackRange.width,
-                                object1Shape: 'rectangle'
-                            },
-                            enemies[i],
-                            {
-                                object2X: enemies[i].position.x,
-                                object2Y: enemies[i].position.y,
-                                object2Width: enemies[i].width,
-                                object2Height: enemies[i].height,
-                                object2Shape: enemies[i].shape
-                            }
-                        );
-                        collision.checkCollision();
+                        
                     }
                     else { // horizontal attack
-                        collision.setObjects(
-                            player.fork, 
-                            {
-                                object1X: player.fork.attackCoordinates.x,
-                                object1Y: player.fork.attackCoordinates.y,
-                                object1Width: player.fork.attackRange.width,
-                                object1Height: player.fork.attackRange.height,
-                                object1Shape: 'rectangle'
-                            },
-                            enemies[i],
-                            {
-                                object2X: enemies[i].position.x,
-                                object2Y: enemies[i].position.y,
-                                object2Width: enemies[i].width,
-                                object2Height: enemies[i].height,
-                                object2Shape: enemies[i].shape
-                            }
-                        );
-                        collision.checkCollision();
+
                     }
                     break;
             }

@@ -67,44 +67,6 @@ class Player {
         this.nextDashTime = 0; // Time when the player can dash again
     }
 
-    isTopOfPlatform(leftPoint, rightPoint){
-        if (this.position.y + this.height > leftPoint[1]+10 || 
-            this.position.y + this.height < leftPoint[1]-10){  // the [1] refers to y
-            return false;
-        }
-        if (this.position.x + this.width >= leftPoint[0] &&     // the [0] refers to x
-            this.position.x <= rightPoint[0]){
-                this.floorY = leftPoint[1];
-                return true;
-        } 
-        return false;
-    }
-
-    setIsOnFloor(){
-        let onFloor = false;
-        for (let i = 0; i<platforms.length; i++){
-            if (platforms[i].position.x <= this.position.x + this.width &&
-                platforms[i].position.x + platforms[i].proportions.width >= this.position.x){
-                    if (this.position.y + this.height >= platforms[i].position.y - 10 &&
-                        this.position.y + this.height <= platforms[i].position.y + 10){
-                            onFloor = true;
-                            this.floorY = platforms[i].position.y;
-                            break;
-                    }
-            }
-            if (onFloor === true){
-                break;
-            }
-        }
-        this.isOnFloor = onFloor;
-    }
-
-    fixPositionOnFloor(){
-        if (this.isOnFloor && this.position.y + this.height !== this.floorY){
-            this.position.y = this.floorY - this.height;
-        }
-    }
-
     // collision and damage functions
 
     collided(source, platformSide){ // source is the object that collided with the player
@@ -121,6 +83,7 @@ class Player {
                 }
             }
             else if (platformSide === 'bottom'){
+                this.position.y = source.position.y + source.proportions.height;
                 this.velocity.y = 0;
             }
             else if (platformSide === 'side'){
@@ -234,9 +197,9 @@ class Player {
         }
         else if (keys.jump.pressed && this.isOnFloor) {
             this.velocity.y = -this.speed.y;
+            this.isOnFloor = false;
         }
         else {
-            console.log('is on floor');
             this.velocity.y = 0;
         }
         
@@ -247,10 +210,7 @@ class Player {
         }
         this.dash();
 
-        this.setIsOnFloor();
-        this.fixPositionOnFloor();
-
-
+        // updates player position
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
