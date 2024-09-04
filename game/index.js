@@ -1,10 +1,15 @@
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 ctx.canvas.width = innerWidth - 20; // set canvas to full window size
 ctx.canvas.height = innerHeight - 20;
 
+
 // instanciates objects
+
+const music = new Music();
+
+
+
 const player = new Player({
     x: 600, 
     y: 0,
@@ -83,11 +88,20 @@ function moveComponents(direction){ // Moves the whole screen, called when playe
 
 // perpetual loop of the running game
 function animationLoop() {
+    
+    //----------------------------------------------------------------
+    //Teste parar musica
+    console.log(player.position.y + player.height)
+    console.log(canvas.height-200)
+    if (player.position.y + player.height < canvas.height-200 && player.isOnFloor){
+        music.stopAudio()
+        
+
+    }
+
+    //----------------------------------------------------------------
     requestAnimationFrame(animationLoop);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-
-
     ctx.fillStyle = '#3b3b4f';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -253,3 +267,23 @@ addEventListener('keyup', ({ code }) => { // gets key released event
 //  audio.addEventListener('ended', function(){
 //     audio.play();
 //  })
+
+addEventListener("keypress", function(){
+    console.log("Clicou")
+    music.audio.canPlay = true;
+    music.tryPlayAudio()
+        
+})
+
+addEventListener("mousedown", function(){
+    console.log("Mexeu")
+    music.audio.canPlay = true;
+    music.tryPlayAudio()
+
+})
+
+music.audio.addEventListener("ended", function(){
+    console.log("acabou")
+    music.changeSong(1)
+    music.audio.play()
+})
