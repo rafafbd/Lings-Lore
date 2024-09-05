@@ -11,6 +11,10 @@ class Player {
         this.shape = "rectangle";
 
         this.position = {x,y};
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
+        }
 
         this.centerPosition = { // used for detection
             x: this.position.x + (this.width / 2),
@@ -191,6 +195,11 @@ class Player {
             this.looking.down = true;
         }
 
+        //  if is on floor then does not fall (incredible)
+        if (this.isOnFloor) {
+            this.velocity.y = 0;
+        }
+
         // jump
         if (!this.isOnFloor && !this.isDashing) {
             this.velocity.y += gravity;
@@ -214,10 +223,16 @@ class Player {
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
-        // updates center position
+        // updates values that are relative to the positions
 
         this.centerPosition.x = this.position.x + (this.width / 2);
         this.centerPosition.y = this.position.y + (this.height / 2)
+
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
+        }
+
 
         this.fork.update();
         this.draw();

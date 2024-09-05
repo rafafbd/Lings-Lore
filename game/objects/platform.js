@@ -11,30 +11,14 @@ class Platform {
         this.speed = { // values wich modify the velocity values
             x: 10 // walk speed
         };
+        
+        this.width = width;
+        this.height = height;
 
         this.position = {x, y};
-
-        this.proportions = {width, height};
-
-        this.playerOn = false;
-        
-        this.colisions = {
-            left: {
-                top: [this.position.x, this.position.y], // top point of the left side
-                bottom: [this.position.x, this.position.y + this.proportions.height] // bottom point
-            },
-            right: {
-                top: [this.position.x + this.proportions.width, this.position.y],
-                bottom: [this.position.x + this.proportions.width, this.position.y + this.proportions.height]
-            },
-            top: {
-                left: [this.position.x, this.position.y], // leftmost point of the top side
-                right: [this.position.x + this.proportions.width, this.position.y] // rightmost point
-            },
-            bottom: {
-                left: [this.position.x, this.position.y + this.proportions.height],
-                right: [this.position.x + this.proportions.width, this.position.y + this.proportions.height]
-            }
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
         }
     }
     
@@ -53,7 +37,7 @@ class Platform {
     }
 
     draw() {
-        ctx.fillRect(this.position.x, this.position.y, this.proportions.width, this.proportions.height)
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
     update() {
         this.draw()

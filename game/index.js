@@ -85,6 +85,15 @@ function moveComponents(direction){ // Moves the whole screen, called when playe
         })
     }
 }
+// check collision between two rectangles function
+function rectangleColision(rect, rects) { // one element and array of elements
+    for (let i=0; i<rects.length; i++) {
+        if (rect.position.x < rects[i].position2.x && rect.position2.x > rects[i].position.x && rect.position.y < rects[i].position2.y && rect.position2.y > rects[i].position.y) {
+            return i; // returns index
+        }
+    }
+    return null; // no collision
+}
 
 // perpetual loop of the running game
 function animationLoop() {
@@ -109,53 +118,23 @@ function animationLoop() {
     ctx.fillStyle = "red";
     ctx.fillText("Ling's Lore", 800, 100);
 
+    // updates and draws the platforms
     ctx.fillStyle = '#000000';
-    for (let i = platforms.length - 1; i >= 0; i--){
+    for (let i = platforms.length - 1; i >= 0; i--){ 
         platforms[i].update();
-        if (player.position.x + player.width > platforms[i].position.x && 
-            player.position.x < platforms[i].position.x + platforms[i].proportions.width) {
-
-            if (player.position.y + player.height >= platforms[i].position.y &&
-                player.position.y + player.height <= platforms[i].position.y + platforms[i].proportions.height
-            ) {
-                platforms[i].playerOn = true;
-                player.velocity.y = 0;
-                player.position.y = platforms[i].position.y - player.height;
-            }
-            else if (player.position.y <= platforms[i].position.y + platforms[i].proportions.height &&
-                player.position.y >= platforms[i].position.y
-            ) {
-                platforms[i].playerOn = false;
-                player.velocity.y = 0;
-                player.position.y = platforms[i].position.y + platforms[i].proportions.height;
-            }
-            else {
-                platforms[i].playerOn = false;
-            }
-
-        }
-        else {
-            platforms[i].playerOn = false;
-        }   
-    };
-    if (platforms.findIndex((platform) => {
-        return platform.playerOn == true;
-    }) >= 0) {
-        console.log("tanochao")
-        player.isOnFloor = true;
     }
-    else {
-        console.log("naotanochao")
+    // checks collision between player and platforms
+    let rectangle = rectangleColision(player, platforms); // returns collided platform's index
+    if (rectangle != null) {
+        player.isOnFloor = true;
+        player.position.y = platforms[rectangle].position.y - player.height; // fixes position
+    }
+    else { // no collision detected
         player.isOnFloor = false;
     }
 
     for (let i = enemies.length - 1; i >= 0; i--){
         enemies[i].update();
-        
-        for (let j = platforms.length - 1; j >= 0; j--){
-
-        }
-        
 
         if (keys.attack.pressed) { // checks if the player is attacking
             switch (player.currentWeapon) { // different hitbox and damage based on current weapon
