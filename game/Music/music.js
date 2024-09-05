@@ -4,14 +4,14 @@ class Music{
         const audio = new Audio();
         this.audio = audio
         this.audio.autoplay = true;
-        this.audio.playing = false;
-        this.audio.canPlay = false;
+        this.playing = false;
+        this.canPlay = false;
 
-        this.audio.src = "/game/Assets/chinese-beat-190047.mp3";
+        this.audio.src = "/game/Assets/Musics/chinese-beat-190047.mp3";
 
         this.musics = [
-            "/game/Assets/chinese-beat-190047.mp3",
-            "/game/Assets/chinese-ancient-style-music.mp3"
+            "/game/Assets/Musics/chinese-beat-190047.mp3",
+            "/game/Assets/Musics/chinese-ancient-style-music.mp3"
 
         ]
 
@@ -20,12 +20,14 @@ class Music{
 
 
     tryPlayAudio(){
-        console.log("Aqui")
-        if (this.audio.canPlay && this.audio.playing == false){
-            console.log("Ta liberado");
+        // console.log("Aqui")
+        // console.log(this.canPlay)
+        // console.log(this.playing)
+        if (this.canPlay && this.playing == false){
+            //console.log("Ta liberado");
             this.audio.play().then (()=>{
-                console.log("foi")
-                this.audio.playing = true;
+                //console.log("foi")
+                this.playing = true;
             }).catch((error) => {
                 console.error("Erro ao tentar reproduzir o áudio:", error);
             });
@@ -35,17 +37,17 @@ class Music{
 
     changeSong(index){
         this.audio.src = this.musics[index]
-        console.log(this.audio.src)
+        //console.log(this.audio.src)
     }
 
     stopAudio() {
-        console.log("Tentou parar")
-        console.log(this.audio.playing)
-        if (this.audio.playing) {
+        //console.log("Tentou parar")
+        //console.log(this.playing)
+        if (this.playing) {
             this.audio.pause();
             this.audio.currentTime = 0;
             this.playing = false;
-            console.log("Música parada");
+            //console.log("Música parada");
         }
     }
 

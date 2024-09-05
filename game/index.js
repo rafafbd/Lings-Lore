@@ -91,8 +91,8 @@ function animationLoop() {
     
     //----------------------------------------------------------------
     //Teste parar musica
-    console.log(player.position.y + player.height)
-    console.log(canvas.height-200)
+    //le.log(player.position.y + player.height)
+    //console.log(canvas.height-200)
     if (player.position.y + player.height < canvas.height-200 && player.isOnFloor){
         music.stopAudio()
         
@@ -269,21 +269,21 @@ addEventListener('keyup', ({ code }) => { // gets key released event
 //  })
 
 addEventListener("keypress", function(){
-    console.log("Clicou")
-    music.audio.canPlay = true;
+    //console.log("Clicou")
+    music.canPlay = true;
     music.tryPlayAudio()
         
 })
 
 addEventListener("mousedown", function(){
-    console.log("Mexeu")
-    music.audio.canPlay = true;
+    //console.log("Mexeu")
+    music.canPlay = true;
     music.tryPlayAudio()
 
 })
 
 music.audio.addEventListener("ended", function(){
-    console.log("acabou")
+    //console.log("acabou")
     music.changeSong(1)
     music.audio.play()
 })
