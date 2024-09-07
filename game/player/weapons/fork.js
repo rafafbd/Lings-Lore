@@ -8,7 +8,7 @@ class Fork {
             x,
             y
         };
-        
+
         this.width = 32;
         this.height = 32;
 
@@ -53,24 +53,28 @@ class Fork {
                 case 'l':
                     this.attackCoordinates.x = this.position.x - this.attackRange.width;
                     this.attackCoordinates.y = this.position.y;
-                    ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.width,this.attackRange.height);
+                    this.position.x = this.attackCoordinates.x + player.width + this.width*2;
+                    this.position.y = this.attackCoordinates.y;
                     break;
 
                 case 'r':
                     this.attackCoordinates.x = this.position.x + 35;
                     this.attackCoordinates.y = this.position.y;
-                    ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.width, this.attackRange.height);
+                    this.position.x = this.attackCoordinates.x;
+                    this.position.y = this.attackCoordinates.y;
                     break;
                     
                 case 'u':
                     this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.width / 2));
                     this.attackCoordinates.y = this.position.y - this.attackRange.height;
-                    ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.width, this.attackRange.height);
+                    this.position.x = this.attackCoordinates.x;
+                    this.position.y = this.attackCoordinates.y;
                     break;
                 case 'd':
                     this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.width / 2));
-                    this.attackCoordinates.y = this.position.y + 30;
-                    ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.width, this.attackRange.height);
+                    this.attackCoordinates.y = this.position.y + this.attackRange.height;
+                    this.position.x = this.attackCoordinates.x;
+                    this.position.y = this.attackCoordinates.y - player.height - this.height*2;
                     break;
             }
             ctx.restore()
@@ -88,8 +92,11 @@ class Fork {
         if (this.isEquiped) {
             this.position.y = player.position.y;
             if (player.looking.left) {
-                this.position.x = player.position.x - this.width;
+                this.position.x = player.position.x;
                 this.position.y += 10;
+                ctx.translate(this.position.x, this.position.y);
+                ctx.scale(-1, 1); // inverts the context
+                ctx.translate(-this.position.x, -this.position.y);
             }
             else if (player.looking.right) {
                 this.position.x = player.position2.x;
@@ -101,7 +108,10 @@ class Fork {
             }
             else if (player.looking.down) {
                 this.position.x = player.position.x + (this.height / 2);
-                this.position.y = player.position2.y;
+                this.position.y = player.position.y + this.height + player.height;
+                ctx.translate(this.position.x, this.position.y);
+                ctx.scale(1, -1);
+                ctx.translate(-this.position.x, -this.position.y);
             }
 
             if (keys.attack.pressed) {

@@ -163,9 +163,11 @@ class Player {
         //ctx.drawImage(this.image, this.position.x, this.position.y)
         ctx.fillStyle = 'gold';
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.restore()
     }
 
     update() {
+        ctx.save();
         const currentTime = Date.now();
 
         // basic movements
