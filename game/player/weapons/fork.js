@@ -8,11 +8,22 @@ class Fork {
             x,
             y
         };
+        
+        this.width = 32;
+        this.height = 32;
+
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
+        }
 
         this.attackCoordinates = { // coordinates for attack hitbox
             x: null,
             y: null
         }
+
+        this.originalWidth = 100;
+        this.originalHeight = 40;
 
         this.attackRange = {
             width: 100,
@@ -29,6 +40,7 @@ class Fork {
 
     draw() {
         ctx.drawImage(this.image, this.position.x, this.position.y);
+        ctx.restore();
     }
 
     attack(direction) {
@@ -51,14 +63,14 @@ class Fork {
                     break;
                     
                 case 'u':
-                    this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.height / 2));
-                    this.attackCoordinates.y = this.position.y - this.attackRange.width;
-                    ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.height, this.attackRange.width);
+                    this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.width / 2));
+                    this.attackCoordinates.y = this.position.y - this.attackRange.height;
+                    ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.width, this.attackRange.height);
                     break;
                 case 'd':
-                    this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.height / 2));
+                    this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.width / 2));
                     this.attackCoordinates.y = this.position.y + 30;
-                    ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.height, this.attackRange.width);
+                    ctx.fillRect(this.attackCoordinates.x, this.attackCoordinates.y, this.attackRange.width, this.attackRange.height);
                     break;
             }
             ctx.restore()
@@ -72,34 +84,53 @@ class Fork {
     }
     
     update() {
+        ctx.save();
         if (this.isEquiped) {
-            this.position.y = player.position.y - 30;
+            this.position.y = player.position.y;
             if (player.looking.left) {
-                this.position.x = player.centerPosition.x - 50;
+                this.position.x = player.position.x - this.width;
+                this.position.y += 10;
             }
             else if (player.looking.right) {
-                this.position.x = player.centerPosition.x + 30;
+                this.position.x = player.position2.x;
+                this.position.y += 10;
             }
             else if (player.looking.up) {
-                this.position.x = player.position.x + (this.attackRange.height / 2);
-                this.position.y -= 40;
+                this.position.x = player.position.x + (this.height / 2);
+                this.position.y = player.position.y - this.height;
             }
             else if (player.looking.down) {
-                this.position.x = player.position.x + (this.attackRange.height / 2);
-                this.position.y += 40;
+                this.position.x = player.position.x + (this.height / 2);
+                this.position.y = player.position2.y;
             }
 
             if (keys.attack.pressed) {
                 if (player.looking.left) {
+                    this.attackRange = { // resets width and height
+                        width: this.originalWidth,
+                        height: this.originalHeight
+                    };
                     this.attack('l')
                 }
                 else if (player.looking.right) {
+                    this.attackRange = { // resets width and height
+                        width: this.originalWidth,
+                        height: this.originalHeight
+                    };
                     this.attack('r')
                 }
                 else if (player.looking.up) {
+                    this.attackRange = { // swaps values
+                        width: this.originalHeight,
+                        height: this.originalWidth
+                    };
                     this.attack('u')
                 }
                 else { // down
+                    this.attackRange = { // swaps values
+                        width: this.originalHeight,
+                        height: this.originalWidth
+                    };
                     this.attack('d')
                 }
             }

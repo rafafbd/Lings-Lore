@@ -11,6 +11,10 @@ class Enemy {
         this.height = 80;
 
         this.position = {x,y};
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
+        }
         this.centerPosition = { // used for detection
             x: this.position.x + (this.width / 2),
             y: this.position.y + (this.height / 2)
@@ -78,13 +82,6 @@ class Enemy {
     }
 
     jump() {
-        if ((this.position.y + this.height) >= 700){
-            this.isOnFloor = true
-        }
-        else{
-            this.isOnFloor = false
-        }
-
         if (!this.isOnFloor){
             this.velocity.y += gravity;
         }
@@ -118,10 +115,15 @@ class Enemy {
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
-        // updates center position
+        // updates positions
 
         this.centerPosition.x = this.position.x + (this.width / 2);
         this.centerPosition.y = this.position.y + (this.height / 2);
+
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
+        }
 
         if (!this.dead) {
             this.draw();

@@ -95,6 +95,22 @@ function rectangleColision(rect, rects) { // one element and array of elements
     return null; // no collision
 }
 
+// checks collision for weapons
+function weaponRectangleColision(rect, rects) { // one element and array of elements
+    let enemiesAttacked = [];
+    for (let i=0; i<rects.length; i++) {
+        if (rect.attackCoordinates.x < rects[i].position2.x && rect.attackCoordinates.x + rect.attackRange.width > rects[i].position.x && rect.attackCoordinates.y < rects[i].position2.y && rect.attackCoordinates.y + rect.attackRange.height > rects[i].position.y) {
+            enemiesAttacked.push(i);
+        }
+    }
+    if (enemiesAttacked.length > 0) {
+        return enemiesAttacked;
+    }
+    else {
+        return null; // no collision
+    }
+}
+
 // perpetual loop of the running game
 function animationLoop() {
     
@@ -135,21 +151,6 @@ function animationLoop() {
             xDiff2: player.position2.x - platforms[platform].position2.x, // distance in y axis y1 - y2
             yDiff2: player.position2.y - platforms[platform].position2.y, // distance in y axis y1 - y2
         }
-        // check wich is smaller
-        if (axisDistances.xDiff1 < axisDistances.xDiff2 && axisDistances.xDiff1 < axisDistances.yDiff1 && axisDistances.xDiff1 < axisDistances.yDiff2) {
-            // xDiff1 is the smallest
-        }
-        else if (axisDistances.xDiff2 < axisDistances.xDiff1 && axisDistances.xDiff2 < axisDistances.yDiff1 && axisDistances.xDiff2 < axisDistances.yDiff2) {
-            // xDiff2 is the smallest
-        }
-        if (axisDistances.yDiff1 < axisDistances.xDiff2 && axisDistances.yDiff1 < axisDistances.xDiff1 && axisDistances.yDiff1 < axisDistances.yDiff2) {
-            // yDiff1 is the smallest
-        }
-        else { // smallest is yDiff2
-
-        }
-
-
         // left or right of platform
         if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 > player.height - 20 && axisDistances.yDiff2 < player.height) { // right of platform
             player.position.x = platforms[platform].position2.x;
@@ -172,31 +173,69 @@ function animationLoop() {
             player.velocity.y = 0;
             player.position.y = platforms[platform].position2.y;
         }
-        
-        
-
     }
     else { // no collision detected
         player.isOnFloor = false;
     }
 
+    // -----------------------------------------
+    // enemy section down below
+
     for (let i = enemies.length - 1; i >= 0; i--){
         enemies[i].update();
-
-        if (keys.attack.pressed) { // checks if the player is attacking
-            switch (player.currentWeapon) { // different hitbox and damage based on current weapon
-                case "fork":
-                    if (player.looking.up || player.looking.down) { // vertical attack
-                        // checks collision
-                        
-                    }
-                    else { // horizontal attack
-
-                    }
-                    break;
+        // enemy collision with platforms
+        platform = rectangleColision(enemies[i], platforms); // returns collided platform's index
+        if (platform != null) {
+            // get diff between x/y from the two objects
+            let axisDistances = {
+                xDiff1: enemies[i].position.x - platforms[platform].position.x, // distance in x axis x1 - x1
+                yDiff1: enemies[i].position.y - platforms[platform].position.y, // distance in y axis y1 - y1
+                xDiff2: enemies[i].position2.x - platforms[platform].position2.x, // distance in y axis y1 - y2
+                yDiff2: enemies[i].position2.y - platforms[platform].position2.y, // distance in y axis y1 - y2
+            }
+            // left or right of platform
+            if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 > enemies[i].height - 20 && axisDistances.yDiff2 < enemies[i].height) { // right of platform
+                enemies[i].position.x = platforms[platform].position2.x;
+                if (enemies[i].velocity.x < 0) {
+                    enemies[i].velocity.x *= -1;
+                }
+            }
+            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 > enemies[i].height - 20 && axisDistances.yDiff2 < enemies[i].height){ // left of platform
+                enemies[i].position.x = platforms[platform].position.x - enemies[i].width;
+                if (enemies[i].velocity.x > 0) {
+                    playenemies[i].velocity.x *= -1;
+                }
+            }
+            // top or bottom
+            else if (axisDistances.yDiff1 <= 0 && axisDistances.yDiff2 < 0){ // top of paltform
+                enemies[i].isOnFloor = true;
+                enemies[i].position.y = platforms[platform].position.y - enemies[i].height;
+            }
+            else if (axisDistances.yDiff1 >= 0 && axisDistances.yDiff2 > 0) { // under platform
+                enemies[i].velocity.y = 0;
+                enemies[i].position.y = platforms[platform].position2.y;
             }
         }
+        else { // no collision detected
+            enemies[i].isOnFloor = false;
+        }
     };
+
+    if (keys.attack.pressed) { // checks if the player is attacking
+        switch (player.currentWeapon) { // different hitbox and damage based on current weapon
+            case "fork":
+                let enemy = weaponRectangleColision(player.fork, enemies); // returns list of enemies hit
+                if (enemy != null) {
+                    for (let j = 0; j<enemy.length; j++) {
+                        player.fork.collided(enemies[enemy[j]]);
+                        enemies[enemy[j]].collided(player.fork);
+                    }
+                }
+                else {
+                    console.log("no enemies hit")
+                }
+        }
+    }
 
     /*if (player.isEndOfScreen.right === true){
         moveComponents("l");
