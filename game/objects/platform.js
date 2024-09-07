@@ -41,5 +41,9 @@ class Platform {
     }
     update() {
         this.draw()
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
+        }
     }
 }

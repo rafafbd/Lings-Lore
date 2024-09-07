@@ -33,9 +33,9 @@ var platforms = [
     }),
     platform3 = new Platform({
         x: 200,
-        y: 100,
+        y: 200,
         width: 200,
-        height: 500
+        height: 300
     }),
     floor1 = new Platform({
         x: 0,
@@ -118,16 +118,63 @@ function animationLoop() {
     ctx.fillStyle = "red";
     ctx.fillText("Ling's Lore", 800, 100);
 
+    // ---------------------------------------------------------------
+    //                           PLATFORMS
     // updates and draws the platforms
     ctx.fillStyle = '#000000';
     for (let i = platforms.length - 1; i >= 0; i--){ 
         platforms[i].update();
     }
     // checks collision between player and platforms
-    let rectangle = rectangleColision(player, platforms); // returns collided platform's index
-    if (rectangle != null) {
-        player.isOnFloor = true;
-        player.position.y = platforms[rectangle].position.y - player.height; // fixes position
+    let platform = rectangleColision(player, platforms); // returns collided platform's index
+    if (platform != null) {
+        // get diff between x/y from the two objects
+        let axisDistances = {
+            xDiff1: player.position.x - platforms[platform].position.x, // distance in x axis x1 - x1
+            yDiff1: player.position.y - platforms[platform].position.y, // distance in y axis y1 - y1
+            xDiff2: player.position2.x - platforms[platform].position2.x, // distance in y axis y1 - y2
+            yDiff2: player.position2.y - platforms[platform].position2.y, // distance in y axis y1 - y2
+        }
+        // check wich is smaller
+        if (axisDistances.xDiff1 < axisDistances.xDiff2 && axisDistances.xDiff1 < axisDistances.yDiff1 && axisDistances.xDiff1 < axisDistances.yDiff2) {
+            // xDiff1 is the smallest
+        }
+        else if (axisDistances.xDiff2 < axisDistances.xDiff1 && axisDistances.xDiff2 < axisDistances.yDiff1 && axisDistances.xDiff2 < axisDistances.yDiff2) {
+            // xDiff2 is the smallest
+        }
+        if (axisDistances.yDiff1 < axisDistances.xDiff2 && axisDistances.yDiff1 < axisDistances.xDiff1 && axisDistances.yDiff1 < axisDistances.yDiff2) {
+            // yDiff1 is the smallest
+        }
+        else { // smallest is yDiff2
+
+        }
+
+
+        // left or right of platform
+        if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 > player.height - 20 && axisDistances.yDiff2 < player.height) { // right of platform
+            player.position.x = platforms[platform].position2.x;
+            if (player.velocity.x < 0) {
+                player.velocity.x *= -1;
+            }
+        }
+        else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 > player.height - 20 && axisDistances.yDiff2 < player.height){ // left of platform
+            player.position.x = platforms[platform].position.x - player.width;
+            if (player.velocity.x > 0) {
+                player.velocity.x *= -1;
+            }
+        }
+        // top or bottom
+        else if (axisDistances.yDiff1 <= 0 && axisDistances.yDiff2 < 0){ // top of paltform
+            player.isOnFloor = true;
+            player.position.y = platforms[platform].position.y - player.height;
+        }
+        else if (axisDistances.yDiff1 >= 0 && axisDistances.yDiff2 > 0) { // under platform
+            player.velocity.y = 0;
+            player.position.y = platforms[platform].position2.y;
+        }
+        
+        
+
     }
     else { // no collision detected
         player.isOnFloor = false;
