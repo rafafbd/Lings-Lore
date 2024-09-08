@@ -237,6 +237,15 @@ function animationLoop() {
         }
     }
 
+    // ------------------------------------------------------
+    // Player collision with enemies
+
+    let playerEnemyCollision = rectangleColision(player, enemies); // checks collision between player and enemies
+    if (playerEnemyCollision != null) {
+        player.collided(enemies[playerEnemyCollision]);
+        enemies[playerEnemyCollision].collided(player);
+    }
+
     /*if (player.isEndOfScreen.right === true){
         moveComponents("l");
     }
