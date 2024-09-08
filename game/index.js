@@ -151,19 +151,36 @@ function animationLoop() {
             xDiff2: player.position2.x - platforms[platform].position2.x, // distance in y axis y1 - y2
             yDiff2: player.position2.y - platforms[platform].position2.y, // distance in y axis y1 - y2
         }
-        // left or right of platform
-        if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 > player.height - 20 && axisDistances.yDiff2 < player.height) { // right of platform
+
+        // inside platform 
+        
+        if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 < 0 && axisDistances.yDiff2 > 0) { // inside platform -- right of platform
             player.position.x = platforms[platform].position2.x;
             if (player.velocity.x < 0) {
                 player.velocity.x *= -1;
             }
         }
-        else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 > player.height - 20 && axisDistances.yDiff2 < player.height){ // left of platform
+        else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 < 0 && axisDistances.yDiff2 > 0){ // left of platform
             player.position.x = platforms[platform].position.x - player.width;
             if (player.velocity.x > 0) {
                 player.velocity.x *= -1;
             }
         }
+
+        // left or right of platform
+        else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height) { // right of platform
+            player.position.x = platforms[platform].position2.x;
+            if (player.velocity.x < 0) {
+                player.velocity.x *= -1;
+            }
+        }
+        else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height){ // left of platform
+            player.position.x = platforms[platform].position.x - player.width;
+            if (player.velocity.x > 0) {
+                player.velocity.x *= -1;
+            }
+        }
+
         // top or bottom
         else if (axisDistances.yDiff1 <= 0 && axisDistances.yDiff2 < 0){ // top of paltform
             player.isOnFloor = true;
@@ -173,6 +190,7 @@ function animationLoop() {
             player.velocity.y = 0;
             player.position.y = platforms[platform].position2.y;
         }
+
     }
     else { // no collision detected
         player.isOnFloor = false;
