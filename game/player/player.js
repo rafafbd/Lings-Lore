@@ -75,6 +75,8 @@ class Player {
         this.knockbackSpeed = 50;
         this.knockbackFriction = 0.6;
         this.isKnockback = false;
+
+        this.attackKnockbackSpeed = 30;
     }
 
     // collision and damage functions
@@ -119,7 +121,7 @@ class Player {
                     this.knockbackDirection = "left";
                 }
             }
-            this.knockBack();
+            this.knockBack("enemy");
         }
         if (this.hp <= 0){
             // gameOver(); // set to dead state and end game through index.js?
@@ -136,18 +138,32 @@ class Player {
         this.looking.down = false;
     }
 
-    knockBack() {
+    knockBack(source) {
         this.isKnockback = true;
         if (this.isKnockback) {
-            if (this.knockbackDirection === "right") {
-                this.velocity.x += this.knockbackSpeed;
+            if (source === "fork") { // knockback by fork attack
+                if (this.knockbackDirection === "right") {
+                    this.velocity.x += this.attackKnockbackSpeed;
+                }
+                else if (this.knockbackDirection === "left") {
+                    this.velocity.x -= this.attackKnockbackSpeed;
+                }
+                this.attackKnockbackSpeed *= this.knockbackFriction;
+                this.isKnockback = false;
+                this.attackKnockbackSpeed = 30; // Reset knockback speed
             }
-            else if (this.knockbackDirection === "left") {
-                this.velocity.x -= this.knockbackSpeed;
+
+            else if (source === "enemy") { // knockback by enemy attack
+                if (this.knockbackDirection === "right") {
+                    this.velocity.x += this.knockbackSpeed;
+                }
+                else if (this.knockbackDirection === "left") {
+                    this.velocity.x -= this.knockbackSpeed;
+                }
+                this.knockbackSpeed *= this.knockbackFriction;
+                this.isKnockback = false;
+                this.knockbackSpeed = 50; // Reset knockback speed
             }
-            this.knockbackSpeed *= this.knockbackFriction;
-            this.isKnockback = false;
-            this.knockbackSpeed = 50; // Reset knockback speed
         }
     }
 

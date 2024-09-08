@@ -32,8 +32,11 @@ class Fork {
 
         this.damage = 50;
         let d = new Date();
-        this.attackTimer = d.getTime()/1000
+        this.attackTimer = d.getTime()/1000;
         this.cd = 0.5; // fork attack colldown in seconds
+
+        this.knockBackTimer = d.getTime()/1000;
+        this.knockBackCd = 0.5;
 
         this.isEquiped = true; // var. to check if fork is being used
     }
@@ -84,7 +87,20 @@ class Fork {
     }
 
     collided(source) {
-        console.log("fork collided with something freaky"); 
+        if (source instanceof Enemy) {
+            let d = new Date();
+            let time = d.getTime()/1000;
+            if (time - this.knockBackTimer > this.knockBackCd){
+                if (source.centerPosition.x > player.centerPosition.x) {
+                    player.knockbackDirection = "left";
+                }
+                else {
+                    player.knockbackDirection = "right";
+                }
+                player.knockBack("fork");
+            }
+            this.knockBackTimer = time;
+        }   
     }
     
     update() {
