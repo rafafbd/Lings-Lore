@@ -69,13 +69,19 @@ class Player {
         this.isDashing = false;
         this.dashCooldown = 600; // Cooldown period in milliseconds
         this.nextDashTime = 0; // Time when the player can dash again
+
+        // knockback vars
+        this.knockbackDirection = "";
+        this.knockbackSpeed = 50;
+        this.knockbackFriction = 0.6;
+        this.isKnockback = false;
     }
 
     // collision and damage functions
 
     collided(source, platformSide){ // source is the object that collided with the player
         if (source instanceof Enemy){
-            this.takeDamage(source.damage);
+            this.takeDamage(source.damage, source);
         }
         else if (source instanceof Platform){
             if (platformSide === 'top'){
@@ -96,13 +102,24 @@ class Player {
         }
     }
 
-    takeDamage(damage){
+    takeDamage(damage, source){
         let d = new Date();
         let time = d.getTime()/1000;
 
         if (time - this.damageTimer > this.damageCd && this.hp > 0){
             this.hp -= damage;
             this.damageTimer = time;
+
+            // knockback
+            if (source instanceof Enemy){
+                if (this.centerPosition.x > source.centerPosition.x){
+                    this.knockbackDirection = "right";
+                }
+                else {
+                    this.knockbackDirection = "left";
+                }
+            }
+            this.knockBack();
         }
         if (this.hp <= 0){
             // gameOver(); // set to dead state and end game through index.js?
@@ -117,6 +134,21 @@ class Player {
         this.looking.left = false;
         this.looking.up = false;
         this.looking.down = false;
+    }
+
+    knockBack() {
+        this.isKnockback = true;
+        if (this.isKnockback) {
+            if (this.knockbackDirection === "right") {
+                this.velocity.x += this.knockbackSpeed;
+            }
+            else if (this.knockbackDirection === "left") {
+                this.velocity.x -= this.knockbackSpeed;
+            }
+            this.knockbackSpeed *= this.knockbackFriction;
+            this.isKnockback = false;
+            this.knockbackSpeed = 50; // Reset knockback speed
+        }
     }
 
     dash() { // dash mechanic
@@ -171,7 +203,7 @@ class Player {
         const currentTime = Date.now();
 
         // basic movements
-        if (!this.isDashing) { // locks the player in dash motion until the dash is over
+        if (!this.isDashing && !this.isKnockback) { // locks the player in dash motion or knockback until the dash is over
             if (keys.left.pressed) {
                 this.velocity.x = -this.speed.x;
                 this.resetLookingDirection();
