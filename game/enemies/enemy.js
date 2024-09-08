@@ -1,10 +1,18 @@
 class Enemy {
-    constructor({x, y} /*imgSource,*/) {
+    constructor({x, y}/*, imgSource*/) {
          
-        //const image = new Image()
-        //this.image = image
-        //this.image.src = imgSource;
+        /* 
+        const image = new Image()
+        this.image = image
+        this.image.src = imgSource;
 
+        this.enemiesSizes = {
+            bob:{
+                spriteWidth: 100,
+                spriteHeight: 100
+            }
+        }
+        */
         this.shape = "rectangle";
 
         this.width = 50;
@@ -49,6 +57,12 @@ class Enemy {
     draw() { // draws enemy every frame (called in a loop)
         ctx.fillStyle = 'red';
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        
+        
+        /*ctx.drawImage(this.image.src, 
+                      0*this.enemiesSizes.bob.spriteWidth, 0*this.enemiesSizes.bob.spriteHeight,
+                      this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.spriteHeight,
+                      0, 0, this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.spriteHeight)*/
     }
 
     takeDamage(damage) {

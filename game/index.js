@@ -278,8 +278,11 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
         case 'KeyP':
             enemies.push(new Enemy({
                 x: 800,
-                y: 100
+                y: 100,
+                imgSource: "./Assets/fork3.png"
+                
             }))
+                        
             break;
         
         case 'KeyJ':
