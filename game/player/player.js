@@ -72,8 +72,8 @@ class Player {
 
         // knockback vars
         this.knockbackDirection = "";
-        this.knockbackSpeed = 50;
-        this.knockbackFriction = 0.6;
+        this.knockbackSpeed = 75;
+        this.knockbackFriction = 0.7;
         this.isKnockback = false;
 
         this.attackKnockbackSpeed = 30;
@@ -156,13 +156,17 @@ class Player {
             else if (source === "enemy") { // knockback by enemy attack
                 if (this.knockbackDirection === "right") {
                     this.velocity.x += this.knockbackSpeed;
+                    this.position.y -= 10; // Adjusts the player's position to make the knockback look more natural
+                    this.velocity.y -= this.knockbackSpeed - 60;
                 }
                 else if (this.knockbackDirection === "left") {
                     this.velocity.x -= this.knockbackSpeed;
+                    this.position.y -= 10; // Adjusts the player's position to make the knockback look more natural
+                    this.velocity.y -= this.knockbackSpeed - 60;
                 }
                 this.knockbackSpeed *= this.knockbackFriction;
                 this.isKnockback = false;
-                this.knockbackSpeed = 50; // Reset knockback speed
+                this.knockbackSpeed = 75; // Reset knockback speed
             }
         }
     }

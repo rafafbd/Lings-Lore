@@ -97,6 +97,9 @@ class Fork {
                 else {
                     player.knockbackDirection = "right";
                 }
+                if (source.centerPosition.y > player.centerPosition.y) {
+                    player.knockbackDirection = "up";
+                }
                 player.knockBack("fork");
             }
             this.knockBackTimer = time;
