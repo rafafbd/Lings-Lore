@@ -201,6 +201,9 @@ function animationLoop() {
 
     for (let i = enemies.length - 1; i >= 0; i--){
         enemies[i].update();
+        if (enemies[i].dead) {
+            enemies.splice(i, 1);
+        }
         // enemy collision with platforms
         platform = rectangleColision(enemies[i], platforms); // returns collided platform's index
         if (platform != null) {
@@ -248,9 +251,6 @@ function animationLoop() {
                         player.fork.collided(enemies[enemy[j]]);
                         enemies[enemy[j]].collided(player.fork);
                     }
-                }
-                else {
-                    console.log("no enemies hit")
                 }
         }
     }
