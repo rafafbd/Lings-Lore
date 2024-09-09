@@ -62,7 +62,7 @@ class Enemy {
         if (this.indexX < 16)
             this.indexX += 1
         else
-            this.indexX = 0
+            this.indexX = 3
     }
     
     draw() { // draws enemy every frame (called in a loop)
