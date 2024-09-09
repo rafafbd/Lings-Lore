@@ -75,7 +75,7 @@ class Enemy {
                       this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.spriteHeight,
                       this.position.x, this.position.y,
                       this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth)
-
+        ctx.restore();
         this.increaseIndexX();
     }
 
@@ -96,9 +96,16 @@ class Enemy {
 
     playerWhere() { // detects wheter the enemy will detect the player 
         if (this.centerPosition.x > player.centerPosition.x ){
-           return "playerAtLeft";
+            return "playerAtLeft";
+           
         }
         if (player.centerPosition.x > this.centerPosition.x ){
+            //ctx.scale(-1, 1); // inverts the context
+            ctx.save();
+            ctx.translate(this.position.x+this.width*2, this.position.y);
+            ctx.scale(-1, 1); // inverts the context
+            ctx.translate(-this.position.x, -this.position.y);
+            
             return "playerAtRight";
         }
         return "dontSeePlayer";
@@ -130,6 +137,7 @@ class Enemy {
     }
 
     update() {
+        ctx.save();
         let where = this.playerWhere();
         if (this.playerWhere() === "playerAtLeft") {
             this.velocity.x = -this.speed.x;
