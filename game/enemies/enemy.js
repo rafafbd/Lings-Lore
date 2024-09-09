@@ -42,6 +42,8 @@ class Enemy {
             y: 10 // jump speed
         };
 
+        this.sideScrollSpeed = 13;
+
         // ^^^^^^ physics ^^^^^^^^
         // vvvvvv states vvvvvvvvv 
 
@@ -134,6 +136,10 @@ class Enemy {
         if (source instanceof Fork) {
             this.takeDamage(source.damage);
         }
+    }
+
+    move(direction){ 
+        this.velocity.x = this.sideScrollSpeed.x * direction;
     }
 
     update() {

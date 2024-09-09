@@ -30,6 +30,7 @@ class Player {
             x: 13, // walk speed
             y: 17, // jump speed
         };
+        
 
         this.looking = {
             right: false,
@@ -187,25 +188,56 @@ class Player {
         }
     }
 
+    setIsEndOfScreen(){
+        if (this.position.x > ctx.canvas.width * 0.8){
+            this.isEndOfScreen.right = true;
+        }
+        else if (this.position.x < ctx.canvas.width * 0.2){
+            this.isEndOfScreen.left = true
+        }
+        else {
+            this.isEndOfScreen.right = false;
+            this.isEndOfScreen.left = false;
+        }
+    }
+
     move(direction){
+        console.log(this.position.x > ctx.canvas.width * 0.8 || this.position.x < ctx.canvas.width * 0.2)
+        //console.log(this.position.x, ctx.canvas.width) // esta dando false
+        this.setIsEndOfScreen();
         this.resetLookingDirection();
         switch (direction){
             case "r":
                 this.looking.right = true;
-                if (this.position.x < 1100){
-                    this.velocity.x = this.speed.x;
+                if (this.isEndOfScreen.right){
+                    this.scenaryMoves(-1);
                 }
                 else {
-                    this.isEndOfScreen.right = true;
+                    this.playerMoves(1);
                 }
+                break;
+
             case "l":
                 this.looking.left = true;
-                if (this.position.x > 200){
-                    this.velocity.x = -this.speed.x;
+                if (this.isEndOfScreen.left){
+                    this.scenaryMoves(1);
                 }
                 else {
-                    this.isEndOfScreen.left = false;
+                    this.playerMoves(-1);
                 }
+        }
+    }
+
+    playerMoves(direction){
+        this.velocity.x = this.speed.x * direction;
+    }
+
+    scenaryMoves(direction){
+        for (let i=0; i<platforms.length; i++){
+            platforms[i].move(direction);
+        }
+        for (let i=0; i<enemies.length; i++){
+            enemies[i].move(direction);
         }
     }
 
@@ -225,14 +257,10 @@ class Player {
         // basic movements
         if (!this.isDashing && !this.isKnockback) { // locks the player in dash motion or knockback until the dash is over
             if (keys.left.pressed) {
-                this.velocity.x = -this.speed.x;
-                this.resetLookingDirection();
-                this.looking.left = true;
+                this.move("l");
             }
             else if (keys.right.pressed) {
-                this.velocity.x = this.speed.x;
-                this.resetLookingDirection();
-                this.looking.right = true;
+                this.move("r");
             }
             else {
                 this.velocity.x *= 0.8;

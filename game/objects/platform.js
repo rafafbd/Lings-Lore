@@ -9,7 +9,11 @@ class Platform {
         };
 
         this.speed = { // values wich modify the velocity values
-            x: 10 // walk speed
+            x: 13 // walk speed
+        };
+
+        this.sideScrollSpeed = {
+            x: 13
         };
         
         this.width = width;
@@ -22,24 +26,16 @@ class Platform {
         }
     }
     
-    
-         
-        
 
-    move(direction){ // player movement trick
-        if (direction === "r"){
-            this.velocity.x = this.speed.x;
-        }
-        else {
-            this.velocity.x = -this.speed.y;
-        }
-        this.position.x += this.velocity.x;
+    move(direction){ 
+        this.velocity.x = this.sideScrollSpeed.x * direction;
     }
 
     draw() {
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
     update() {
+        this.position.x += this.velocity.x;
         this.draw()
         this.position2 = {
             x: this.position.x + this.width,

@@ -44,6 +44,11 @@ var platforms = [
         height: 200
     })
 ];
+/*
+var floors = [
+    floor1 = new Floor()
+]*/
+
 var components = {
     platforms: platforms,
     enemies: enemies
