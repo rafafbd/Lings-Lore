@@ -161,13 +161,13 @@ function animationLoop() {
         }
 
         // left or right of platform
-        else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height) { // right of platform
+        else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height) { // right of platform
             player.position.x = platforms[platform].position2.x;
             if (player.velocity.x < 0) {
                 player.velocity.x *= -1;
             }
         }
-        else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height){ // left of platform
+        else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height){ // left of platform
             player.position.x = platforms[platform].position.x - player.width;
             if (player.velocity.x > 0) {
                 player.velocity.x *= -1;
