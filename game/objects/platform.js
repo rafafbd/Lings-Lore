@@ -29,13 +29,13 @@ class Platform {
 
     move(direction){ 
         this.velocity.x = this.sideScrollSpeed.x * direction;
+        this.position.x += this.velocity.x;
     }
 
     draw() {
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
     update() {
-        this.position.x += this.velocity.x;
         this.draw()
         this.position2 = {
             x: this.position.x + this.width,

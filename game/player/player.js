@@ -91,7 +91,6 @@ class Player {
                 this.velocity.y = 0;
                 this.isOnFloor = true;
                 if (source.position.y + source.proportions.height < this.position.y + this.height){
-                    console.log('top2');
                     this.position.y = source.position.y - this.height;
                 }
             }
@@ -189,10 +188,10 @@ class Player {
     }
 
     setIsEndOfScreen(){
-        if (this.position.x > ctx.canvas.width * 0.8){
+        if (this.position.x > ctx.canvas.width * 0.7){
             this.isEndOfScreen.right = true;
         }
-        else if (this.position.x < ctx.canvas.width * 0.2){
+        else if (this.position.x < ctx.canvas.width * 0.3){
             this.isEndOfScreen.left = true
         }
         else {
