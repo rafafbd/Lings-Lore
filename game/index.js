@@ -92,6 +92,7 @@ function rectangleColision(rect, rects) { // one element and array of elements
 function weaponRectangleColision(rect, rects) { // one element and array of elements
     let enemiesAttacked = [];
     for (let i=0; i<rects.length; i++) {
+
         if (rect.attackCoordinates.x < rects[i].position2.x && rect.attackCoordinates.x + rect.attackRange.width > rects[i].position.x && rect.attackCoordinates.y < rects[i].position2.y && rect.attackCoordinates.y + rect.attackRange.height > rects[i].position.y) {
             enemiesAttacked.push(i);
         }

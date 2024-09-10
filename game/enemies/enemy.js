@@ -133,42 +133,42 @@ class Enemy {
     }
 
     update() {
-        ctx.save();
-        let where = this.playerWhere();
-        if (this.playerWhere() === "playerAtLeft") {
-            this.velocity.x = -this.speed.x;
-        }
-        else if (this.playerWhere() === "playerAtRight"){
-            this.velocity.x = this.speed.x;
-        }
-        else {
-            this.velocity.x = 0;
-        }
-        this.jump(); // verifies if need to jump and tries to do so
-
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
-
-        // updates positions
-
-        this.centerPosition.x = this.position.x + (this.width / 2);
-        this.centerPosition.y = this.position.y + (this.height / 2);
-
-        this.position2 = {
-            x: this.position.x + this.width,
-            y: this.position.y + this.height
-        }
-
-        if (this.hp <= 0) {
-            this.dead = true;
-            ctx.restore();
-        }
-
         if (!this.dead) {
-            this.draw();
+            let where = this.playerWhere();
+            if (where === "playerAtLeft") {
+                this.velocity.x = -this.speed.x;
+            }
+            else if (where === "playerAtRight"){
+                this.velocity.x = this.speed.x;
+            }
+            else {
+                this.velocity.x = 0;
+            }
+            this.jump(); // verifies if need to jump and tries to do so
+
+            this.position.x += this.velocity.x;
+            this.position.y += this.velocity.y;
+
+            // updates positions
+
+            this.centerPosition.x = this.position.x + (this.width / 2);
+            this.centerPosition.y = this.position.y + (this.height / 2);
+
+            this.position2 = {
+                x: this.position.x + this.width,
+                y: this.position.y + this.height
+            }
+
+            if (this.hp <= 0) {
+                this.dead = true;
+                ctx.restore();
+            }
+
+            if (!this.dead) {
+                this.draw();
+            }
         }
         ctx.restore();
-        
     }
 
 }

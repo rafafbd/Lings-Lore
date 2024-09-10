@@ -71,13 +71,13 @@ class Fork {
                     this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.width / 2));
                     this.attackCoordinates.y = this.position.y - this.attackRange.height;
                     this.position.x = this.attackCoordinates.x;
-                    this.position.y = this.attackCoordinates.y;
+                    this.position.y = this.attackCoordinates.y + player.height/2;
                     break;
                 case 'd':
                     this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.width / 2));
-                    this.attackCoordinates.y = this.position.y + this.attackRange.height;
+                    this.attackCoordinates.y = this.position.y;
                     this.position.x = this.attackCoordinates.x;
-                    this.position.y = this.attackCoordinates.y - player.height - this.height*2;
+                    this.position.y = this.attackCoordinates.y - player.height/2;
                     break;
             }
             ctx.restore()
@@ -128,7 +128,7 @@ class Fork {
             else if (player.looking.down) {
                 this.position.x = player.position.x + (this.height / 2);
                 this.position.y = player.position.y + this.height + player.height;
-                ctx.translate(this.position.x, this.position.y);
+                ctx.translate(this.position.x, this.position.y );
                 ctx.scale(1, -1);
                 ctx.translate(-this.position.x, -this.position.y);
             }
