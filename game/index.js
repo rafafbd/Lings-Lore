@@ -83,6 +83,13 @@ const keys = { // keys status (pressed or released)
     }
 }
 
+function moveComponents(direction){ // Moves the whole screen, called when player is at border
+    for (let i=0; i<components.length; i++){
+        components[i].forEach(function(object) { // takes all the objects in the screen
+            object.move(direction); // a method that all objects will need (still not working)
+        })
+    }
+}
 // check collision between two rectangles function
 function rectangleColision(rect, rects) { // one element and array of elements
     for (let i=0; i<rects.length; i++) {
