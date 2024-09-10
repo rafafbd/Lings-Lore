@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-ctx.canvas.width = innerWidth - 20; // set canvas to full window size
-ctx.canvas.height = innerHeight - 20;
+ctx.canvas.width = 1920; // set canvas to full window size
+ctx.canvas.height = 940;
 
 
 // instanciates objects
@@ -78,13 +78,6 @@ const keys = { // keys status (pressed or released)
     }
 }
 
-function moveComponents(direction){ // Moves the whole screen, called when player is at border
-    for (let i=0; i<components.length; i++){
-        components[i].forEach(function(object) { // takes all the objects in the screen
-            object.move(direction); // a method that all objects will need (still not working)
-        })
-    }
-}
 // check collision between two rectangles function
 function rectangleColision(rect, rects) { // one element and array of elements
     for (let i=0; i<rects.length; i++) {
@@ -272,6 +265,28 @@ function animationLoop() {
     }*/
    
     player.update();
+
+    // ------------------------------------------------------
+    // scenery scrolling
+    if (player.position.x > 850) {
+        for (let i = 0; i < components.platforms.length; i++) {
+            components.platforms[i].position.x -= player.velocity.x;
+        }
+        for (let i = 0; i < components.enemies.length; i++) {
+            components.enemies[i].position.x -= player.velocity.x;
+        }
+        player.position.x = 850;
+    }
+    else if (player.position.x < 450) { 
+        for (let i = 0; i < components.platforms.length; i++) {
+            components.platforms[i].position.x += -player.velocity.x;
+        }
+        for (let i = 0; i < components.enemies.length; i++) {
+            components.enemies[i].position.x += -player.velocity.x;
+        }
+        player.position.x = 450;
+    }
+
 }
 animationLoop()
 

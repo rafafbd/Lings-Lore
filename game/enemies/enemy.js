@@ -88,10 +88,6 @@ class Enemy {
             this.hp -= damage;
             this.damageTimer = time;
         }
-        
-        if (this.hp <= 0) {
-            this.dead = true;
-        }
     }
 
     playerWhere() { // detects wheter the enemy will detect the player 
@@ -163,9 +159,15 @@ class Enemy {
             y: this.position.y + this.height
         }
 
+        if (this.hp <= 0) {
+            this.dead = true;
+            ctx.restore();
+        }
+
         if (!this.dead) {
             this.draw();
         }
+        ctx.restore();
         
     }
 
