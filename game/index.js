@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-ctx.canvas.width = innerWidth - 20; // set canvas to full window size
-ctx.canvas.height = innerHeight - 20;
+ctx.canvas.width = 1920; // set canvas to full window size
+ctx.canvas.height = 940;
 
 
 // instanciates objects
@@ -78,13 +78,6 @@ const keys = { // keys status (pressed or released)
     }
 }
 
-function moveComponents(direction){ // Moves the whole screen, called when player is at border
-    for (let i=0; i<components.length; i++){
-        components[i].forEach(function(object) { // takes all the objects in the screen
-            object.move(direction); // a method that all objects will need (still not working)
-        })
-    }
-}
 // check collision between two rectangles function
 function rectangleColision(rect, rects) { // one element and array of elements
     for (let i=0; i<rects.length; i++) {
@@ -99,6 +92,7 @@ function rectangleColision(rect, rects) { // one element and array of elements
 function weaponRectangleColision(rect, rects) { // one element and array of elements
     let enemiesAttacked = [];
     for (let i=0; i<rects.length; i++) {
+
         if (rect.attackCoordinates.x < rects[i].position2.x && rect.attackCoordinates.x + rect.attackRange.width > rects[i].position.x && rect.attackCoordinates.y < rects[i].position2.y && rect.attackCoordinates.y + rect.attackRange.height > rects[i].position.y) {
             enemiesAttacked.push(i);
         }
@@ -168,13 +162,13 @@ function animationLoop() {
         }
 
         // left or right of platform
-        else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height) { // right of platform
+        else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height) { // right of platform
             player.position.x = platforms[platform].position2.x;
             if (player.velocity.x < 0) {
                 player.velocity.x *= -1;
             }
         }
-        else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height){ // left of platform
+        else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height){ // left of platform
             player.position.x = platforms[platform].position.x - player.width;
             if (player.velocity.x > 0) {
                 player.velocity.x *= -1;
@@ -272,6 +266,28 @@ function animationLoop() {
     }*/
    
     player.update();
+
+    // ------------------------------------------------------
+    // scenery scrolling
+    if (player.position.x > 850) {
+        for (let i = 0; i < components.platforms.length; i++) {
+            components.platforms[i].position.x -= player.velocity.x;
+        }
+        for (let i = 0; i < components.enemies.length; i++) {
+            components.enemies[i].position.x -= player.velocity.x;
+        }
+        player.position.x = 850;
+    }
+    else if (player.position.x < 450) { 
+        for (let i = 0; i < components.platforms.length; i++) {
+            components.platforms[i].position.x += -player.velocity.x;
+        }
+        for (let i = 0; i < components.enemies.length; i++) {
+            components.enemies[i].position.x += -player.velocity.x;
+        }
+        player.position.x = 450;
+    }
+
 }
 animationLoop()
 
