@@ -5,14 +5,6 @@ class Player {
         // this.image = image
         // this.image.src = imgSource;
 
-        this.howMuchWasWalkedBeyondTheScreen = 0;
-        /* 
-        Entao, aqui... o problema eh que quando o player anda demais para os lados, a deteccao de onde ele esta em relacao a tela eh errada,
-        porque a "colisao" esta sendo feita de acordo com o canvas, e nao com a posicao relativa da janela.
-        Entao uma das solucoes seria conseguir pegar a posicao absoluta em relacao a janela e outra seria usar o quanto foi andado alem da "tela original",
-        mas essa ultima opcao eh meio pa
-        */
-
         this.width = 64;
         this.height = 64;
 
