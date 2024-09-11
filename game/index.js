@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-ctx.canvas.width = 1920; // set canvas to full window size
-ctx.canvas.height = 940;
+ctx.canvas.width = 1915; // set canvas to full window size
+ctx.canvas.height = 928;
 
 var didGameStart = false;
 
@@ -174,7 +174,7 @@ function commandsPage(){
 
         )
     }
-    /*------------      Back to menu button               --------------*/   
+    /*------------      Back to menu button     --------------*/   
     ctx.drawImage(buttonX, 10, 10)
 
     if (mouseClickPosition.x >= 10 &&
@@ -188,8 +188,6 @@ function commandsPage(){
     if (currentPage == "commands"){
         requestAnimationFrame(commandsPage);
     }
-    
-
 }
 
 function lorePage(){
@@ -230,8 +228,6 @@ function menuLoop(){
     
     ctx.drawImage(buttonCommands, buttons.commandsButton.x, buttons.commandsButton.y/*, buttons.commandsButton.w, buttons.commandsButton.h */);
     
-
-    console.log(mouseClickPosition)
     if (mouseClickPosition.x >= buttons.playButton.x &&
         mouseClickPosition.x <= buttons.playButton.x + buttons.playButton.w &&
         mouseClickPosition.y >= buttons.playButton.y &&
@@ -344,10 +340,13 @@ function playerLoop() {
     // -----------------------------------------
     // enemy section down below
 
-    for (let i = enemies.length - 1; i >= 0; i--){
+    for (let i=0; i<enemies.length; i++){
         enemies[i].update();
         if (enemies[i].dead) {
-            enemies.splice(i, 1);
+            enemies[i].speed.jump = 20;
+            setTimeout (() => {
+                enemies.splice(i, 1);
+            }, 500);   
         }
         // enemy collision with platforms
         platform = rectangleColision(enemies[i], platforms); // returns collided platform's index
@@ -500,9 +499,7 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
         case 'KeyP':
             enemies.push(new Enemy({
                 x: 800,
-                y: 100,
-                imgSource: "./Assets/fork3.png"
-                
+                y: 100
             }))
                         
             break;
