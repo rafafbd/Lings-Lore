@@ -3,6 +3,8 @@ const ctx = canvas.getContext('2d');
 ctx.canvas.width = 1920; // set canvas to full window size
 ctx.canvas.height = 940;
 
+var didGameStart = false;
+
 var mouseClickPosition = {
     x: 0,
     y:0
@@ -17,9 +19,9 @@ buttonPlay.src = "./Assets/botaoPlay.png"
 const buttonLore = new Image()
 buttonLore.src = "./Assets/botaoLore.png"
 
-var textLore = "vuafgregvrfvrfevrffsb"
+var textLore = "Comece o modo campanha em 'jogar' para descobrir a lore..."
 
-var currentPage = ""
+var currentPage = "menu"
 
 var buttons = {
     playButton:{
@@ -129,30 +131,36 @@ const keys = { // keys status (pressed or released)
 
 //Game Loop
 function animationLoop(){
-    menuLoop()
-    switch(currentPage){
-        case "game": 
-            playerLoop()
-            break;
-        case "lore": 
-            lorePage()
-            break;
-        case "commands": 
-            commandsPage()
-            break;
-    }
-    mouseClickPosition.y = 0
-    mouseClickPosition.x = 0
 
-    requestAnimationFrame(animationLoop)
+//    setTimeout(() => {
+        switch(currentPage){
+            case "menu":
+                menuLoop();
+                break;
+
+            case "game": 
+                playerLoop();
+                break;
+            case "lore": 
+                lorePage();
+                break;
+            case "commands": 
+                commandsPage();
+                break;
+        }
+        mouseClickPosition.y = 0;
+        mouseClickPosition.x = 0;
+
+        requestAnimationFrame(animationLoop);
+//    }, 300)
 }
 
 //Menu Pages
 function commandsPage(){
 
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.font = "50px Arial"
-    ctx.fillText("Ling's Lore", 150, 200, 300)
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.font = "50px Arial";
+    ctx.fillText("Ling's Lore", 150, 200, 300);
     ctx.font = "15px Arial"
     for (i = 0; i< 7 ; i++){
         ctx.fillText(commandArray[i].text,
@@ -170,11 +178,11 @@ function commandsPage(){
         mouseClickPosition.y >= 10 &&
         mouseClickPosition.y <= 50
     ){
-        currentPage = "menu"
+        currentPage = "menu";
     }
     /*------------      Loop               --------------*/  
     if (currentPage == "commands"){
-        requestAnimationFrame(commandsPage)
+        requestAnimationFrame(commandsPage);
     }
     
 
@@ -182,24 +190,24 @@ function commandsPage(){
 
 function lorePage(){
     
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.font = "50px Arial"
-    ctx.fillText("Ling's Lore", 150, 200, 300)
-    ctx.font = "15px Arial"
-    ctx.fillText(textLore, 150, 400, 300)   
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.font = "50px Arial";
+    ctx.fillText("Ling's Lore", 150, 200, 300);
+    ctx.font = "15px Arial";
+    ctx.fillText(textLore, 150, 400, 300);
     
-    ctx.drawImage(buttonX, 10, 10)
+    ctx.drawImage(buttonX, 10, 10);
 
     if (mouseClickPosition.x >= 10 &&
         mouseClickPosition.x <= 60 &&
         mouseClickPosition.y >= 10 &&
         mouseClickPosition.y <= 60
     ){
-        currentPage = "menu"
+        currentPage = "menu";
     }
 
     if (currentPage == "lore"){
-        requestAnimationFrame(lorePage)
+        requestAnimationFrame(lorePage);
     }
     
 
@@ -207,27 +215,25 @@ function lorePage(){
 
 //Menu loop
 function menuLoop(){
-    console.log("No menu")
-    ctx.clearRect(0, 0, 600, 800)
+    ctx.clearRect(0, 0, 600, 800);
 
-    ctx.font = "50px Arial"
-    ctx.fillText("Ling's Lore", 830, 200, 300)
+    ctx.font = "50px Arial";
+    ctx.fillText("Ling's Lore", 830, 200, 300);
 
     
     
-    ctx.drawImage(buttonPlay, buttons.playButton.x, buttons.playButton.y/* , buttons.playButton.w, buttons.playButton.h*/)
+    ctx.drawImage(buttonPlay, buttons.playButton.x, buttons.playButton.y/* , buttons.playButton.w, buttons.playButton.h*/);
     
-    ctx.drawImage(buttonLore, buttons.loreButton.x, buttons.loreButton.y/*, buttons.loreButton.w, buttons.loreButton.h */)
+    ctx.drawImage(buttonLore, buttons.loreButton.x, buttons.loreButton.y/*, buttons.loreButton.w, buttons.loreButton.h */);
     
-    ctx.fillRect(buttons.commandsButton.x, buttons.commandsButton.y, buttons.commandsButton.w, buttons.commandsButton.h)
+    ctx.fillRect(buttons.commandsButton.x, buttons.commandsButton.y, buttons.commandsButton.w, buttons.commandsButton.h);
     
 
-    console.log(mouseClickPosition)
     if (mouseClickPosition.x >= buttons.playButton.x &&
         mouseClickPosition.x <= buttons.playButton.x + buttons.playButton.w &&
         mouseClickPosition.y >= buttons.playButton.y &&
         mouseClickPosition.y <= buttons.playButton.y + buttons.playButton.h){
-        currentPage = "game"
+        currentPage = "game";
     }
 
     else if (mouseClickPosition.x >= buttons.loreButton.x &&
@@ -243,7 +249,7 @@ function menuLoop(){
         mouseClickPosition.y <= buttons.commandsButton.y + buttons.commandsButton.h){
         currentPage = "commands"
     }
-    if (currentPage == ""){
+    if (currentPage == "menu"){
         requestAnimationFrame(menuLoop)
     }
     
@@ -279,7 +285,10 @@ function weaponRectangleColision(rect, rects) { // one element and array of elem
 
 // perpetual loop of the running game
 function playerLoop() {
-    
+    if (!didGameStart){
+        cutscesneInicial();
+        didGameStart = true;
+    }
     //----------------------------------------------------------------
     //Teste parar musica
     //le.log(player.position.y + player.height)
@@ -291,7 +300,6 @@ function playerLoop() {
     }
 
     //----------------------------------------------------------------
-    requestAnimationFrame(playerLoop);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#3b3b4f';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -565,3 +573,7 @@ addEventListener("click", () => {
     mouseClickPosition.x = e.pageX;
     mouseClickPosition.y = e.pageY;
 } })
+
+function cutscesneInicial(){
+    
+}
