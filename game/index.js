@@ -19,6 +19,9 @@ buttonPlay.src = "./Assets/botaoPlay.png"
 const buttonLore = new Image()
 buttonLore.src = "./Assets/botaoLore.png"
 
+const buttonCommands = new Image()
+buttonCommands.src = "./Assets/botaoCommands.png"
+
 var textLore = "Comece o modo campanha em 'jogar' para descobrir a lore..."
 
 var currentPage = "menu"
@@ -225,7 +228,7 @@ function menuLoop(){
     
     ctx.drawImage(buttonLore, buttons.loreButton.x, buttons.loreButton.y/*, buttons.loreButton.w, buttons.loreButton.h */);
     
-    ctx.fillRect(buttons.commandsButton.x, buttons.commandsButton.y, buttons.commandsButton.w, buttons.commandsButton.h);
+    ctx.drawImage(buttonCommands, buttons.commandsButton.x, buttons.commandsButton.y/*, buttons.commandsButton.w, buttons.commandsButton.h */);
     
 
     console.log(mouseClickPosition)
