@@ -343,7 +343,7 @@ function playerLoop() {
     for (let i=0; i<enemies.length; i++){
         enemies[i].update();
         if (enemies[i].dead) {
-            enemies[i].speed.jump = 20;
+            enemies[i].velocity.y = -5;
             setTimeout (() => {
                 enemies.splice(i, 1);
             }, 500);   
@@ -443,6 +443,9 @@ function playerLoop() {
 // check collision between two rectangles function
 function rectangleColision(rect, rects) { // one element and array of elements
     for (let i=0; i<rects.length; i++) {
+        if (rects[i].dead == true) { // no collision if enemy is dead and still in array
+            continue;
+        }
         if (rect.position.x < rects[i].position2.x && rect.position2.x > rects[i].position.x && rect.position.y < rects[i].position2.y && rect.position2.y > rects[i].position.y) {
             return i; // returns index
         }

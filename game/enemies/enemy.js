@@ -108,7 +108,7 @@ class Enemy {
     }
 
     isPlayerHigher() {
-        if (player.centerPosition.y < this.centerPosition.y){
+        if (player.position2.y < this.position.y){
             return true;
         }
         return false;
