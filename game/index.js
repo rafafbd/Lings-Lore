@@ -201,97 +201,61 @@ function lorePage(){
     if (currentPage == "lore"){
         requestAnimationFrame(lorePage)
     }
-    
-
 }
 
-//Menu loop
+// Menu loop
 function menuLoop(){
-    console.log("No menu")
-    ctx.clearRect(0, 0, 600, 800)
+    ctx.clearRect(0, 0, 600, 800);
 
-    ctx.font = "50px Arial"
-    ctx.fillText("Ling's Lore", 830, 200, 300)
-
+    ctx.font = "50px Arial";
+    ctx.fillText("Ling's Lore", 830, 200, 300);
     
+    ctx.drawImage(buttonPlay, buttons.playButton.x, buttons.playButton.y/* , buttons.playButton.w, buttons.playButton.h*/);
     
-    ctx.drawImage(buttonPlay, buttons.playButton.x, buttons.playButton.y/* , buttons.playButton.w, buttons.playButton.h*/)
+    ctx.drawImage(buttonLore, buttons.loreButton.x, buttons.loreButton.y/*, buttons.loreButton.w, buttons.loreButton.h */);
     
-    ctx.drawImage(buttonLore, buttons.loreButton.x, buttons.loreButton.y/*, buttons.loreButton.w, buttons.loreButton.h */)
+    ctx.fillRect(buttons.commandsButton.x, buttons.commandsButton.y, buttons.commandsButton.w, buttons.commandsButton.h);
     
-    ctx.fillRect(buttons.commandsButton.x, buttons.commandsButton.y, buttons.commandsButton.w, buttons.commandsButton.h)
-    
-
-    console.log(mouseClickPosition)
     if (mouseClickPosition.x >= buttons.playButton.x &&
         mouseClickPosition.x <= buttons.playButton.x + buttons.playButton.w &&
         mouseClickPosition.y >= buttons.playButton.y &&
         mouseClickPosition.y <= buttons.playButton.y + buttons.playButton.h){
-        currentPage = "game"
+        currentPage = "game";
     }
 
     else if (mouseClickPosition.x >= buttons.loreButton.x &&
         mouseClickPosition.x <= buttons.loreButton.x + buttons.loreButton.w &&
         mouseClickPosition.y >= buttons.loreButton.y &&
         mouseClickPosition.y <= buttons.loreButton.y + buttons.loreButton.h){
-        currentPage = "lore"
+        currentPage = "lore";
     }
     
     else if (mouseClickPosition.x >= buttons.commandsButton.x &&
         mouseClickPosition.x <= buttons.commandsButton.x + buttons.commandsButton.w &&
         mouseClickPosition.y >= buttons.commandsButton.y &&
         mouseClickPosition.y <= buttons.commandsButton.y + buttons.commandsButton.h){
-        currentPage = "commands"
+        currentPage = "commands";
     }
     if (currentPage == ""){
-        requestAnimationFrame(menuLoop)
+        requestAnimationFrame(menuLoop);
     }
     
 }
-animationLoop()
-
-// check collision between two rectangles function
-function rectangleColision(rect, rects) { // one element and array of elements
-    for (let i=0; i<rects.length; i++) {
-        if (rect.position.x < rects[i].position2.x && rect.position2.x > rects[i].position.x && rect.position.y < rects[i].position2.y && rect.position2.y > rects[i].position.y) {
-            return i; // returns index
-        }
-    }
-    return null; // no collision
-}
-
-// checks collision for weapons
-function weaponRectangleColision(rect, rects) { // one element and array of elements
-    let enemiesAttacked = [];
-    for (let i=0; i<rects.length; i++) {
-
-        if (rect.attackCoordinates.x < rects[i].position2.x && rect.attackCoordinates.x + rect.attackRange.width > rects[i].position.x && rect.attackCoordinates.y < rects[i].position2.y && rect.attackCoordinates.y + rect.attackRange.height > rects[i].position.y) {
-            enemiesAttacked.push(i);
-        }
-    }
-    if (enemiesAttacked.length > 0) {
-        return enemiesAttacked;
-    }
-    else {
-        return null; // no collision
-    }
-}
+animationLoop(); // calls the game loop
 
 // perpetual loop of the running game
 function playerLoop() {
-    
+    requestAnimationFrame(playerLoop);
     //----------------------------------------------------------------
     //Teste parar musica
-    //le.log(player.position.y + player.height)
-    //console.log(canvas.height-200)
     if (player.position.y + player.height < canvas.height-200 && player.isOnFloor){
-        music.stopAudio()
+        music.stopAudio();
         
 
     }
 
     //----------------------------------------------------------------
-    requestAnimationFrame(playerLoop);
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#3b3b4f';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -461,6 +425,34 @@ function playerLoop() {
     }
 
 }
+
+// check collision between two rectangles function
+function rectangleColision(rect, rects) { // one element and array of elements
+    for (let i=0; i<rects.length; i++) {
+        if (rect.position.x < rects[i].position2.x && rect.position2.x > rects[i].position.x && rect.position.y < rects[i].position2.y && rect.position2.y > rects[i].position.y) {
+            return i; // returns index
+        }
+    }
+    return null; // no collision
+}
+
+// checks collision for weapons
+function weaponRectangleColision(rect, rects) { // one element and array of elements
+    let enemiesAttacked = [];
+    for (let i=0; i<rects.length; i++) {
+
+        if (rect.attackCoordinates.x < rects[i].position2.x && rect.attackCoordinates.x + rect.attackRange.width > rects[i].position.x && rect.attackCoordinates.y < rects[i].position2.y && rect.attackCoordinates.y + rect.attackRange.height > rects[i].position.y) {
+            enemiesAttacked.push(i);
+        }
+    }
+    if (enemiesAttacked.length > 0) {
+        return enemiesAttacked;
+    }
+    else {
+        return null; // no collision
+    }
+}
+
 
 
 // input listeners
