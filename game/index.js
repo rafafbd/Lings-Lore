@@ -8,14 +8,14 @@ var mouseClickPosition = {
     y:0
 }
 
-const botaoX = new Image()
-botaoX.src = "./Assets/pixil-frame-0.png"
+const buttonX = new Image()
+buttonX.src = "./Assets/pixil-frame-0.png"
 
-const botaoPlay = new Image()
-botaoPlay.src = "./Assets/botaoPlay.png"
+const buttonPlay = new Image()
+buttonPlay.src = "./Assets/botaoPlay.png"
 
-const botaoLore = new Image()
-botaoLore.src = "./Assets/botaoLore.png"
+const buttonLore = new Image()
+buttonLore.src = "./Assets/botaoLore.png"
 
 var textLore = "vuafgregvrfvrfevrffsb"
 
@@ -25,7 +25,7 @@ var buttons = {
     playButton:{
         x:760,
         y:350,
-        w:100,
+        w:400,
         h:100
     },
 
@@ -163,7 +163,7 @@ function commandsPage(){
         )
     }
     /*------------      Back to menu button               --------------*/   
-    ctx.drawImage(image, 10, 10)
+    ctx.drawImage(buttonX, 10, 10)
 
     if (mouseClickPosition.x >= 10 &&
         mouseClickPosition.x <= 50 &&
@@ -188,7 +188,7 @@ function lorePage(){
     ctx.font = "15px Arial"
     ctx.fillText(textLore, 150, 400, 300)   
     
-    ctx.drawImage(botaoX, 10, 10)
+    ctx.drawImage(buttonX, 10, 10)
 
     if (mouseClickPosition.x >= 10 &&
         mouseClickPosition.x <= 60 &&
@@ -215,9 +215,9 @@ function menuLoop(){
 
     
     
-    ctx.drawImage(botaoPlay, buttons.playButton.x, buttons.playButton.y/* , buttons.playButton.w, buttons.playButton.h*/)
+    ctx.drawImage(buttonPlay, buttons.playButton.x, buttons.playButton.y/* , buttons.playButton.w, buttons.playButton.h*/)
     
-    ctx.drawImage(botaoLore, buttons.loreButton.x, buttons.loreButton.y/*, buttons.loreButton.w, buttons.loreButton.h */)
+    ctx.drawImage(buttonLore, buttons.loreButton.x, buttons.loreButton.y/*, buttons.loreButton.w, buttons.loreButton.h */)
     
     ctx.fillRect(buttons.commandsButton.x, buttons.commandsButton.y, buttons.commandsButton.w, buttons.commandsButton.h)
     
