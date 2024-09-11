@@ -344,8 +344,9 @@ function playerLoop() {
         enemies[i].update();
         if (enemies[i].dead) {
             enemies[i].velocity.y = -8;
+            let deadEnemy = i;
             setTimeout (() => {
-                enemies.splice(i, 1);
+                enemies.splice(deadEnemy, 1);
             }, 500);   
         }
         // enemy collision with platforms

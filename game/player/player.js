@@ -143,26 +143,31 @@ class Player {
         if (this.isKnockback) {
             if (source === "fork") { // knockback by fork attack
                 if (this.knockbackDirection === "right") {
-                    this.velocity.x += this.attackKnockbackSpeed;
+                    this.velocity.x = this.attackKnockbackSpeed;
                 }
                 else if (this.knockbackDirection === "left") {
-                    this.velocity.x -= this.attackKnockbackSpeed;
+                    this.velocity.x = -this.attackKnockbackSpeed;
                 }
-                this.attackKnockbackSpeed *= this.knockbackFriction;
+                else if (this.knockbackDirection === "up") {
+                    this.velocity.y = -this.attackKnockbackSpeed + 60;
+                }
+                else {
+                    this.velocity.y = this.attackKnockbackSpeed - 60;
+                }
                 this.isKnockback = false;
-                this.attackKnockbackSpeed = 30; // Reset knockback speed
+                this.attackKnockbackSpeed = 75; // Reset knockback speed
             }
 
             else if (source === "enemy") { // knockback by enemy attack
                 if (this.knockbackDirection === "right") {
-                    this.velocity.x += this.knockbackSpeed;
+                    this.velocity.x = this.knockbackSpeed;
                     this.position.y -= 10; // Adjusts the player's position to make the knockback look more natural
-                    this.velocity.y -= this.knockbackSpeed - 60;
+                    this.velocity.y = -this.knockbackSpeed + 60;
                 }
                 else if (this.knockbackDirection === "left") {
-                    this.velocity.x -= this.knockbackSpeed;
+                    this.velocity.x = -this.knockbackSpeed;
                     this.position.y -= 10; // Adjusts the player's position to make the knockback look more natural
-                    this.velocity.y -= this.knockbackSpeed - 60;
+                    this.velocity.y = -this.knockbackSpeed + 60;
                 }
                 this.knockbackSpeed *= this.knockbackFriction;
                 this.isKnockback = false;
