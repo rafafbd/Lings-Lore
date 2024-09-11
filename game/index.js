@@ -3,7 +3,56 @@ const ctx = canvas.getContext('2d');
 ctx.canvas.width = 1920; // set canvas to full window size
 ctx.canvas.height = 940;
 
+var mouseClickPosition = {
+    x: 0,
+    y:0
+}
 
+const botaoX = new Image()
+botaoX.src = "./Assets/pixil-frame-0.png"
+
+const botaoPlay = new Image()
+botaoPlay.src = "./Assets/botaoPlay.png"
+
+const botaoLore = new Image()
+botaoLore.src = "./Assets/botaoLore.png"
+
+var textLore = "vuafgregvrfvrfevrffsb"
+
+var currentPage = ""
+
+var buttons = {
+    playButton:{
+        x:760,
+        y:350,
+        w:100,
+        h:100
+    },
+
+    loreButton:{
+        x:760,
+        y:500,
+        w:400,
+        h:100
+    },
+
+    commandsButton:{
+        x:760,
+        y:650,
+        w:400,
+        h:100
+    }
+}
+
+var commandArray = [
+    {text:"W         - Mirar para cima", x:100, y:300, maxW: 1000 },
+    {text:"A         - Mirar/Andar para esquerda", x:100, y:330, maxW: 1000 },
+    {text:"S         - Mirar para baixo", x:100, y:360, maxW: 1000 },
+    {text:"D         - Mirar/Andar para direita", x:100, y:390, maxW: 1000 },
+    {text:"J         - Atacar", x:100, y:420, maxW: 1000 },
+    {text:"K         - Dash", x:100, y:450, maxW: 1000 },
+    {text:"Space - Pular", x:100, y:480, maxW: 1000 }
+]
 // instanciates objects
 
 const music = new Music();
@@ -78,6 +127,129 @@ const keys = { // keys status (pressed or released)
     }
 }
 
+//Game Loop
+function animationLoop(){
+    menuLoop()
+    switch(currentPage){
+        case "game": 
+            playerLoop()
+            break;
+        case "lore": 
+            lorePage()
+            break;
+        case "commands": 
+            commandsPage()
+            break;
+    }
+    mouseClickPosition.y = 0
+    mouseClickPosition.x = 0
+
+    requestAnimationFrame(animationLoop)
+}
+
+//Menu Pages
+function commandsPage(){
+
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    ctx.font = "50px Arial"
+    ctx.fillText("Ling's Lore", 150, 200, 300)
+    ctx.font = "15px Arial"
+    for (i = 0; i< 7 ; i++){
+        ctx.fillText(commandArray[i].text,
+                     commandArray[i].x, 
+                     commandArray[i].y,
+                     commandArray[i].maxW,
+
+        )
+    }
+    /*------------      Back to menu button               --------------*/   
+    ctx.drawImage(image, 10, 10)
+
+    if (mouseClickPosition.x >= 10 &&
+        mouseClickPosition.x <= 50 &&
+        mouseClickPosition.y >= 10 &&
+        mouseClickPosition.y <= 50
+    ){
+        currentPage = "menu"
+    }
+    /*------------      Loop               --------------*/  
+    if (currentPage == "commands"){
+        requestAnimationFrame(commandsPage)
+    }
+    
+
+}
+
+function lorePage(){
+    
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    ctx.font = "50px Arial"
+    ctx.fillText("Ling's Lore", 150, 200, 300)
+    ctx.font = "15px Arial"
+    ctx.fillText(textLore, 150, 400, 300)   
+    
+    ctx.drawImage(botaoX, 10, 10)
+
+    if (mouseClickPosition.x >= 10 &&
+        mouseClickPosition.x <= 60 &&
+        mouseClickPosition.y >= 10 &&
+        mouseClickPosition.y <= 60
+    ){
+        currentPage = "menu"
+    }
+
+    if (currentPage == "lore"){
+        requestAnimationFrame(lorePage)
+    }
+    
+
+}
+
+//Menu loop
+function menuLoop(){
+    console.log("No menu")
+    ctx.clearRect(0, 0, 600, 800)
+
+    ctx.font = "50px Arial"
+    ctx.fillText("Ling's Lore", 830, 200, 300)
+
+    
+    
+    ctx.drawImage(botaoPlay, buttons.playButton.x, buttons.playButton.y/* , buttons.playButton.w, buttons.playButton.h*/)
+    
+    ctx.drawImage(botaoLore, buttons.loreButton.x, buttons.loreButton.y/*, buttons.loreButton.w, buttons.loreButton.h */)
+    
+    ctx.fillRect(buttons.commandsButton.x, buttons.commandsButton.y, buttons.commandsButton.w, buttons.commandsButton.h)
+    
+
+    console.log(mouseClickPosition)
+    if (mouseClickPosition.x >= buttons.playButton.x &&
+        mouseClickPosition.x <= buttons.playButton.x + buttons.playButton.w &&
+        mouseClickPosition.y >= buttons.playButton.y &&
+        mouseClickPosition.y <= buttons.playButton.y + buttons.playButton.h){
+        currentPage = "game"
+    }
+
+    else if (mouseClickPosition.x >= buttons.loreButton.x &&
+        mouseClickPosition.x <= buttons.loreButton.x + buttons.loreButton.w &&
+        mouseClickPosition.y >= buttons.loreButton.y &&
+        mouseClickPosition.y <= buttons.loreButton.y + buttons.loreButton.h){
+        currentPage = "lore"
+    }
+    
+    else if (mouseClickPosition.x >= buttons.commandsButton.x &&
+        mouseClickPosition.x <= buttons.commandsButton.x + buttons.commandsButton.w &&
+        mouseClickPosition.y >= buttons.commandsButton.y &&
+        mouseClickPosition.y <= buttons.commandsButton.y + buttons.commandsButton.h){
+        currentPage = "commands"
+    }
+    if (currentPage == ""){
+        requestAnimationFrame(menuLoop)
+    }
+    
+}
+animationLoop()
+
 // check collision between two rectangles function
 function rectangleColision(rect, rects) { // one element and array of elements
     for (let i=0; i<rects.length; i++) {
@@ -106,7 +278,7 @@ function weaponRectangleColision(rect, rects) { // one element and array of elem
 }
 
 // perpetual loop of the running game
-function animationLoop() {
+function playerLoop() {
     
     //----------------------------------------------------------------
     //Teste parar musica
@@ -119,7 +291,7 @@ function animationLoop() {
     }
 
     //----------------------------------------------------------------
-    requestAnimationFrame(animationLoop);
+    requestAnimationFrame(playerLoop);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#3b3b4f';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -289,7 +461,7 @@ function animationLoop() {
     }
 
 }
-animationLoop()
+
 
 // input listeners
 addEventListener('keydown', ({ code }) => { // gets key pressed event
@@ -365,19 +537,8 @@ addEventListener('keyup', ({ code }) => { // gets key released event
             break;
     }
 })
-// var canplaythrough = false;
-// audio.addEventListener('canplaythrough', function() { 
-//     console.log("Entrou aqui")
-//     canplaythrough = true;
-//  }, false);
 
-//  if (canplaythrough){
-//     audio.play();
-//  }
 
-//  audio.addEventListener('ended', function(){
-//     audio.play();
-//  })
 
 addEventListener("keypress", function(){
     //console.log("Clicou")
@@ -398,3 +559,9 @@ music.audio.addEventListener("ended", function(){
     music.changeSong(1)
     music.audio.play()
 })
+
+addEventListener("click", () => {
+    document.onmousedown = function(e){
+    mouseClickPosition.x = e.pageX;
+    mouseClickPosition.y = e.pageY;
+} })
