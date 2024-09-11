@@ -343,7 +343,7 @@ function playerLoop() {
     for (let i=0; i<enemies.length; i++){
         enemies[i].update();
         if (enemies[i].dead) {
-            enemies[i].velocity.y = -5;
+            enemies[i].velocity.y = -8;
             setTimeout (() => {
                 enemies.splice(i, 1);
             }, 500);   

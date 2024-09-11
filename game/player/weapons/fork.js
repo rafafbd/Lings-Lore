@@ -22,13 +22,12 @@ class Fork {
             y: null
         }
 
-        this.originalWidth = 100;
-        this.originalHeight = 40;
-
         this.attackRange = {
-            width: 100,
-            height: 40
+            width: 140,
+            height: 60
         };
+        this.originalWidth = this.attackRange.width;
+        this.originalHeight = this.attackRange.height;
 
         this.damage = 50;
         let d = new Date();
@@ -56,27 +55,27 @@ class Fork {
                 case 'l':
                     this.attackCoordinates.x = this.position.x - this.attackRange.width;
                     this.attackCoordinates.y = this.position.y;
-                    this.position.x = this.attackCoordinates.x + player.width + this.width*2;
+                    this.position.x = this.attackCoordinates.x + player.width*3;
                     this.position.y = this.attackCoordinates.y;
                     break;
 
                 case 'r':
-                    this.attackCoordinates.x = this.position.x + 35;
-                    this.attackCoordinates.y = this.position.y;
+                    this.attackCoordinates.x = this.position.x + this.width;
+                    this.attackCoordinates.y = this.position.y - this.attackRange.height/6;
                     this.position.x = this.attackCoordinates.x;
-                    this.position.y = this.attackCoordinates.y;
+                    this.position.y = this.attackCoordinates.y + this.attackRange.height/6;
                     break;
                     
                 case 'u':
-                    this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.width / 2));
+                    this.attackCoordinates.x = this.position.x - this.attackRange.width/4;
                     this.attackCoordinates.y = this.position.y - this.attackRange.height;
-                    this.position.x = this.attackCoordinates.x;
-                    this.position.y = this.attackCoordinates.y + player.height/2;
+                    this.position.x = this.attackCoordinates.x + this.attackRange.width/3;
+                    this.position.y = this.attackCoordinates.y + this.attackRange.height/1.5;
                     break;
                 case 'd':
                     this.attackCoordinates.x = (player.position.x + (player.width / 2) - (this.attackRange.width / 2));
                     this.attackCoordinates.y = this.position.y;
-                    this.position.x = this.attackCoordinates.x;
+                    this.position.x = this.attackCoordinates.x + this.attackRange.width/4;
                     this.position.y = this.attackCoordinates.y - player.height/2;
                     break;
             }
