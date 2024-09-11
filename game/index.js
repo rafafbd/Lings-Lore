@@ -267,7 +267,6 @@ function playerLoop() {
     }
 
     //----------------------------------------------------------------
-    requestAnimationFrame(playerLoop);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#3b3b4f';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
