@@ -152,7 +152,8 @@ function animationLoop(){
         mouseClickPosition.x = 0;
 
         requestAnimationFrame(animationLoop);
-//    }, 300)
+//    }, 300)  
+
 }
 
 //Menu Pages
