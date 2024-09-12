@@ -3,8 +3,6 @@ const ctx = canvas.getContext('2d');
 ctx.canvas.width = 1915; // set canvas to full window size
 ctx.canvas.height = 928;
 
-var didGameStart = false;
-
 var mouseClickPosition = {
     x: 0,
     y:0
@@ -83,6 +81,10 @@ const keys = { // keys status (pressed or released)
     }
 }
 
+function cutscesneInicial(){
+    
+}
+
 //Game Loop
 function animationLoop(){
         menus.updateMousePositions(mouseClickPosition.x, mouseClickPosition.y)
@@ -108,7 +110,7 @@ function animationLoop(){
         requestAnimationFrame(animationLoop);
 
 }
-
+cutscesneInicial();
 animationLoop(); // calls the game loop
 
 
@@ -245,6 +247,3 @@ addEventListener("click", () => {
     mouseClickPosition.y = e.pageY;
 } })
 
-function cutscesneInicial(){
-    
-}

@@ -6,6 +6,10 @@ class Menus {
             y: yMouse
         };
 
+        const background = new Image();
+        background.src = "/Assets/Background-original.png";
+        this.backGround = background;
+
         this.buttonX = new Image();
         this.buttonX.src = "./Assets/pixil-frame-0.png";
         this.buttonPlay = new Image();
@@ -162,13 +166,23 @@ class Menus {
             music.stopAudio();
         }
         //----------------------------------------------------------------
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        /*ctx.drawImage(this.backGround,
+            0,
+            0,
+            canvas.width,
+            canvas.height);*/
+
         ctx.fillStyle = '#3b3b4f';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     
         ctx.font = "50px Times new Roman";
         ctx.fillStyle = "red";
         ctx.fillText("Ling's Lore", 800, 100);
+
+
     
         // ---------------------------------------------------------------
         //                           PLATFORMS
@@ -230,6 +244,7 @@ class Menus {
         }
        
         player.update();
+    
     
         // ------------------------------------------------------
         // scenery scrolling

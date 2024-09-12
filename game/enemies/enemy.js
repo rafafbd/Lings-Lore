@@ -3,18 +3,16 @@ class Enemy {
          
         
         const image = new Image()
-        
-        image.src = "./Assets/Bob-spritesheet.png";
+        this.imgSource = "./Assets/Bob-spritesheet.png";
+        image.src = this.imgSource;
         this.image = image
         this.indexX = 0
         this.indexY = 0
 
         this.enemiesSizes = {
-            bob:{
-                spriteWidth: 100,
-                spriteHeight: 100,
-                scale: 1
-            }
+            spriteWidth: 100,
+            spriteHeight: 100,
+            scale: 1
         }
 
         this.shape = "rectangle";
@@ -225,10 +223,10 @@ class Enemy {
 
     draw() {
         ctx.drawImage(this.image,
-                      this.indexX*this.enemiesSizes.bob.spriteWidth, this.indexY*this.enemiesSizes.bob.spriteHeight,
-                      this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.spriteHeight,
+                      this.indexX*this.enemiesSizes.spriteWidth, this.indexY*this.enemiesSizes.spriteHeight,
+                      this.enemiesSizes.spriteWidth, this.enemiesSizes.spriteHeight,
                       this.position.x, this.position.y,
-                      this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth)
+                      this.enemiesSizes.scale*this.enemiesSizes.spriteWidth, this.enemiesSizes.scale*this.enemiesSizes.spriteWidth)
         ctx.restore();
         this.increaseIndexX();
     }

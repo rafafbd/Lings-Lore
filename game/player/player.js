@@ -245,6 +245,13 @@ class Player {
         }
     }
 
+    heal(amountHealed){
+        player.hp += amountHealed;
+        if (player.hp > 100){
+            player.hp = 100;
+        }
+    }
+
     // update function
 
     draw() { // draws player every frame (called in a loop)
@@ -252,6 +259,13 @@ class Player {
         ctx.fillStyle = 'gold';
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
         ctx.restore()
+    }
+
+    drawLife() {
+        ctx.fillStyle = 'black';
+        ctx.fillRect(10, 10, 110, 20);
+        ctx.fillStyle = 'red';
+        ctx.fillRect(15, 15, this.hp, 10)
     }
 
     update() {
@@ -326,5 +340,6 @@ class Player {
 
         this.fork.update();
         this.draw();
+        this.drawLife();
     }
 }
