@@ -118,9 +118,6 @@ class Enemy {
         if (!this.isOnFloor){
             this.velocity.y += gravity;
         }
-        else if (this.isPlayerHigher() && this.isOnFloor) {
-            this.velocity.y = -this.speed.y;
-        }
         else {
             this.velocity.y = 0;
         }
