@@ -9,60 +9,11 @@ var mouseClickPosition = {
     x: 0,
     y:0
 }
-
-const buttonX = new Image()
-buttonX.src = "./Assets/pixil-frame-0.png"
-
-const buttonPlay = new Image()
-buttonPlay.src = "./Assets/botaoPlay.png"
-
-const buttonLore = new Image()
-buttonLore.src = "./Assets/botaoLore.png"
-
-const buttonCommands = new Image()
-buttonCommands.src = "./Assets/botaoCommands.png"
-
-var textLore = "Comece o modo campanha em 'jogar' para descobrir a lore..."
-
 var currentPage = "menu"
 
-var buttons = {
-    playButton:{
-        x:760,
-        y:350,
-        w:400,
-        h:100
-    },
-
-    loreButton:{
-        x:760,
-        y:500,
-        w:400,
-        h:100
-    },
-
-    commandsButton:{
-        x:760,
-        y:650,
-        w:400,
-        h:100
-    }
-}
-
-var commandArray = [
-    {text:"W         - Mirar para cima", x:100, y:300, maxW: 1000 },
-    {text:"A         - Mirar/Andar para esquerda", x:100, y:330, maxW: 1000 },
-    {text:"S         - Mirar para baixo", x:100, y:360, maxW: 1000 },
-    {text:"D         - Mirar/Andar para direita", x:100, y:390, maxW: 1000 },
-    {text:"J         - Atacar", x:100, y:420, maxW: 1000 },
-    {text:"K         - Dash", x:100, y:450, maxW: 1000 },
-    {text:"Space - Pular", x:100, y:480, maxW: 1000 }
-]
-// instanciates objects
+const menus = new Menus(mouseClickPosition.x, mouseClickPosition.y)
 
 const music = new Music();
-
-
 
 const player = new Player({
     x: 600, 
@@ -134,235 +85,34 @@ const keys = { // keys status (pressed or released)
 
 //Game Loop
 function animationLoop(){
-
-//    setTimeout(() => {
+        menus.updateMousePositions(mouseClickPosition.x, mouseClickPosition.y)
+        currentPage = menus.getCurrentPage()
         switch(currentPage){
             case "menu":
-                menuLoop();
+                menus.menuLoop();
                 break;
 
             case "game": 
-                playerLoop();
+                menus.playerLoop();
                 break;
             case "lore": 
-                lorePage();
+                menus.lorePage();
                 break;
             case "commands": 
-                commandsPage();
+                menus.commandsPage();
                 break;
         }
         mouseClickPosition.y = 0;
         mouseClickPosition.x = 0;
 
         requestAnimationFrame(animationLoop);
-//    }, 300)  
 
 }
 
-//Menu Pages
-function commandsPage(){
-
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.font = "50px Arial";
-    ctx.fillText("Ling's Lore", 150, 200, 300);
-    ctx.font = "15px Arial"
-    for (i = 0; i< 7 ; i++){
-        ctx.fillText(commandArray[i].text,
-                     commandArray[i].x, 
-                     commandArray[i].y,
-                     commandArray[i].maxW,
-
-        )
-    }
-    /*------------      Back to menu button     --------------*/   
-    ctx.drawImage(buttonX, 10, 10)
-
-    if (mouseClickPosition.x >= 10 &&
-        mouseClickPosition.x <= 50 &&
-        mouseClickPosition.y >= 10 &&
-        mouseClickPosition.y <= 50
-    ){
-        currentPage = "menu";
-    }
-    /*------------      Loop               --------------*/  
-    if (currentPage == "commands"){
-        requestAnimationFrame(commandsPage);
-    }
-}
-
-function lorePage(){
-    
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.font = "50px Arial";
-    ctx.fillText("Ling's Lore", 150, 200, 300);
-    ctx.font = "15px Arial";
-    ctx.fillText(textLore, 150, 400, 300);
-    
-    ctx.drawImage(buttonX, 10, 10);
-
-    if (mouseClickPosition.x >= 10 &&
-        mouseClickPosition.x <= 60 &&
-        mouseClickPosition.y >= 10 &&
-        mouseClickPosition.y <= 60
-    ){
-        currentPage = "menu";
-    }
-
-    if (currentPage == "lore"){
-        requestAnimationFrame(lorePage);
-    }
-}
-
-// Menu loop
-function menuLoop(){
-    ctx.clearRect(0, 0, 600, 800);
-
-    ctx.font = "50px Arial"
-    ctx.fillText("Ling's Lore", 830, 200, 300)
-
-    
-    
-    ctx.drawImage(buttonPlay, buttons.playButton.x, buttons.playButton.y/* , buttons.playButton.w, buttons.playButton.h*/);
-    
-    ctx.drawImage(buttonLore, buttons.loreButton.x, buttons.loreButton.y/*, buttons.loreButton.w, buttons.loreButton.h */);
-    
-    ctx.drawImage(buttonCommands, buttons.commandsButton.x, buttons.commandsButton.y/*, buttons.commandsButton.w, buttons.commandsButton.h */);
-    
-    if (mouseClickPosition.x >= buttons.playButton.x &&
-        mouseClickPosition.x <= buttons.playButton.x + buttons.playButton.w &&
-        mouseClickPosition.y >= buttons.playButton.y &&
-        mouseClickPosition.y <= buttons.playButton.y + buttons.playButton.h){
-        currentPage = "game";
-    }
-
-    else if (mouseClickPosition.x >= buttons.loreButton.x &&
-        mouseClickPosition.x <= buttons.loreButton.x + buttons.loreButton.w &&
-        mouseClickPosition.y >= buttons.loreButton.y &&
-        mouseClickPosition.y <= buttons.loreButton.y + buttons.loreButton.h){
-        currentPage = "lore";
-    }
-    
-    else if (mouseClickPosition.x >= buttons.commandsButton.x &&
-        mouseClickPosition.x <= buttons.commandsButton.x + buttons.commandsButton.w &&
-        mouseClickPosition.y >= buttons.commandsButton.y &&
-        mouseClickPosition.y <= buttons.commandsButton.y + buttons.commandsButton.h){
-        currentPage = "commands";
-    }
-    if (currentPage == ""){
-        requestAnimationFrame(menuLoop)
-    }
-    
-}
 animationLoop(); // calls the game loop
 
-// perpetual loop of the running game
-function playerLoop() {
-    
-    //----------------------------------------------------------------
-    //Teste parar musica
-    if (player.position.y + player.height < canvas.height-200 && player.isOnFloor){
-        music.stopAudio();
-        
 
-    }
-
-    //----------------------------------------------------------------
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#3b3b4f';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.font = "50px Times new Roman";
-    ctx.fillStyle = "red";
-    ctx.fillText("Ling's Lore", 800, 100);
-
-    // ---------------------------------------------------------------
-    //                           PLATFORMS
-    // updates and draws the platforms
-    ctx.fillStyle = '#000000';
-    for (let i = platforms.length - 1; i >= 0; i--){ 
-        platforms[i].update();
-    }
-    // checks collision between player and platforms
-    let platform = rectangleColision(player, platforms); // returns collided platform's index
-    if (platform != null) {
-        player.collided(platforms[platform]);
-    }
-    else { // no collision detected
-        player.isOnFloor = false;
-    }
-
-    // -----------------------------------------
-    // enemy section down below
-
-    for (let i=0; i<enemies.length; i++){
-        enemies[i].update();
-        if (enemies[i].dead) {
-            let deadEnemy = i;
-            setTimeout (() => {
-                enemies.splice(deadEnemy, 1);
-            }, 0);   
-        }
-        // enemy collision with platforms
-        platform = rectangleColision(enemies[i], platforms); // returns collided platform's index
-        if (platform != null) {
-            enemies[i].collided(platforms[platform]);
-        }
-        else { // no collision detected
-            enemies[i].isOnFloor = false;
-        }
-    };
-
-    if (keys.attack.pressed) { // checks if the player is attacking
-        switch (player.currentWeapon) { // different hitbox and damage based on current weapon
-            case "fork":
-                let enemy = weaponRectangleColision(player.fork, enemies); // returns list of enemies hit
-                if (enemy != null) {
-                    for (let j = 0; j<enemy.length; j++) {
-                        player.fork.collided(enemies[enemy[j]]);
-                        enemies[enemy[j]].collided(player.fork);
-                    }
-                }
-        }
-    }
-
-    // ------------------------------------------------------
-    // Player collision with enemies
-
-    let playerEnemyCollision = rectangleColision(player, enemies); // checks collision between player and enemies
-    if (playerEnemyCollision != null) {
-        player.collided(enemies[playerEnemyCollision]);
-        enemies[playerEnemyCollision].collided(player);
-    }
-   
-    player.update();
-
-    // ------------------------------------------------------
-    // scenery scrolling
-    if (player.position.x > 850) {
-        for (let i = 0; i < components.platforms.length; i++) {
-            components.platforms[i].position.x -= player.velocity.x;
-        }
-        for (let i = 0; i < components.enemies.length; i++) {
-            components.enemies[i].position.x -= player.velocity.x;
-        }
-        player.position.x = 850;
-    }
-    else if (player.position.x < 450) { 
-        for (let i = 0; i < components.platforms.length; i++) {
-            components.platforms[i].position.x += -player.velocity.x;
-        }
-        for (let i = 0; i < components.enemies.length; i++) {
-            components.enemies[i].position.x += -player.velocity.x;
-        }
-        player.position.x = 450;
-    }
-
-}
-
-// ------------------------------------------------------
-// collision functions
-
-// check collision between two rectangles function
+// // check collision between two rectangles function
 function rectangleColision(rect, rects) { // one element and array of elements
     for (let i=0; i<rects.length; i++) {
         if (rects[i].dead == true) { // no collision if enemy is dead and still in array
