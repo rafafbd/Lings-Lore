@@ -22,20 +22,20 @@ class Menus {
             playButton: {
                 x: (canvas.width-this.buttonPlay.width)/2,
                 y: 350,
-                w: 200,
-                h: 80
+                w: 400,
+                h: 100
             },
             loreButton: {
                 x: (canvas.width-this.buttonLore.width)/2,
                 y: 500,
-                w: 200,
-                h: 80
+                w: 400,
+                h: 100
             },
             commandsButton: {
                 x: (canvas.width-this.buttonCommands.width)/2,
                 y: 650,
-                w: 200,
-                h: 80
+                w: 400,
+                h: 100
             }
         };
 
