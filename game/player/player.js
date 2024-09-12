@@ -38,22 +38,19 @@ class Player {
             down: false
         };
 
-        // ^^^^^^ physics ^^^^^^^^
+        // ^^^^^^ positions and velocities^^^^^^^^
         // vvvvvv states vvvvvvvvv 
 
-        this.isEndOfScreen = {
-            right: false,
-            left: false
-        };
-
         this.isOnFloor = false;
-        this.floorY = 0;
 
+        // hp and damage vars
         this.hp = 100;
 
         let d = new Date()
         this.damageTimer = d.getTime()/1000;
         this.damageCd = 1;
+
+        // -------------------------------------
 
         // equipment
         this.currentWeapon = "fork";
@@ -70,6 +67,8 @@ class Player {
         this.dashCooldown = 600; // Cooldown period in milliseconds
         this.nextDashTime = 0; // Time when the player can dash again
 
+        //--------------------------------------
+
         // knockback vars
         this.knockbackDirection = "";
         this.knockbackSpeed = 75;
@@ -81,26 +80,61 @@ class Player {
 
     // collision and damage functions
 
-    collided(source, platformSide){ // source is the object that collided with the player
+    collided(source){ // source is the object that collided with the player
         if (source instanceof Enemy){
-            this.takeDamage(source.damage, source);
+            if (!this.isDashing){
+                this.takeDamage(source.damage, source);
+            }
         }
         else if (source instanceof Platform){
-            if (platformSide === 'top'){
-                this.velocity.y = 0;
-                this.isOnFloor = true;
-                if (source.position.y + source.proportions.height < this.position.y + this.height){
-                    console.log('top2');
-                    this.position.y = source.position.y - this.height;
+            // get diff between x/y from the two objects
+            let axisDistances = {
+                xDiff1: this.position.x - source.position.x, // distance in x axis x1 - x1
+                yDiff1: this.position.y - source.position.y, // distance in y axis y1 - y1
+                xDiff2: this.position2.x - source.position2.x, // distance in y axis y1 - y2
+                yDiff2: this.position2.y - source.position2.y, // distance in y axis y1 - y2
+            }
+
+            // inside platform 
+            
+            if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 < 0 && axisDistances.yDiff2 > 0) { // inside platform -- right of platform
+                this.position.x = source.position2.x;
+                if (this.velocity.x < 0) {
+                    this.velocity.x *= -1;
                 }
             }
-            else if (platformSide === 'bottom'){
-                this.position.y = source.position.y + source.proportions.height;
+            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 < 0 && axisDistances.yDiff2 > 0){ // inside platform -- left of platform
+                this.position.x = source.position.x - this.width;
+                if (this.velocity.x > 0) {
+                    this.velocity.x *= -1;
+                }
+            }
+
+            // top or bottom
+            if (axisDistances.yDiff1 <= 0 && axisDistances.yDiff2 < 0 && axisDistances.xDiff1 > -this.width && axisDistances.xDiff2 < this.width){ // top of paltform
+                this.isOnFloor = true;
+                this.position.y = source.position.y - this.height;
+            }
+            else if (axisDistances.yDiff1 > 0 && axisDistances.yDiff2 >= this.height/2 && axisDistances.xDiff1 > -this.width && axisDistances.xDiff2 < this.width) { // under platform
                 this.velocity.y = 0;
+                this.position.y = source.position2.y;
             }
-            else if (platformSide === 'side'){
-                this.velocity.x = 0;
+
+            // left or right of platform
+            else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -20 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height) { // right of platform
+                this.position.x = source.position2.x;
+                if (this.velocity.x < 0) {
+                    this.velocity.x *= -1;
+                }
             }
+            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < -20 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height){ // left of platform
+                this.position.x = source.position.x - this.width;
+                if (this.velocity.x > 0) {
+                    this.velocity.x *= -1;
+                }
+            }
+
+            
         }
     }
 
@@ -142,27 +176,29 @@ class Player {
         this.isKnockback = true;
         if (this.isKnockback) {
             if (source === "fork") { // knockback by fork attack
-                if (this.knockbackDirection === "right") {
-                    this.velocity.x += this.attackKnockbackSpeed;
+                if (this.looking.right) {
+                    this.velocity.x = -this.attackKnockbackSpeed;
                 }
-                else if (this.knockbackDirection === "left") {
-                    this.velocity.x -= this.attackKnockbackSpeed;
+                else if (this.looking.left) {
+                    this.velocity.x = this.attackKnockbackSpeed;
                 }
-                this.attackKnockbackSpeed *= this.knockbackFriction;
+                else if (this.looking.down) {
+                    this.velocity.y = -this.attackKnockbackSpeed + 15;
+                }
                 this.isKnockback = false;
                 this.attackKnockbackSpeed = 30; // Reset knockback speed
             }
 
             else if (source === "enemy") { // knockback by enemy attack
                 if (this.knockbackDirection === "right") {
-                    this.velocity.x += this.knockbackSpeed;
+                    this.velocity.x = this.knockbackSpeed;
                     this.position.y -= 10; // Adjusts the player's position to make the knockback look more natural
-                    this.velocity.y -= this.knockbackSpeed - 60;
+                    this.velocity.y = -this.knockbackSpeed + 60;
                 }
                 else if (this.knockbackDirection === "left") {
-                    this.velocity.x -= this.knockbackSpeed;
+                    this.velocity.x = -this.knockbackSpeed;
                     this.position.y -= 10; // Adjusts the player's position to make the knockback look more natural
-                    this.velocity.y -= this.knockbackSpeed - 60;
+                    this.velocity.y = -this.knockbackSpeed + 60;
                 }
                 this.knockbackSpeed *= this.knockbackFriction;
                 this.isKnockback = false;

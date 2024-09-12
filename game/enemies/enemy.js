@@ -1,5 +1,5 @@
 class Enemy {
-    constructor({x, y}, imgSource) {
+    constructor({x, y}) {
          
         
         const image = new Image()
@@ -56,30 +56,18 @@ class Enemy {
         this.hp = 100;
         this.dead = false;
 
+        // knockback atributes
+        this.knockbackDirection = "";
+        this.knockbackSpeed = 25;
+        this.isKnockback = false;
     }
     
-    increaseIndexX(){
+    increaseIndexX(){ // increases the index of the sprite sheet
         if (this.indexX < 16)
             this.indexX += 1
         else
             this.indexX = 3
     }
-    
-    draw() { // draws enemy every frame (called in a loop)
-        //ctx.fillStyle = 'red';
-        //ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-        
-        
-        ctx.drawImage(this.image,
-                      this.indexX*this.enemiesSizes.bob.spriteWidth, this.indexY*this.enemiesSizes.bob.spriteHeight,
-                      this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.spriteHeight,
-                      this.position.x, this.position.y,
-                      this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth)
-        ctx.restore();
-        this.increaseIndexX();
-    }
-
-    
 
     takeDamage(damage) {
         let d = new Date();
@@ -108,7 +96,7 @@ class Enemy {
     }
 
     isPlayerHigher() {
-        if (player.centerPosition.y < this.centerPosition.y){
+        if (player.position2.y < this.position.y){
             return true;
         }
         return false;
@@ -118,22 +106,88 @@ class Enemy {
         if (!this.isOnFloor){
             this.velocity.y += gravity;
         }
-        else if (this.isPlayerHigher() && this.isOnFloor) {
-            this.velocity.y = -this.speed.y;
-        }
         else {
             this.velocity.y = 0;
+        }
+    }
+
+    knockBack(source) {
+        this.isKnockback = true;
+        if (this.isKnockback) {
+            if (source instanceof Fork) { // knockback by fork attack
+                if (player.looking.right) {
+                    this.velocity.x = this.knockbackSpeed;
+                }
+                else if (player.looking.left) {
+                    this.velocity.x = -this.knockbackSpeed;
+                }
+                else if (player.looking.up) {
+                    this.velocity.y = -this.knockbackSpeed + 15;
+                }
+                setTimeout(() => {
+                    this.isKnockback = false;
+                }, 100);
+            }
         }
     }
 
     collided(source) {
         if (source instanceof Fork) {
             this.takeDamage(source.damage);
+            this.knockBack(source);
+        }
+        else if (source instanceof Platform) {
+            // get diff between x/y from the two objects
+            let axisDistances = {
+                xDiff1: this.position.x - source.position.x, // distance in x axis x1 - x1
+                yDiff1: this.position.y - source.position.y, // distance in y axis y1 - y1
+                xDiff2: this.position2.x - source.position2.x, // distance in y axis y1 - y2
+                yDiff2: this.position2.y - source.position2.y, // distance in y axis y1 - y2
+            }
+
+            // inside platform 
+            
+            if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 < 0 && axisDistances.yDiff2 > 0) { // inside platform -- right of platform
+                this.position.x = source.position2.x;
+                if (this.velocity.x < 0) {
+                    this.velocity.x *= -1;
+                }
+            }
+            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 < 0 && axisDistances.yDiff2 > 0){ // left of platform
+                this.position.x = source.position.x - this.width;
+                if (this.velocity.x > 0) {
+                    this.velocity.x *= -1;
+                }
+            }
+
+            // left or right of platform
+            else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < 0) { // right of platform
+                this.position.x = source.position2.x;
+                if (this.velocity.x < 0) {
+                    this.velocity.x *= -1;
+                }
+            }
+            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < 0){ // left of platform
+                this.position.x = source.position.x - this.width;
+                if (this.velocity.x > 0) {
+                    this.velocity.x *= -1;
+                }
+            }
+
+            // top or bottom
+            else if (axisDistances.yDiff1 <= 0 && axisDistances.yDiff2 < 0){ // top of paltform
+                this.isOnFloor = true;
+                this.position.y = source.position.y - this.height;
+            }
+            else if (axisDistances.yDiff1 >= 0 && axisDistances.yDiff2 > 0) { // under platform
+                this.velocity.y = 0;
+                this.position.y = source.position2.y;
+            }
         }
     }
 
     update() {
-        if (!this.dead) {
+        if (!this.isKnockback) {
             let where = this.playerWhere();
             if (where === "playerAtLeft") {
                 this.velocity.x = -this.speed.x;
@@ -142,33 +196,41 @@ class Enemy {
                 this.velocity.x = this.speed.x;
             }
             else {
-                this.velocity.x = 0;
-            }
-            this.jump(); // verifies if need to jump and tries to do so
-
-            this.position.x += this.velocity.x;
-            this.position.y += this.velocity.y;
-
-            // updates positions
-
-            this.centerPosition.x = this.position.x + (this.width / 2);
-            this.centerPosition.y = this.position.y + (this.height / 2);
-
-            this.position2 = {
-                x: this.position.x + this.width,
-                y: this.position.y + this.height
-            }
-
-            if (this.hp <= 0) {
-                this.dead = true;
-                ctx.restore();
-            }
-
-            if (!this.dead) {
-                this.draw();
+                this.velocity.x *= 0.7;
             }
         }
+        this.jump(); // verifies if need to jump and tries to do so
+
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+
+        // updates positions
+
+        this.centerPosition.x = this.position.x + (this.width / 2);
+        this.centerPosition.y = this.position.y + (this.height / 2);
+
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
+        }
+
+        if (this.hp <= 0) {
+            this.dead = true;
+            ctx.restore();
+        }
+
+        this.draw();
         ctx.restore();
+    }
+
+    draw() {
+        ctx.drawImage(this.image,
+                      this.indexX*this.enemiesSizes.bob.spriteWidth, this.indexY*this.enemiesSizes.bob.spriteHeight,
+                      this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.spriteHeight,
+                      this.position.x, this.position.y,
+                      this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth)
+        ctx.restore();
+        this.increaseIndexX();
     }
 
 }
