@@ -285,53 +285,7 @@ function playerLoop() {
     // checks collision between player and platforms
     let platform = rectangleColision(player, platforms); // returns collided platform's index
     if (platform != null) {
-        // get diff between x/y from the two objects
-        let axisDistances = {
-            xDiff1: player.position.x - platforms[platform].position.x, // distance in x axis x1 - x1
-            yDiff1: player.position.y - platforms[platform].position.y, // distance in y axis y1 - y1
-            xDiff2: player.position2.x - platforms[platform].position2.x, // distance in y axis y1 - y2
-            yDiff2: player.position2.y - platforms[platform].position2.y, // distance in y axis y1 - y2
-        }
-
-        // inside platform 
-        
-        if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 < 0 && axisDistances.yDiff2 > 0) { // inside platform -- right of platform
-            player.position.x = platforms[platform].position2.x;
-            if (player.velocity.x < 0) {
-                player.velocity.x *= -1;
-            }
-        }
-        else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 < 0 && axisDistances.yDiff2 > 0){ // left of platform
-            player.position.x = platforms[platform].position.x - player.width;
-            if (player.velocity.x > 0) {
-                player.velocity.x *= -1;
-            }
-        }
-
-        // left or right of platform
-        else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height) { // right of platform
-            player.position.x = platforms[platform].position2.x;
-            if (player.velocity.x < 0) {
-                player.velocity.x *= -1;
-            }
-        }
-        else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < player.height){ // left of platform
-            player.position.x = platforms[platform].position.x - player.width;
-            if (player.velocity.x > 0) {
-                player.velocity.x *= -1;
-            }
-        }
-
-        // top or bottom
-        else if (axisDistances.yDiff1 <= 0 && axisDistances.yDiff2 < 0){ // top of paltform
-            player.isOnFloor = true;
-            player.position.y = platforms[platform].position.y - player.height;
-        }
-        else if (axisDistances.yDiff1 >= 0 && axisDistances.yDiff2 > 0) { // under platform
-            player.velocity.y = 0;
-            player.position.y = platforms[platform].position2.y;
-        }
-
+        player.collided(platforms[platform]);
     }
     else { // no collision detected
         player.isOnFloor = false;
@@ -343,44 +297,15 @@ function playerLoop() {
     for (let i=0; i<enemies.length; i++){
         enemies[i].update();
         if (enemies[i].dead) {
-            enemies[i].velocity.y = -8;
             let deadEnemy = i;
             setTimeout (() => {
                 enemies.splice(deadEnemy, 1);
-            }, 500);   
+            }, 0);   
         }
         // enemy collision with platforms
         platform = rectangleColision(enemies[i], platforms); // returns collided platform's index
         if (platform != null) {
-            // get diff between x/y from the two objects
-            let axisDistances = {
-                xDiff1: enemies[i].position.x - platforms[platform].position.x, // distance in x axis x1 - x1
-                yDiff1: enemies[i].position.y - platforms[platform].position.y, // distance in y axis y1 - y1
-                xDiff2: enemies[i].position2.x - platforms[platform].position2.x, // distance in y axis y1 - y2
-                yDiff2: enemies[i].position2.y - platforms[platform].position2.y, // distance in y axis y1 - y2
-            }
-            // left or right of platform
-            if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 > enemies[i].height - 20 && axisDistances.yDiff2 < enemies[i].height) { // right of platform
-                enemies[i].position.x = platforms[platform].position2.x;
-                if (enemies[i].velocity.x < 0) {
-                    enemies[i].velocity.x *= -1;
-                }
-            }
-            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 > enemies[i].height - 20 && axisDistances.yDiff2 < enemies[i].height){ // left of platform
-                enemies[i].position.x = platforms[platform].position.x - enemies[i].width;
-                if (enemies[i].velocity.x > 0) {
-                    playenemies[i].velocity.x *= -1;
-                }
-            }
-            // top or bottom
-            else if (axisDistances.yDiff1 <= 0 && axisDistances.yDiff2 < 0){ // top of paltform
-                enemies[i].isOnFloor = true;
-                enemies[i].position.y = platforms[platform].position.y - enemies[i].height;
-            }
-            else if (axisDistances.yDiff1 >= 0 && axisDistances.yDiff2 > 0) { // under platform
-                enemies[i].velocity.y = 0;
-                enemies[i].position.y = platforms[platform].position2.y;
-            }
+            enemies[i].collided(platforms[platform]);
         }
         else { // no collision detected
             enemies[i].isOnFloor = false;
@@ -408,13 +333,6 @@ function playerLoop() {
         player.collided(enemies[playerEnemyCollision]);
         enemies[playerEnemyCollision].collided(player);
     }
-
-    /*if (player.isEndOfScreen.right === true){
-        moveComponents("l");
-    }
-    else if (player.isEndOfScreen.left === true){
-        moveComponents("r");
-    }*/
    
     player.update();
 
@@ -440,6 +358,9 @@ function playerLoop() {
     }
 
 }
+
+// ------------------------------------------------------
+// collision functions
 
 // check collision between two rectangles function
 function rectangleColision(rect, rects) { // one element and array of elements
@@ -471,7 +392,7 @@ function weaponRectangleColision(rect, rects) { // one element and array of elem
     }
 }
 
-
+// ------------------------------------------------------
 
 // input listeners
 addEventListener('keydown', ({ code }) => { // gets key pressed event

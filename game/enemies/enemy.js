@@ -127,6 +127,54 @@ class Enemy {
         if (source instanceof Fork) {
             this.takeDamage(source.damage);
         }
+        else if (source instanceof Platform) {
+            // get diff between x/y from the two objects
+            let axisDistances = {
+                xDiff1: this.position.x - source.position.x, // distance in x axis x1 - x1
+                yDiff1: this.position.y - source.position.y, // distance in y axis y1 - y1
+                xDiff2: this.position2.x - source.position2.x, // distance in y axis y1 - y2
+                yDiff2: this.position2.y - source.position2.y, // distance in y axis y1 - y2
+            }
+
+            // inside platform 
+            
+            if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > 0 && axisDistances.yDiff1 < 0 && axisDistances.yDiff2 > 0) { // inside platform -- right of platform
+                this.position.x = source.position2.x;
+                if (this.velocity.x < 0) {
+                    this.velocity.x *= -1;
+                }
+            }
+            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 < 0 && axisDistances.yDiff2 > 0){ // left of platform
+                this.position.x = source.position.x - this.width;
+                if (this.velocity.x > 0) {
+                    this.velocity.x *= -1;
+                }
+            }
+
+            // left or right of platform
+            else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height) { // right of platform
+                this.position.x = source.position2.x;
+                if (this.velocity.x < 0) {
+                    this.velocity.x *= -1;
+                }
+            }
+            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height){ // left of platform
+                this.position.x = source.position.x - this.width;
+                if (this.velocity.x > 0) {
+                    this.velocity.x *= -1;
+                }
+            }
+
+            // top or bottom
+            else if (axisDistances.yDiff1 <= 0 && axisDistances.yDiff2 < 0){ // top of paltform
+                this.isOnFloor = true;
+                this.position.y = source.position.y - this.height;
+            }
+            else if (axisDistances.yDiff1 >= 0 && axisDistances.yDiff2 > 0) { // under platform
+                this.velocity.y = 0;
+                this.position.y = source.position2.y;
+            }
+        }
     }
 
     update() {
