@@ -112,12 +112,10 @@ class Player {
 
             // top or bottom
             if (axisDistances.yDiff1 <= 0 && axisDistances.yDiff2 < 0 && axisDistances.xDiff1 > -this.width && axisDistances.xDiff2 < this.width){ // top of paltform
-                console.log("top of platform")
                 this.isOnFloor = true;
                 this.position.y = source.position.y - this.height;
             }
             else if (axisDistances.yDiff1 > 0 && axisDistances.yDiff2 >= this.height/2 && axisDistances.xDiff1 > -this.width && axisDistances.xDiff2 < this.width) { // under platform
-                console.log("under platform")
                 this.velocity.y = 0;
                 this.position.y = source.position2.y;
             }
@@ -125,14 +123,12 @@ class Player {
             // left or right of platform
             else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -20 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height) { // right of platform
                 this.position.x = source.position2.x;
-                console.log("right of platform")
                 if (this.velocity.x < 0) {
                     this.velocity.x *= -1;
                 }
             }
             else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < -20 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height){ // left of platform
                 this.position.x = source.position.x - this.width;
-                console.log("left of platform")
                 if (this.velocity.x > 0) {
                     this.velocity.x *= -1;
                 }
@@ -180,20 +176,17 @@ class Player {
         this.isKnockback = true;
         if (this.isKnockback) {
             if (source === "fork") { // knockback by fork attack
-                if (this.knockbackDirection === "right") {
-                    this.velocity.x = this.attackKnockbackSpeed;
-                }
-                else if (this.knockbackDirection === "left") {
+                if (this.looking.right) {
                     this.velocity.x = -this.attackKnockbackSpeed;
                 }
-                else if (this.knockbackDirection === "up") {
-                    this.velocity.y = -this.attackKnockbackSpeed + 60;
+                else if (this.looking.left) {
+                    this.velocity.x = this.attackKnockbackSpeed;
                 }
-                else {
-                    this.velocity.y = this.attackKnockbackSpeed - 60;
+                else if (this.looking.down) {
+                    this.velocity.y = -this.attackKnockbackSpeed + 15;
                 }
                 this.isKnockback = false;
-                this.attackKnockbackSpeed = 75; // Reset knockback speed
+                this.attackKnockbackSpeed = 30; // Reset knockback speed
             }
 
             else if (source === "enemy") { // knockback by enemy attack

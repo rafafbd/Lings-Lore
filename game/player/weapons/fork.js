@@ -90,18 +90,6 @@ class Fork {
             let d = new Date();
             let time = d.getTime()/1000;
             if (time - this.knockBackTimer > this.knockBackCd){
-                if (player.looking.right) {
-                    player.knockbackDirection = "left";
-                }
-                else if(player.looking.left) {
-                    player.knockbackDirection = "right";
-                }
-                if (player.looking.down) {
-                    player.knockbackDirection = "up";
-                }
-                else {
-                    player.knockbackDirection = "down";
-                }
                 player.knockBack("fork");
             }
             this.knockBackTimer = time;

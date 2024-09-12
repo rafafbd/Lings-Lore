@@ -56,30 +56,18 @@ class Enemy {
         this.hp = 100;
         this.dead = false;
 
+        // knockback atributes
+        this.knockbackDirection = "";
+        this.knockbackSpeed = 25;
+        this.isKnockback = false;
     }
     
-    increaseIndexX(){
+    increaseIndexX(){ // increases the index of the sprite sheet
         if (this.indexX < 16)
             this.indexX += 1
         else
             this.indexX = 3
     }
-    
-    draw() { // draws enemy every frame (called in a loop)
-        //ctx.fillStyle = 'red';
-        //ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-        
-        
-        ctx.drawImage(this.image,
-                      this.indexX*this.enemiesSizes.bob.spriteWidth, this.indexY*this.enemiesSizes.bob.spriteHeight,
-                      this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.spriteHeight,
-                      this.position.x, this.position.y,
-                      this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth)
-        ctx.restore();
-        this.increaseIndexX();
-    }
-
-    
 
     takeDamage(damage) {
         let d = new Date();
@@ -123,9 +111,30 @@ class Enemy {
         }
     }
 
+    knockBack(source) {
+        this.isKnockback = true;
+        if (this.isKnockback) {
+            if (source instanceof Fork) { // knockback by fork attack
+                if (player.looking.right) {
+                    this.velocity.x = this.knockbackSpeed;
+                }
+                else if (player.looking.left) {
+                    this.velocity.x = -this.knockbackSpeed;
+                }
+                else if (player.looking.up) {
+                    this.velocity.y = -this.knockbackSpeed + 15;
+                }
+                setTimeout(() => {
+                    this.isKnockback = false;
+                }, 100);
+            }
+        }
+    }
+
     collided(source) {
         if (source instanceof Fork) {
             this.takeDamage(source.damage);
+            this.knockBack(source);
         }
         else if (source instanceof Platform) {
             // get diff between x/y from the two objects
@@ -152,13 +161,13 @@ class Enemy {
             }
 
             // left or right of platform
-            else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height) { // right of platform
+            else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < 0) { // right of platform
                 this.position.x = source.position2.x;
                 if (this.velocity.x < 0) {
                     this.velocity.x *= -1;
                 }
             }
-            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height){ // left of platform
+            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < 0){ // left of platform
                 this.position.x = source.position.x - this.width;
                 if (this.velocity.x > 0) {
                     this.velocity.x *= -1;
@@ -178,15 +187,17 @@ class Enemy {
     }
 
     update() {
-        let where = this.playerWhere();
-        if (where === "playerAtLeft") {
-            this.velocity.x = -this.speed.x;
-        }
-        else if (where === "playerAtRight"){
-            this.velocity.x = this.speed.x;
-        }
-        else {
-            this.velocity.x = 0;
+        if (!this.isKnockback) {
+            let where = this.playerWhere();
+            if (where === "playerAtLeft") {
+                this.velocity.x = -this.speed.x;
+            }
+            else if (where === "playerAtRight"){
+                this.velocity.x = this.speed.x;
+            }
+            else {
+                this.velocity.x *= 0.7;
+            }
         }
         this.jump(); // verifies if need to jump and tries to do so
 
@@ -210,6 +221,16 @@ class Enemy {
 
         this.draw();
         ctx.restore();
+    }
+
+    draw() {
+        ctx.drawImage(this.image,
+                      this.indexX*this.enemiesSizes.bob.spriteWidth, this.indexY*this.enemiesSizes.bob.spriteHeight,
+                      this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.spriteHeight,
+                      this.position.x, this.position.y,
+                      this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth, this.enemiesSizes.bob.scale*this.enemiesSizes.bob.spriteWidth)
+        ctx.restore();
+        this.increaseIndexX();
     }
 
 }
