@@ -83,7 +83,9 @@ class Player {
 
     collided(source, platformSide){ // source is the object that collided with the player
         if (source instanceof Enemy){
-            this.takeDamage(source.damage, source);
+            if (!this.isDashing){
+                this.takeDamage(source.damage, source);
+            }
         }
         else if (source instanceof Platform){
             if (platformSide === 'top'){
