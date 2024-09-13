@@ -76,6 +76,10 @@ class Player {
         this.isKnockback = false;
 
         this.attackKnockbackSpeed = 30;
+
+        // social credits *money face emoji*
+
+        this.socialCredits = 0;
     }
 
     // collision and damage functions
@@ -133,9 +137,31 @@ class Player {
                     this.velocity.x *= -1;
                 }
             }
-
-            
         }
+        else if (source instanceof Credits){
+            if (!source.isCollected){
+                source.isCollected = true;
+                if (source.value > 0) {
+                    this.gainSocialCredits(source.value);
+                }
+                else if (source.value < 0) {
+                    this.loseSocialCredits(source.value);
+                }
+            }
+        }
+    }
+
+    loseSocialCredits(amountLost){
+        this.socialCredits -= amountLost; // subtracts the amount lost
+        components.credits.push(new Credits({ // creates a new credit object
+            x: this.position.x,
+            y: this.position.y - 20
+        }, "negative"));
+        components.credits[components.credits.length - 1].isCollected = true; // makes the credit disappear
+    }
+
+    gainSocialCredits(amountGained){
+        this.socialCredits += amountGained; // adds the amount gained
     }
 
     takeDamage(damage, source){
@@ -144,6 +170,9 @@ class Player {
 
         if (time - this.damageTimer > this.damageCd && this.hp > 0){
             this.hp -= damage;
+
+            this.loseSocialCredits(10);
+
             this.damageTimer = time;
 
             // knockback

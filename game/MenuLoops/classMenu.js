@@ -208,7 +208,8 @@ class Menus {
             if (enemies[i].dead) {
                 let deadEnemy = i;
                 setTimeout (() => {
-                    enemies.splice(deadEnemy, 1);
+                    enemies.splice(deadEnemy, 1); // removes dead enemy from array
+                    i--;
                 }, 0);   
             }
             // enemy collision with platforms
@@ -233,9 +234,10 @@ class Menus {
                     }
             }
         }
-    
+
         // ------------------------------------------------------
-        // Player collision with enemies
+
+        // Player
     
         let playerEnemyCollision = rectangleColision(player, enemies); // checks collision between player and enemies
         if (playerEnemyCollision != null) {
@@ -244,7 +246,21 @@ class Menus {
         }
        
         player.update();
-    
+
+        // ------------------------------------------------------
+        // Credits
+        for (let i = 0; i < components.credits.length; i++) {
+            components.credits[i].update(); // updates the credits
+            if (components.credits[i].spliceThis) {
+                components.credits.splice(i, 1); // removes the credit from the array
+                i--;
+            }
+        }
+        let credit = rectangleColision(player, components.credits); // returns collided credit's index
+        if (credit != null) {
+            player.collided(components.credits[credit]);
+            components.credits[credit].collided(player);
+        }
     
         // ------------------------------------------------------
         // scenery scrolling
@@ -255,6 +271,9 @@ class Menus {
             for (let i = 0; i < components.enemies.length; i++) {
                 components.enemies[i].position.x -= player.velocity.x;
             }
+            for (let i = 0; i < components.credits.length; i++) {
+                components.credits[i].position.x -= player.velocity.x;
+            }
             player.position.x = 850;
         }
         else if (player.position.x < 450) { 
@@ -263,6 +282,9 @@ class Menus {
             }
             for (let i = 0; i < components.enemies.length; i++) {
                 components.enemies[i].position.x += -player.velocity.x;
+            }
+            for (let i = 0; i < components.credits.length; i++) {
+                components.credits[i].position.x += -player.velocity.x;
             }
             player.position.x = 450;
         }

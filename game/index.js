@@ -47,9 +47,19 @@ var platforms = [
         height: 200
     })
 ];
+
+var credits = [
+    new Credits({
+        x: 500,
+        y: 400
+    }, "positive"),
+
+]
+
 var components = {
     platforms: platforms,
-    enemies: enemies
+    enemies: enemies,
+    credits: credits
 }
     
 
