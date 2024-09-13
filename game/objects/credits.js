@@ -54,14 +54,19 @@ class Credits {
 
     update() {
         ctx.save();
-        if (this.position.y < this.floatingHeight.min && this.velocity.y > -0.7) {
-            this.velocity.y = 1.2;
-        }
-        else if (this.position.y > this.floatingHeight.max && this.velocity.y < 0.7) {
-            this.velocity.y = -1.2;
+        if (this.isCollected) {
+            this.velocity.y = -6; // make it go up
         }
         else {
-            this.velocity.y *= 0.8;
+            if (this.position.y < this.floatingHeight.min && this.velocity.y > -0.7) {
+                this.velocity.y = 1.2;
+            }
+            else if (this.position.y > this.floatingHeight.max && this.velocity.y < 0.7) {
+                this.velocity.y = -1.2;
+            }
+            else {
+                this.velocity.y *= 0.8;
+            }
         }
 
         this.position.y += this.velocity.y;
@@ -73,7 +78,6 @@ class Credits {
         };
 
         if (this.isCollected) {
-            this.velocity.y = -8; // make it go up
             setTimeout(() => {
                 this.spliceThis = true; // remove it from the array
             }, 200)

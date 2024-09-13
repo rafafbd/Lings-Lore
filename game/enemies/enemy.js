@@ -58,6 +58,8 @@ class Enemy {
         this.knockbackDirection = "";
         this.knockbackSpeed = 25;
         this.isKnockback = false;
+
+        this.creditsValue = 15;
     }
     
     increaseIndexX(){ // increases the index of the sprite sheet
@@ -213,6 +215,10 @@ class Enemy {
         }
 
         if (this.hp <= 0) {
+            components.credits.push(new Credits({ // creates a new positive credits object to make player lose credits
+                x: this.position.x,
+                y: this.position.y - 20
+            }, "positive"));
             this.dead = true;
             ctx.restore();
         }

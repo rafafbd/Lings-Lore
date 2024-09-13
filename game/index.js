@@ -50,13 +50,18 @@ var platforms = [
 
 var credits = [
     new Credits({
-        x: 500,
-        y: 400
+        x: -100,
+        y: 550
     }, "positive"),
 
     new Credits({
-        x: 2000,
+        x: 1120,
         y: 300
+    }, "positive"),
+
+    new Credits({
+        x: 270,
+        y: 100
     }, "positive"),
 ]
 

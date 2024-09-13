@@ -152,12 +152,7 @@ class Player {
     }
 
     loseSocialCredits(amountLost){
-        this.socialCredits -= amountLost; // subtracts the amount lost
-        components.credits.push(new Credits({ // creates a new credit object
-            x: this.position.x,
-            y: this.position.y - 20
-        }, "negative"));
-        components.credits[components.credits.length - 1].isCollected = true; // makes the credit disappear
+        this.socialCredits += amountLost; // subtracts the amount lost
     }
 
     gainSocialCredits(amountGained){
@@ -171,7 +166,10 @@ class Player {
         if (time - this.damageTimer > this.damageCd && this.hp > 0){
             this.hp -= damage;
 
-            this.loseSocialCredits(10);
+            components.credits.push(new Credits({ // creates a new negative credits object to make player lose credits
+                x: this.position.x,
+                y: this.position.y - 20
+            }, "negative"));
 
             this.damageTimer = time;
 
