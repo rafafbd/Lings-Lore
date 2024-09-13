@@ -174,7 +174,7 @@ class Menus {
             0,
             canvas.width,
             canvas.height);*/
-
+        ctx.save();
         ctx.fillStyle = '#3b3b4f';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     
@@ -182,7 +182,22 @@ class Menus {
         ctx.fillStyle = "red";
         ctx.fillText("Ling's Lore", 800, 100);
 
+        ctx.font = "20px Times new Roman";
+        if (player.socialCredits < 0) {
+            ctx.fillStyle = "red";
+        }
+        else if (player.socialCredits > 0) {
+            ctx.fillStyle = "green";
+        }
+        else {
+            ctx.fillStyle = "white";
+        }   
+        ctx.fillText("Social Credits: " + player.socialCredits, 10, 60);
 
+        ctx.fillText("x: " + player.position.x + " y: " + player.position.y, 10, 100);
+
+
+        ctx.restore();
     
         // ---------------------------------------------------------------
         //                           PLATFORMS
@@ -264,7 +279,7 @@ class Menus {
     
         // ------------------------------------------------------
         // scenery scrolling
-        if (player.position.x > 850) {
+        if (player.position.x > 850) { // scrolls the scenery to the left
             for (let i = 0; i < components.platforms.length; i++) {
                 components.platforms[i].position.x -= player.velocity.x;
             }
@@ -276,7 +291,7 @@ class Menus {
             }
             player.position.x = 850;
         }
-        else if (player.position.x < 450) { 
+        else if (player.position.x < 450) {  // scrolling to the right
             for (let i = 0; i < components.platforms.length; i++) {
                 components.platforms[i].position.x += -player.velocity.x;
             }

@@ -125,13 +125,13 @@ class Player {
             }
 
             // left or right of platform
-            else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -20 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height) { // right of platform
+            else if (axisDistances.xDiff1 > 0 && axisDistances.xDiff2 > -50 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height) { // right of platform
                 this.position.x = source.position2.x;
                 if (this.velocity.x < 0) {
                     this.velocity.x *= -1;
                 }
             }
-            else if (axisDistances.xDiff1 < 0 && axisDistances.xDiff2 < -20 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height){ // left of platform
+            else if (axisDistances.xDiff1 < -50 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height){ // left of platform
                 this.position.x = source.position.x - this.width;
                 if (this.velocity.x > 0) {
                     this.velocity.x *= -1;

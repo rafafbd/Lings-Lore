@@ -54,6 +54,10 @@ var credits = [
         y: 400
     }, "positive"),
 
+    new Credits({
+        x: 2000,
+        y: 300
+    }, "positive"),
 ]
 
 var components = {
