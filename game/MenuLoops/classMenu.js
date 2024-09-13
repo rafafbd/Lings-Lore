@@ -123,9 +123,9 @@ class Menus {
         ctx.drawImage(this.buttonX, 10, 10)
     
         if (this.mouseClickPosition.x >= 10 &&
-            this.mouseClickPosition.x <= 50 &&
+            this.mouseClickPosition.x <= 60 &&
             this.mouseClickPosition.y >= 10 &&
-            this.mouseClickPosition.y <= 50
+            this.mouseClickPosition.y <= 60
         ){
             this.currentPage = "menu";
         }
