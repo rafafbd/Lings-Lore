@@ -6,9 +6,13 @@ class Menus {
             y: yMouse
         };
 
-        const background = new Image();
-        background.src = "/Assets/Background-original.png";
-        this.backGround = background;
+        this.canPlay = false
+        this.background = new Image();
+        this.background.src = "./Assets/Background-original.png";
+        this.background.onload = () => {
+            this.canPlay = true
+        }
+
 
         this.buttonX = new Image();
         this.buttonX.src = "./Assets/pixil-frame-0.png";
@@ -175,8 +179,8 @@ class Menus {
             canvas.width,
             canvas.height);*/
         ctx.save();
-        ctx.fillStyle = '#3b3b4f';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
     
         ctx.font = "50px Times new Roman";
         ctx.fillStyle = "red";
