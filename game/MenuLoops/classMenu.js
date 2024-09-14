@@ -8,7 +8,7 @@ class Menus {
 
         this.canPlay = false
         this.background = new Image();
-        this.background.src = "./Assets/Background-original.png";
+        this.background.src = "./Assets/background3.png";
         this.background.onload = () => {
             this.canPlay = true
         }
