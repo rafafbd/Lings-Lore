@@ -1,13 +1,15 @@
-class Enemy {
-    constructor({x, y}) {
+class Enemy { // abstract class
+    constructor({x, y}, imageSource, width, height, speedX, speedY, damage, hp, creditsValue) {
          
-        
-        const image = new Image()
-        this.imgSource = "./Assets/Bob-spritesheet.png";
-        image.src = this.imgSource;
-        this.image = image
-        this.indexX = 0
-        this.indexY = 0
+        this.image = new Image();
+        this.image.src = imageSource;
+        this.canPlay = false;
+        this.image.onload = () => {
+            this.canPlay = true;
+        }
+
+        this.indexX = 0;
+        this.indexY = 0;
 
         this.enemiesSizes = {
             spriteWidth: 100,
@@ -15,12 +17,10 @@ class Enemy {
             scale: 1
         }
 
-        this.shape = "rectangle";
-
-        this.width = 50;
-        this.height = 80;
-
+        this.width = width;
+        this.height = height;
         this.position = {x,y};
+
         this.position2 = {
             x: this.position.x + this.width,
             y: this.position.y + this.height
@@ -36,8 +36,8 @@ class Enemy {
         };
 
         this.speed = { // values wich modify the velocity values
-            x: 5, // walk speed
-            y: 10 // jump speed
+            x: speedX, // walk speed
+            y: speedY // jump speed
         };
 
         // ^^^^^^ physics ^^^^^^^^
@@ -50,8 +50,8 @@ class Enemy {
         this.damageCd = 0.5
 
         // atributes
-        this.damage = 20;
-        this.hp = 100;
+        this.damage = damage;
+        this.hp = hp;
         this.dead = false;
 
         // knockback atributes
@@ -59,7 +59,7 @@ class Enemy {
         this.knockbackSpeed = 25;
         this.isKnockback = false;
 
-        this.creditsValue = 15;
+        this.creditsValue = creditsValue;
     }
     
     increaseIndexX(){ // increases the index of the sprite sheet
@@ -80,7 +80,7 @@ class Enemy {
 
     playerWhere() { // detects wheter the enemy will detect the player 
         if (this.centerPosition.x > player.centerPosition.x ){
-            return "playerAtLeft";
+            return -1; // player is at left
            
         }
         if (player.centerPosition.x > this.centerPosition.x ){
@@ -90,9 +90,9 @@ class Enemy {
             ctx.scale(-1, 1); // inverts the context
             ctx.translate(-this.position.x, -this.position.y);
             
-            return "playerAtRight";
+            return 1; // player is at right
         }
-        return "dontSeePlayer";
+        return 0; // player is at the same x axis
     }
 
     isPlayerHigher() {
@@ -105,6 +105,9 @@ class Enemy {
     jump() {
         if (!this.isOnFloor){
             this.velocity.y += gravity;
+        }
+        else if (this.isPlayerHigher() && this.isOnFloor) {
+            this.velocity.y = -this.speed.y;
         }
         else {
             this.velocity.y = 0;
@@ -189,10 +192,10 @@ class Enemy {
     update() {
         if (!this.isKnockback) {
             let where = this.playerWhere();
-            if (where === "playerAtLeft") {
+            if (where == -1) { // player is at left
                 this.velocity.x = -this.speed.x;
             }
-            else if (where === "playerAtRight"){
+            else if (where == 1){ // player is at right
                 this.velocity.x = this.speed.x;
             }
             else {
@@ -215,10 +218,13 @@ class Enemy {
         }
 
         if (this.hp <= 0) {
-            components.credits.push(new Credits({ // creates a new positive credits object to make player lose credits
-                x: this.position.x,
-                y: this.position.y - 20
-            }, "positive"));
+            let howManyCredits = this.creditsValue / 10;
+            for (let i = 0; i < howManyCredits; i++) {
+                components.credits.push(new Credits({ // creates a new positive credits object to make player lose credits
+                    x: this.position.x,
+                    y: this.position.y - 20 - (i * 10),
+                }, "positive"));
+            }
             this.dead = true;
             ctx.restore();
         }
@@ -228,13 +234,14 @@ class Enemy {
     }
 
     draw() {
-        ctx.drawImage(this.image,
-                      this.indexX*this.enemiesSizes.spriteWidth, this.indexY*this.enemiesSizes.spriteHeight,
-                      this.enemiesSizes.spriteWidth, this.enemiesSizes.spriteHeight,
-                      this.position.x, this.position.y,
-                      this.enemiesSizes.scale*this.enemiesSizes.spriteWidth, this.enemiesSizes.scale*this.enemiesSizes.spriteWidth)
-        ctx.restore();
-        this.increaseIndexX();
+        if (this.canPlay) {
+            ctx.drawImage(this.image,
+                        this.indexX*this.enemiesSizes.spriteWidth, this.indexY*this.enemiesSizes.spriteHeight,
+                        this.enemiesSizes.spriteWidth, this.enemiesSizes.spriteHeight,
+                        this.position.x, this.position.y,
+                        this.enemiesSizes.scale*this.enemiesSizes.spriteWidth, this.enemiesSizes.scale*this.enemiesSizes.spriteWidth)
+            ctx.restore();
+            this.increaseIndexX();
+        }
     }
-
 }

@@ -193,11 +193,10 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
             break;
 
         case 'KeyP':
-            enemies.push(new Enemy({
+            enemies.push(new Bob({
                 x: 800,
                 y: 100
-            }))
-                        
+            }))   
             break;
         
         case 'KeyJ':
