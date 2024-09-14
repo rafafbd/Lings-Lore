@@ -35,7 +35,7 @@ class Fork {
         this.cd = 0.5; // fork attack colldown in seconds
 
         this.knockBackTimer = d.getTime()/1000;
-        this.knockBackCd = 0.5;
+        this.knockBackCd = 0.3;
 
         this.isEquiped = true; // var. to check if fork is being used
     }
