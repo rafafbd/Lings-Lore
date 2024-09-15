@@ -27,7 +27,13 @@ var credits = [];
 
 var components = {}
 
+var doors = [];
+
 function level1() {
+    doors = [
+        door = new Door({x:50, y: 0})
+    ];
+
     player.velocity = { // player velocity
         x: 0,
         y: 0
@@ -38,7 +44,9 @@ function level1() {
     player.dead = false;
     player.socialCredits = 0;
     
-    enemies = []  // creates enemy
+    enemies = [
+        
+    ]  // creates enemy
     
     platforms = [
         platform1 = new Platform({
@@ -62,8 +70,14 @@ function level1() {
         floor1 = new Platform({
             x: 0,
             y: canvas.height - 200,
-            width: canvas.width, 
+            width: canvas.width + 2000, 
             height: 200
+        }),
+        floor2 = new Platform({
+            x: canvas.width + 2000,
+            y: canvas.height - 300,
+            width: 1000,
+            height: 300
         })
     ];
     credits = [

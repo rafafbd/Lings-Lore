@@ -194,6 +194,7 @@ class Enemy { // abstract class
     }
 
     update() {
+        console.log("entrou no super.update")
         if (!this.isKnockback) {
             let where = this.playerWhere();
             if (where == -1) { // player is at left

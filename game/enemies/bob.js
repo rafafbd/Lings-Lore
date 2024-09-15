@@ -2,7 +2,7 @@ class Bob extends Enemy {
     constructor({x, y}, sideToSideRange){
         super({x, y}, "./Assets/Bob-spritesheet.png", 50, 80, 5, 0, 20, 100, 15 );
         this.originalPosition = {x, y};
-        this.seePlayerRange = 300;
+        this.seePlayerRange = 400;
         this.playerInRange = false;
         this.sideToSideRange = sideToSideRange;
         this.patrolDirection = 1; // 1 for right, -1 for left

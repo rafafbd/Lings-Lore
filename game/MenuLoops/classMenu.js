@@ -64,19 +64,19 @@ class Menus {
     }
 
     getCurrentPage = () => {
-        return this.currentPage
+        return this.currentPage;
     }
 
     updateMousePositions = (xMouse, yMouse) => {
-        this.mouseClickPosition.x = xMouse
-        this.mouseClickPosition.y = yMouse
+        this.mouseClickPosition.x = xMouse;
+        this.mouseClickPosition.y = yMouse;
     }
 
     menuLoop = () => {
         ctx.clearRect(0, 0, 600, 800);
     
-        ctx.font = "50px Arial"
-        ctx.fillText("Ling's Lore", 830, 200, 300)
+        ctx.font = "50px Arial";
+        ctx.fillText("Ling's Lore", 830, 200, 300);
     
         
         
@@ -275,6 +275,14 @@ class Menus {
 
         // ------------------------------------------------------
 
+        // Door
+
+        if (rectangleColision(player, doors) != null){
+            this.currentLevel += 1;
+        }
+        doors[0].draw();
+        // ------------------------------------------------------
+
         // Player
     
         let playerEnemyCollision = rectangleColision(player, enemies); // checks collision between player and enemies
@@ -282,7 +290,7 @@ class Menus {
             player.collided(enemies[playerEnemyCollision]);
             enemies[playerEnemyCollision].collided(player);
         }
-       
+        
         player.update();
 
         // ------------------------------------------------------
@@ -331,6 +339,14 @@ class Menus {
     
     }
 
+    resetLevel = () => {
+        platforms = [];
+        enemies = [];
+        credits = [];
+        components = [];
+        level1();
+    }
+
     gameOver = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.font = "50px Arial";
@@ -340,7 +356,7 @@ class Menus {
         this.currentPage = "gameover";
         ctx.fillText("Press 'J' to restart", 150, 400, 300);
         if (keys.attack.pressed) {
-            this.currentLevel = 2;
+            this.resetLevel();
             this.currentPage = "game";
         }
         if (this.currentPage == "gameover"){
