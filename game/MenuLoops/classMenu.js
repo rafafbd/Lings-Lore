@@ -165,6 +165,10 @@ class Menus {
         }
     }
 
+    drawBackground() {
+        ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
+    }
+
     playerLoop = () => {
         if (this.firstLoadLevel) {
             switch (this.currentLevel) {
@@ -194,8 +198,9 @@ class Menus {
             canvas.height);*/
         ctx.save();
         
-        ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
-    
+        
+        this.drawBackground()
+
         ctx.font = "50px Times new Roman";
         ctx.fillStyle = "red";
         ctx.fillText("Ling's Lore", 800, 100);

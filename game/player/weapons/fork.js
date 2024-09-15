@@ -80,6 +80,7 @@ class Fork {
                     break;
             }
             ctx.restore()
+            music.playMusic(3)
             this.attackTimer = time;
         }
         

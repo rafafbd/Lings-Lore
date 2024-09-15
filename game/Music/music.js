@@ -7,14 +7,16 @@ class Music{
         this.playing = false;
         this.canPlay = false;
 
-        this.audio.src = "/game/Assets/Musics/chinese-beat-190047.mp3";
+        
 
         this.musics = [
             "/game/Assets/Musics/chinese-beat-190047.mp3",
-            "/game/Assets/Musics/chinese-ancient-style-music.mp3"
+            "/game/Assets/Musics/chinese-ancient-style-music.mp3",
+            "/game/Assets/Musics/redSunInTheSkyLoopVer.mp3",
+            "/game/Assets/Musics/forkHit.mp3"
 
         ]
-
+        this.audio.src = this.musics[2];
     }
 
 
@@ -33,6 +35,30 @@ class Music{
             });
             
     }
+    }
+
+    playMusic(music){
+        if (this.canPlay && this.playing == false){
+            //console.log("Ta liberado");
+            this.audio.play().then (()=>{
+                //console.log("foi")
+                this.playing = true;
+            }).catch((error) => {
+                console.error("Erro ao tentar reproduzir o áudio:", error);
+            })
+
+        }    
+        else{
+            this.audio.pause()
+            this.audio.src = this.musics[music]
+            this.audio.play().then (()=>{
+                //console.log("foi")
+                this.playing = true;
+            }).catch((error) => {
+                console.error("Erro ao tentar reproduzir o áudio:", error);
+            })
+        }
+        
     }
 
     changeSong(index){
