@@ -25,14 +25,21 @@ var platforms = [];
 
 var credits = [];
 
-var components = {}
-
 var doors = [];
 
+var heals = [];
+
+var components = {};
+
+
+
 function level1() {
-    doors = [
-        door = new Door({x:50, y: 0})
+    heals = [
+        new Heal(850, 664)
     ];
+    //doors = [
+    //    door = new Door({x:700, y: 664})
+    //];
 
     player.velocity = { // player velocity
         x: 0,
@@ -99,11 +106,14 @@ function level1() {
     components = {
         platforms: platforms,
         enemies: enemies,
-        credits: credits
+        credits: credits,
+        doors: doors,
+        heals: heals
     }
 }
 
 function level2() {
+    
     player.velocity = { // player velocity
         x: 0,
         y: 0
@@ -113,6 +123,9 @@ function level2() {
     player.hp = 100;
     player.dead = false;
     player.socialCredits = 0;
+
+    doors = [];
+    heals = [];
 
     enemies = [
         new Bob({

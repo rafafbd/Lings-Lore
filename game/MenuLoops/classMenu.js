@@ -59,6 +59,7 @@ class Menus {
 
         this.currentLevel = 1;
         this.firstLoadLevel = true;
+        this.passedLevel = false;
 
         // Ensure ctx is available globally or passed in as needed
     }
@@ -170,7 +171,7 @@ class Menus {
     }
 
     playerLoop = () => {
-        if (this.firstLoadLevel) {
+        if (this.firstLoadLevel || this.passedLevel) {
             switch (this.currentLevel) {
                 case 1:
                     level1();
@@ -180,6 +181,7 @@ class Menus {
                     break;
             }
             this.firstLoadLevel = false;
+            this.passedLevel = false;
         }
     
         //----------------------------------------------------------------
@@ -276,11 +278,25 @@ class Menus {
         // ------------------------------------------------------
 
         // Door
+        
+        //if (rectangleColision(player, doors) != null){
+        //    doors[0].passLevel(this.currentLevel);
+        //}
+        //doors[0].draw();
 
-        if (rectangleColision(player, doors) != null){
-            this.currentLevel += 1;
+        // ------------------------------------------------------
+
+        // Heal
+
+        let qualHeal = rectangleColision(player, heals); 
+        if (qualHeal != null) {
+            console.log("entroui")
+            player.collided(heals[qualHeal]);
         }
-        doors[0].draw();
+        for (let i=0; i<heals.length;i++){
+            heals[i].draw();
+        }
+
         // ------------------------------------------------------
 
         // Player

@@ -149,6 +149,9 @@ class Player {
                 }
             }
         }
+        else if (source instanceof Heal){
+            this.heal(25);
+        }
     }
 
     loseSocialCredits(amountLost){

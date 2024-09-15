@@ -1,6 +1,9 @@
 class Enemy { // abstract class
     constructor({x, y}, imageSource, width, height, speedX, speedY, damage, hp, creditsValue) {
-         
+        this.originalPosition = {
+            x: x,
+            y: y
+        };
         this.image = new Image();
         this.image.src = imageSource;
         this.canPlay = false;
@@ -194,7 +197,6 @@ class Enemy { // abstract class
     }
 
     update() {
-        console.log("entrou no super.update")
         if (!this.isKnockback) {
             let where = this.playerWhere();
             if (where == -1) { // player is at left
