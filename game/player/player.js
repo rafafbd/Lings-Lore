@@ -209,6 +209,7 @@ class Player {
                 this.velocity.x = this.attackKnockbackSpeed;
             }
             else if (this.looking.down) {
+                this.position.y -= 10; // Adjusts the player's position to make the player not on the floor
                 this.velocity.y = -this.attackKnockbackSpeed + 15;
             }
             this.isKnockback = false;
