@@ -24,22 +24,7 @@ class Bob extends Enemy {
 
         if (!this.isKnockback) {
             if (!this.playerInRange) {
-                // patrol limits
-                const leftBoundary = this.originalPosition.x - this.sideToSideRange;
-                const rightBoundary = this.originalPosition.x + this.sideToSideRange;
-                
-                if (this.position.x <= leftBoundary) {
-                    // inverts image
-                    ctx.save();
-                    ctx.translate(this.position.x + this.width*2, this.position.y);
-                    ctx.scale(-1, 1); // inverts the context
-                    ctx.translate(-this.position.x, -this.position.y);
-                    this.patrolDirection = 1; // Move right
-                } else if (this.position.x >= rightBoundary) {
-                    this.patrolDirection = -1; // Move left
-                }
-
-                this.velocity.x = this.speed.x * this.patrolDirection;
+                this.velocity.x = 0;
             }
             else if (this.playerInRange) {
                 console.log("player in range");
