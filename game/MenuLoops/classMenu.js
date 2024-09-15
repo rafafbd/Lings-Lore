@@ -288,6 +288,7 @@ class Menus {
                 components.platforms[i].position.x -= player.velocity.x;
             }
             for (let i = 0; i < components.enemies.length; i++) {
+                components.enemies[i].originalPosition.x -= player.velocity.x;
                 components.enemies[i].position.x -= player.velocity.x;
             }
             for (let i = 0; i < components.credits.length; i++) {
@@ -300,6 +301,7 @@ class Menus {
                 components.platforms[i].position.x += -player.velocity.x;
             }
             for (let i = 0; i < components.enemies.length; i++) {
+                components.enemies[i].originalPosition.x += -player.velocity.x;
                 components.enemies[i].position.x += -player.velocity.x;
             }
             for (let i = 0; i < components.credits.length; i++) {

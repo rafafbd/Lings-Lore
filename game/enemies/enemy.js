@@ -61,7 +61,7 @@ class Enemy { // abstract class
 
         this.creditsValue = creditsValue;
     }
-    
+
     increaseIndexX(){ // increases the index of the sprite sheet
         if (this.indexX < 16)
             this.indexX += 1
@@ -81,15 +81,8 @@ class Enemy { // abstract class
     playerWhere() { // detects wheter the enemy will detect the player 
         if (this.centerPosition.x > player.centerPosition.x ){
             return -1; // player is at left
-           
         }
         if (player.centerPosition.x > this.centerPosition.x ){
-            //ctx.scale(-1, 1); // inverts the context
-            ctx.save();
-            ctx.translate(this.position.x+this.width*2, this.position.y);
-            ctx.scale(-1, 1); // inverts the context
-            ctx.translate(-this.position.x, -this.position.y);
-            
             return 1; // player is at right
         }
         return 0; // player is at the same x axis
@@ -106,7 +99,7 @@ class Enemy { // abstract class
         if (!this.isOnFloor){
             this.velocity.y += gravity;
         }
-        else if (this.isPlayerHigher() && this.isOnFloor) {
+        else if (this.isPlayerHigher() && this.isOnFloor && !this.isKnockback) {
             this.velocity.y = -this.speed.y;
         }
         else {
@@ -189,6 +182,17 @@ class Enemy { // abstract class
         }
     }
 
+    updatePositions() {
+        // updates positions
+        this.centerPosition.x = this.position.x + (this.width / 2);
+        this.centerPosition.y = this.position.y + (this.height / 2);
+
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
+        }
+    }
+
     update() {
         if (!this.isKnockback) {
             let where = this.playerWhere();
@@ -196,6 +200,12 @@ class Enemy { // abstract class
                 this.velocity.x = -this.speed.x;
             }
             else if (where == 1){ // player is at right
+                //ctx.scale(-1, 1); // inverts the context
+                ctx.save();
+                ctx.translate(this.position.x+this.width*2, this.position.y);
+                ctx.scale(-1, 1); // inverts the context
+                ctx.translate(-this.position.x, -this.position.y);
+                
                 this.velocity.x = this.speed.x;
             }
             else {
@@ -207,22 +217,14 @@ class Enemy { // abstract class
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
-        // updates positions
-
-        this.centerPosition.x = this.position.x + (this.width / 2);
-        this.centerPosition.y = this.position.y + (this.height / 2);
-
-        this.position2 = {
-            x: this.position.x + this.width,
-            y: this.position.y + this.height
-        }
+        this.updatePositions();
 
         if (this.hp <= 0) {
             let howManyCredits = this.creditsValue / 10;
-            for (let i = 0; i < howManyCredits; i++) {
+            for (let i = 1; i < howManyCredits; i++) {
                 components.credits.push(new Credits({ // creates a new positive credits object to make player lose credits
                     x: this.position.x,
-                    y: this.position.y - 20 - (i * 10),
+                    y: this.position.y - 20 - (i * 20),
                 }, "positive"));
             }
             this.dead = true;
