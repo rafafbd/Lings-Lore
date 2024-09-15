@@ -21,56 +21,147 @@ const player = new Player({
 
 var enemies = []  // creates enemy
 
-var platforms = [
-    platform1 = new Platform({
-        x: 800,
-        y: 600,
-        width: 200,
-        height: 50
-    }),
-    platform2 = new Platform({
-        x: 1100,
-        y: 400,
-        width: 100,
-        height: 30
-    }),
-    platform3 = new Platform({
-        x: 200,
-        y: 200,
-        width: 200,
-        height: 300
-    }),
-    floor1 = new Platform({
+var platforms = [];
+
+var credits = [];
+
+var components = {}
+
+function level1() {
+    player.velocity = { // player velocity
         x: 0,
-        y: canvas.height - 200,
-        width: canvas.width, 
-        height: 200
-    })
-];
-
-var credits = [
-    new Credits({
-        x: -100,
-        y: 550
-    }, "positive"),
-
-    new Credits({
-        x: 1120,
-        y: 300
-    }, "positive"),
-
-    new Credits({
-        x: 270,
-        y: 100
-    }, "positive"),
-]
-
-var components = {
-    platforms: platforms,
-    enemies: enemies,
-    credits: credits
-}
+        y: 0
+    }
+    player.position.x = 600;
+    player.position.y = 0;
+    player.hp = 100;
+    player.dead = false;
+    player.socialCredits = 0;
     
+    enemies = []  // creates enemy
+    
+    platforms = [
+        platform1 = new Platform({
+            x: 800,
+            y: 600,
+            width: 200,
+            height: 50
+        }),
+        platform2 = new Platform({
+            x: 1100,
+            y: 400,
+            width: 100,
+            height: 30
+        }),
+        platform3 = new Platform({
+            x: 200,
+            y: 200,
+            width: 200,
+            height: 300
+        }),
+        floor1 = new Platform({
+            x: 0,
+            y: canvas.height - 200,
+            width: canvas.width, 
+            height: 200
+        })
+    ];
+    credits = [
+        new Credits({
+            x: -100,
+            y: 550
+        }, "positive"),
+    
+        new Credits({
+            x: 1120,
+            y: 300
+        }, "positive"),
+    
+        new Credits({
+            x: 270,
+            y: 100
+        }, "positive"),
+    ];
+    components = {
+        platforms: platforms,
+        enemies: enemies,
+        credits: credits
+    }
+}
+
+function level2() {
+    player.velocity = { // player velocity
+        x: 0,
+        y: 0
+    }
+    player.position.x = 600;
+    player.position.y = 0;
+    player.hp = 100;
+    player.dead = false;
+    player.socialCredits = 0;
+
+    enemies = [
+        new Bob({
+            x: 500,
+            y: 300
+        }, 100),
+        new Bob({
+            x: 900,
+            y: 500
+        }, 100)
+    ];
+
+    platforms = [
+        new Platform({
+            x: 300,
+            y: 400,
+            width: 150,
+            height: 50
+        }),
+        new Platform({
+            x: 700,
+            y: 300,
+            width: 200,
+            height: 50
+        }),
+        new Platform({
+            x: 1000,
+            y: 200,
+            width: 100,
+            height: 30
+        }),
+        new Platform({
+            x: 0,
+            y: canvas.height - 200,
+            width: canvas.width,
+            height: 200
+        })
+    ];
+
+    credits = [
+        new Credits({
+            x: 350,
+            y: 350
+        }, "positive"),
+        new Credits({
+            x: 750,
+            y: 250
+        }, "positive"),
+        new Credits({
+            x: 1050,
+            y: 150
+        }, "positive")
+    ];
+
+    components = {
+        platforms: platforms,
+        enemies: enemies,
+        credits: credits
+    };
+}
+
+function level3() {
+}
 
 // world constants
 const gravity = 0.8;
@@ -101,7 +192,7 @@ const keys = { // keys status (pressed or released)
 }
 
 function cutscesneInicial(){
-    
+    return;
 }
 
 //Game Loop

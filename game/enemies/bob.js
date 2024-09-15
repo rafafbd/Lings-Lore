@@ -1,6 +1,6 @@
 class Bob extends Enemy {
     constructor({x, y}, sideToSideRange){
-        super({x, y}, "./Assets/Bob-spritesheet.png", 50, 80, 5, 0, 10, 100, 15 );
+        super({x, y}, "./Assets/Bob-spritesheet.png", 50, 80, 5, 0, 20, 100, 15 );
         this.originalPosition = {x, y};
         this.seePlayerRange = 300;
         this.playerInRange = false;
@@ -27,14 +27,11 @@ class Bob extends Enemy {
                 this.velocity.x = 0;
             }
             else if (this.playerInRange) {
-                console.log("player in range");
                 let where = this.playerWhere();
                 if (where == -1) { // player is at left
-                    console.log("player is at left");
                     this.velocity.x = -this.speed.x;
                 }
                 else if (where == 1){ // player is at right
-                    console.log("player is at right");
                     ctx.save();
                     ctx.translate(this.position.x + this.width*2, this.position.y);
                     ctx.scale(-1, 1); // inverts the context

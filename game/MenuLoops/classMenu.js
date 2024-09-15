@@ -57,6 +57,9 @@ class Menus {
             { text: "Space - Pular", x: 100, y: 480, maxW: 1000 }
         ];
 
+        this.currentLevel = 1;
+        this.firstLoadLevel = true;
+
         // Ensure ctx is available globally or passed in as needed
     }
 
@@ -163,6 +166,17 @@ class Menus {
     }
 
     playerLoop = () => {
+        if (this.firstLoadLevel) {
+            switch (this.currentLevel) {
+                case 1:
+                    level1();
+                    break;
+                case 2:
+                    level2();
+                    break;
+            }
+            this.firstLoadLevel = false;
+        }
     
         //----------------------------------------------------------------
         //Teste parar musica
@@ -310,6 +324,23 @@ class Menus {
             player.position.x = 450;
         }
     
+    }
+
+    gameOver = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = "50px Arial";
+        ctx.fillText("Game Over", 150, 200, 300);
+        ctx.font = "20px Arial";
+        this.firstLoadLevel = true;
+        this.currentPage = "gameover";
+        ctx.fillText("Press 'J' to restart", 150, 400, 300);
+        if (keys.attack.pressed) {
+            this.currentLevel = 2;
+            this.currentPage = "game";
+        }
+        if (this.currentPage == "gameover"){
+            requestAnimationFrame(this.gameOver);
+        }
     }
 
 }

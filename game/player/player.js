@@ -185,7 +185,7 @@ class Player {
             this.knockBack("enemy");
         }
         if (this.hp <= 0){
-            // gameOver(); // set to dead state and end game through index.js?
+            menus.gameOver();
             console.log("game over");   
         }
     }
