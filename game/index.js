@@ -119,8 +119,9 @@ function level1() {
         platforms: platforms,
         enemies: enemies,
         credits: credits,
-        door: doors[0],
-        heals: heals
+        doors: doors,
+        heals: heals,
+        notes: notes
     }
 }
 
@@ -203,8 +204,9 @@ function level2() {
         platforms: platforms,
         enemies: enemies,
         credits: credits,
-        door: doors[0],
-        heals: heals
+        doors: doors,
+        heals: heals,
+        notes: notes
     };
 }
 

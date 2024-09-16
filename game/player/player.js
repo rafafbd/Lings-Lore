@@ -102,7 +102,6 @@ class Player {
             }
         }
         else if (source instanceof Heal){
-            console.log("heal") 
             this.heal(25);
         }
         else if (source instanceof Platform){
