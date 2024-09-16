@@ -90,6 +90,21 @@ class Player {
                 this.takeDamage(source.damage, source);
             }
         }
+        else if (source instanceof Credits){
+            if (!source.isCollected){
+                source.isCollected = true;
+                if (source.value > 0) {
+                    this.gainSocialCredits(source.value);
+                }
+                else if (source.value < 0) {
+                    this.loseSocialCredits(source.value);
+                }
+            }
+        }
+        else if (source instanceof Heal){
+            console.log("heal") 
+            this.heal(25);
+        }
         else if (source instanceof Platform){
             // get diff between x/y from the two objects
             let axisDistances = {
@@ -137,20 +152,6 @@ class Player {
                     this.velocity.x *= -1;
                 }
             }
-        }
-        else if (source instanceof Credits){
-            if (!source.isCollected){
-                source.isCollected = true;
-                if (source.value > 0) {
-                    this.gainSocialCredits(source.value);
-                }
-                else if (source.value < 0) {
-                    this.loseSocialCredits(source.value);
-                }
-            }
-        }
-        else if (source instanceof Heal){
-            this.heal(25);
         }
     }
 

@@ -260,13 +260,13 @@ class Menus {
 
         // Heal
 
-        let qualHeal = rectangleColision(player, heals); 
-        if (qualHeal != null) {
-            console.log("entroui")
-            player.collided(heals[qualHeal]);
+        let collidedHeal = rectangleColision(player, heals); // checks collision between player and heals
+        if (collidedHeal != null) {
+            console.log("collided with heal");
+            player.collided(heals[collidedHeal]);
         }
         for (let i=0; i<heals.length;i++){
-            heals[i].draw();
+            heals[i].update();
         }
 
         // ------------------------------------------------------
@@ -309,6 +309,9 @@ class Menus {
             for (let i = 0; i < components.credits.length; i++) {
                 components.credits[i].position.x -= player.velocity.x;
             }
+            for (let i = 0; i < components.heals.length; i++) {
+                components.heals[i].position.x -= player.velocity.x;
+            }
             player.position.x = 850;
         }
         else if (player.position.x < 450) {  // scrolling to the right
@@ -321,6 +324,9 @@ class Menus {
             }
             for (let i = 0; i < components.credits.length; i++) {
                 components.credits[i].position.x += -player.velocity.x;
+            }
+            for (let i = 0; i < components.heals.length; i++) {
+                components.heals[i].position.x += -player.velocity.x;
             }
             player.position.x = 450;
         }

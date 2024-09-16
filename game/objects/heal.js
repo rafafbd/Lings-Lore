@@ -9,12 +9,20 @@ class Heal { // classe de um objeto que o ling se cura quando passar por cima
         this.height = 20;
 
         this.position2 = {
-            x: this.x + this.width,
-            y: this.y + this.height
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
         };
 
         this.image = new Image();
         this.image.src = "";
+    }
+
+    update() {
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
+        };
+        this.draw();
     }
 
     draw(){
