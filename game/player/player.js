@@ -131,7 +131,7 @@ class Player {
                     this.velocity.x *= -1;
                 }
             }
-            else if (axisDistances.xDiff1 < -50 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height){ // left of platform
+            else if (axisDistances.xDiff1 < 50 && axisDistances.xDiff2 < 0 && axisDistances.yDiff1 > 0 && axisDistances.yDiff2 < this.height){ // left of platform
                 this.position.x = source.position.x - this.width;
                 if (this.velocity.x > 0) {
                     this.velocity.x *= -1;
@@ -293,6 +293,20 @@ class Player {
         ctx.fillRect(15, 15, this.hp, 10)
     }
 
+    drawCredits() {
+        ctx.font = "20px Times new Roman";
+        if (this.socialCredits < 0) {
+            ctx.fillStyle = "red";
+        }
+        else if (this.socialCredits > 0) {
+            ctx.fillStyle = "green";
+        }
+        else {
+            ctx.fillStyle = "white";
+        }   
+        ctx.fillText("Social Credits: " + this.socialCredits, 10, 60);
+    }
+
     update() {
         ctx.save();
         const currentTime = Date.now();
@@ -369,5 +383,6 @@ class Player {
         this.fork.update();
         this.draw();
         this.drawLife();
+        this.drawCredits();
     }
 }

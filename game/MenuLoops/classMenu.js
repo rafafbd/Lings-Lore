@@ -185,42 +185,14 @@ class Menus {
         }
     
         //----------------------------------------------------------------
-        //Teste parar musica
-        if (player.position.y + player.height < canvas.height-200 && player.isOnFloor){
-            music.stopAudio();
-        }
-        //----------------------------------------------------------------
-
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        /*ctx.drawImage(this.backGround,
-            0,
-            0,
-            canvas.width,
-            canvas.height);*/
         ctx.save();
-        
         
         this.drawBackground()
 
         ctx.font = "50px Times new Roman";
         ctx.fillStyle = "red";
         ctx.fillText("Ling's Lore", 800, 100);
-
-        ctx.font = "20px Times new Roman";
-        if (player.socialCredits < 0) {
-            ctx.fillStyle = "red";
-        }
-        else if (player.socialCredits > 0) {
-            ctx.fillStyle = "green";
-        }
-        else {
-            ctx.fillStyle = "white";
-        }   
-        ctx.fillText("Social Credits: " + player.socialCredits, 10, 60);
-
-        ctx.fillText("x: " + player.position.x + " y: " + player.position.y, 10, 100);
-
 
         ctx.restore();
     
@@ -365,6 +337,7 @@ class Menus {
 
     gameOver = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "red";
         ctx.font = "50px Arial";
         ctx.fillText("Game Over", 150, 200, 300);
         ctx.font = "20px Arial";
