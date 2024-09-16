@@ -55,6 +55,8 @@ function level1() {
         y: 564
     })
     ];
+
+    notes = [];
     
     enemies = [
         new Bob({
@@ -147,6 +149,8 @@ function level2() {
     })
     ];
 
+    notes = [];
+
     enemies = [
         new Bob({
             x: 500,
@@ -211,6 +215,94 @@ function level2() {
 }
 
 function level3() {
+    player.velocity = { // player velocity
+        x: 0,
+        y: 0
+    }
+    player.position.x = 600;
+    player.position.y = 0;
+    player.hp = 100;
+    player.dead = false;
+    player.socialCredits = 0;
+
+    heals = [
+        new Heal(100, 700),
+        new Heal(900, 500),
+    ];
+    doors = [
+       door = new Door({
+        x: 2000,
+        y: 600
+    })
+    ];
+
+    notes = [];
+
+    enemies = [
+        new Bob({
+            x: 700,
+            y: 500
+        }),
+        new Bob({
+            x: 200,
+            y: 300
+        }),
+        new Jorge({
+            x: 1000,
+            y: 100 
+        })
+    ];
+
+    platforms = [
+        new Platform({
+            x: 300,
+            y: 500,
+            width: 240,
+            height: 100
+        }),
+        new Platform({
+            x: 700,
+            y: 400,
+            width: 200,
+            height: 50
+        }),
+        new Platform({
+            x: 1000,
+            y: 200,
+            width: 100,
+            height: 30
+        }),
+        new Platform({
+            x: 0,
+            y: canvas.height - 200,
+            width: canvas.width,
+            height: 200
+        })
+    ];
+
+    credits = [
+        new Credits({
+            x: 350,
+            y: 350
+        }, "positive"),
+        new Credits({
+            x: 750,
+            y: 250
+        }, "positive"),
+        new Credits({
+            x: 1050,
+            y: 150
+        }, "positive")
+    ];
+
+    components = {
+        platforms: platforms,
+        enemies: enemies,
+        credits: credits,
+        doors: doors,
+        heals: heals,
+        notes: notes
+    };
 }
 
 // world constants

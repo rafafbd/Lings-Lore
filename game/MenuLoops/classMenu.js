@@ -179,6 +179,9 @@ class Menus {
                 case 2:
                     level2();
                     break;
+                case 3:
+                    level3();
+                    break;
             }
             this.firstLoadLevel = false;
             this.passedLevel = false;
