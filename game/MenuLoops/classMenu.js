@@ -249,6 +249,20 @@ class Menus {
 
         // ------------------------------------------------------
 
+        // Notes
+        if (notes.length > 0){
+           for (let i=0; i<notes.length; i++){
+            notes[i].update();
+            } 
+            let whichNoteCollided = rectangleColision(player, notes); // checks collision between player and enemies
+            if (whichNoteCollided != null) {
+                player.collided(notes[whichNoteCollided]);
+            }
+        }
+        
+
+        // ------------------------------------------------------
+
         // Door
         
         if (rectangleColision(player, doors) != null){

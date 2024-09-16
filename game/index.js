@@ -29,6 +29,8 @@ var doors = [];
 
 var heals = [];
 
+var notes = [];
+
 var components = {};
 
 
@@ -58,6 +60,10 @@ function level1() {
         new Bob({
             x: 1200,
             y: 100
+        }),
+        new Jorge({
+            x: 1400,
+            y: 150
         })
     ]  // creates enemy
     

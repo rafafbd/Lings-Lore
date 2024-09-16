@@ -85,7 +85,7 @@ class Player {
     // collision and damage functions
 
     collided(source){ // source is the object that collided with the player
-        if (source instanceof Enemy){
+        if (source instanceof Enemy || source instanceof Note){
             if (!this.isDashing){
                 this.takeDamage(source.damage, source);
             }

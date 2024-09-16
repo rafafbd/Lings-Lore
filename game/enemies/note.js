@@ -1,5 +1,5 @@
 class Note { // throwable used by Jorge
-    constructor({x, y, damage, width, height, horizontalBool}){
+    constructor({x, y, damage, width, height, horizontalBool, direction}){
         this.horizontal = horizontalBool;
         this.position = {
             x: x,
@@ -7,7 +7,7 @@ class Note { // throwable used by Jorge
         }
 
         this.speed = {
-            x: 15,
+            x: 10,
             y: 1
         };
 
@@ -23,13 +23,14 @@ class Note { // throwable used by Jorge
             y: this.y + this.height
         };
         this.damage = damage;
+        this.direction = direction;
 
         this.image = new Image();
         this.image.src = "";
     }
 
-        horizontalMovement(direction){
-            this.velocity.x = this.speed.x * direction;
+        horizontalMovement(){
+            this.velocity.x = this.speed.x * this.direction;
         }
 
         fall(){
@@ -41,9 +42,9 @@ class Note { // throwable used by Jorge
             ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
         }
 
-        update = (direction) => {
+        update = () => {
             if (this.horizontal){
-                horizontalMovement(direction);
+                this.horizontalMovement();
             }
             else {
                 fall();
@@ -56,7 +57,9 @@ class Note { // throwable used by Jorge
                 x: this.position.x + this.width,
                 y: this.position.y + this.height
             }
+            this.draw();
         }
+        
 
     
 }
