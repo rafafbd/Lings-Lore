@@ -43,6 +43,8 @@ class Player {
 
         this.isOnFloor = false;
 
+        this.jumped = false;
+
         // hp and damage vars
         this.hp = 100;
 
@@ -341,18 +343,24 @@ class Player {
         //  if is on floor then does not fall (incredible)
         if (this.isOnFloor) {
             this.velocity.y = 0;
+            this.jumped = false;
         }
 
         // jump
-        if (!this.isOnFloor && !this.isDashing) {
+        if (!this.isOnFloor && !this.isDashing) { // falls
             this.velocity.y += gravity;
         }
-        else if (keys.jump.pressed && this.isOnFloor) {
+        else if (keys.jump.pressed && this.isOnFloor && !this.isDashing) { // jumps
             this.velocity.y = -this.speed.y;
+            this.jumped = true;
             this.isOnFloor = false;
         }
         else {
             this.velocity.y = 0;
+        }
+
+        if (this.velocity.y > 0 && this.jumped && !this.isDashing) { // is falling
+            this.jumped = false;
         }
         
         // dash

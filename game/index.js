@@ -451,6 +451,9 @@ addEventListener('keyup', ({ code }) => { // gets key released event
 
         case 'Space': 
             keys.jump.pressed = false;
+            if (player.jumped) {
+                player.velocity.y = 0;
+            }
             break;
 
         case 'KeyK':
