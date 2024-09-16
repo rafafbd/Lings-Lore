@@ -25,11 +25,11 @@ class Credits {
         // value of the credits
         if (value === "positive") {
             this.value = 15;
-            this.imageSource = "./Assets/plusSocialCredits.png";
+            this.imageSource = "./Assets/spriteSocialCredits/plusSocialCredits.png";
         }
         else {
             this.value = -10;
-            this.imageSource = "./Assets/minusSocialCredits.png";
+            this.imageSource = "./Assets/spriteSocialCredits/minusSocialCredits.png";
         }
 
         this.image.src = this.imageSource;

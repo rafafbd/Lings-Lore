@@ -8,39 +8,39 @@ class Menus {
 
         this.canPlay = false
         this.background = new Image();
-        this.background.src = "./Assets/background3.png";
+        this.background.src = "./Assets/spriteBackground/background3.png";
         this.background.onload = () => {
             this.canPlay = true
         }
 
 
         this.buttonX = new Image();
-        this.buttonX.src = "./Assets/pixil-frame-0.png";
+        this.buttonX.src = "./Assets/spriteButtons/buttonX.png";
         this.buttonPlay = new Image();
-        this.buttonPlay.src = "./Assets/botaoPlay.png";
+        this.buttonPlay.src = "./Assets/spriteButtons/buttonPlay.png";
         this.buttonLore = new Image();
-        this.buttonLore.src = "./Assets/botaoLore.png";
+        this.buttonLore.src = "./Assets/spriteButtons/buttonLore.png";
         this.buttonCommands = new Image();
-        this.buttonCommands.src = "./Assets/botaoCommands.png";
+        this.buttonCommands.src = "./Assets/spriteButtons/buttonCommands.png";
 
         this.textLore = "vuafgregvrfvrfevrffsb";
         this.currentPage = "menu";
 
         this.buttons = {
             playButton: {
-                x: (canvas.width-this.buttonPlay.width)/2,
+                x: (canvas.width-400)/2,
                 y: 350,
                 w: 400,
                 h: 100
             },
             loreButton: {
-                x: (canvas.width-this.buttonLore.width)/2,
+                x: (canvas.width-400)/2,
                 y: 500,
                 w: 400,
                 h: 100
             },
             commandsButton: {
-                x: (canvas.width-this.buttonCommands.width)/2,
+                x: (canvas.width-400)/2,
                 y: 650,
                 w: 400,
                 h: 100
