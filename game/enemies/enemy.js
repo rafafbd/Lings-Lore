@@ -222,7 +222,7 @@ class Enemy { // abstract class
 
         this.updatePositions();
 
-        if (this.hp <= 0) {
+        if (this.hp <= 0 || this.position.y > canvas.height) {
             let howManyCredits = this.creditsValue / 10;
             for (let i = 1; i < howManyCredits; i++) {
                 components.credits.push(new Credits({ // creates a new positive credits object to make player lose credits

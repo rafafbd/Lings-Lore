@@ -81,7 +81,7 @@ function level1() {
             height: 200
         }),
         floor2 = new Platform({
-            x: canvas.width + 2000,
+            x: canvas.width + 2100,
             y: canvas.height - 300,
             width: 1000,
             height: 300

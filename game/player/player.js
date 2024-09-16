@@ -187,10 +187,6 @@ class Player {
             }
             this.knockBack("enemy");
         }
-        if (this.hp <= 0){
-            menus.gameOver();
-            console.log("game over");   
-        }
     }
 
     // movement functions
@@ -366,6 +362,9 @@ class Player {
             y: this.position.y + this.height
         }
 
+        if (this.hp <= 0 || this.position.y > canvas.height){
+            menus.gameOver();
+        }
 
         this.fork.update();
         this.draw();
