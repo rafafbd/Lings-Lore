@@ -424,13 +424,6 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
         case 'KeyK':
             keys.dash.pressed = true;
             break;
-
-        case 'KeyP':
-            enemies.push(new Bob({
-                x: 1200,
-                y: 100
-            }, 200))   
-            break;
         
         case 'KeyJ':
             keys.attack.pressed = true;
