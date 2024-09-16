@@ -366,14 +366,6 @@ class Menus {
     
     }
 
-    resetLevel = () => {
-        platforms = [];
-        enemies = [];
-        credits = [];
-        components = [];
-        level1();
-    }
-
     gameOver = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "red";
@@ -384,7 +376,7 @@ class Menus {
         this.currentPage = "gameover";
         ctx.fillText("Press 'J' to restart", 150, 400, 300);
         if (keys.attack.pressed) {
-            this.resetLevel();
+            this.firstLoadLevel = true;
             this.currentPage = "game";
         }
         if (this.currentPage == "gameover"){
