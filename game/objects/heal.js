@@ -15,6 +15,14 @@ class Heal { // classe de um objeto que o ling se cura quando passar por cima
 
         this.image = new Image();
         this.image.src = "";
+
+        this.isCollected = false;
+    }
+
+    collided(source) {
+        if (source instanceof Player) {
+            this.isCollected = true;
+        }
     }
 
     update() {

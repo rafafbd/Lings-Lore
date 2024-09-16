@@ -251,10 +251,10 @@ class Menus {
 
         // Door
         
-        //if (rectangleColision(player, doors) != null){
-        //    doors[0].passLevel(this.currentLevel);
-        //}
-        //doors[0].draw();
+        if (rectangleColision(player, doors) != null){
+           doors[0].passLevel(this.currentLevel);
+        }
+        doors[0].update();
 
         // ------------------------------------------------------
 
@@ -264,9 +264,17 @@ class Menus {
         if (collidedHeal != null) {
             console.log("collided with heal");
             player.collided(heals[collidedHeal]);
+            heals[collidedHeal].collided(player);
         }
         for (let i=0; i<heals.length;i++){
-            heals[i].update();
+            if (heals[i].isCollected) {
+                heals.splice(i, 1);
+                i--;
+            }
+            else {
+                heals[i].update();
+            }
+            
         }
 
         // ------------------------------------------------------
@@ -312,6 +320,7 @@ class Menus {
             for (let i = 0; i < components.heals.length; i++) {
                 components.heals[i].position.x -= player.velocity.x;
             }
+            components.door.position.x -= player.velocity.x;
             player.position.x = 850;
         }
         else if (player.position.x < 450) {  // scrolling to the right
@@ -328,6 +337,7 @@ class Menus {
             for (let i = 0; i < components.heals.length; i++) {
                 components.heals[i].position.x += -player.velocity.x;
             }
+            components.door.position.x += -player.velocity.x;
             player.position.x = 450;
         }
     

@@ -22,6 +22,14 @@ class Door {
         }
     }
 
+    update() {
+        this.position2 = {
+            x: this.position.x + this.width,
+            y: this.position.y + this.height
+        };
+        this.draw();    
+    }
+
     draw(){
         ctx.fillStyle = "yellow";
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
