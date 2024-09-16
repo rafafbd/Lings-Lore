@@ -29,6 +29,8 @@ class Jorge extends Enemy {
 
         
         this.jump();
+
+        this.velocity.x *= 0.8;
         
 
         this.position.x += this.velocity.x;
@@ -55,6 +57,4 @@ class Jorge extends Enemy {
         ctx.fillStyle = "brown";
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
-    // 360
-    // 60
 }
