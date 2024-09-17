@@ -41,7 +41,7 @@ function level1() {
         y: 0
     }
     player.position.x = 600;
-    player.position.y = 0;
+    player.position.y = 500;
     player.hp = 100;
     player.dead = false;
     player.socialCredits = 0;
@@ -59,47 +59,96 @@ function level1() {
     notes = [];
     
     enemies = [
-        new Bob({
-            x: 1200,
-            y: 100
+        new Jorge ({
+            x: 5500,
+            y: 380
         }),
-        new Jorge({
-            x: 1400,
-            y: 150
+        new Jorge ({
+            x: 5200,
+            y: 230
+        }),
+        new Jorge ({
+            x: 4900,
+            y: 380
+        }),
+        new Jorge ({
+            x: 500,
+            y: 300
+        }),
+        new Bob ({
+            x: 300,
+            y: 400
         })
+
     ]  // creates enemy
     
     platforms = [
-        platform1 = new Platform({
+        new Platform({
             x: 800,
             y: 600,
             width: 200,
             height: 50
         }),
-        platform2 = new Platform({
+        new Platform({
             x: 1100,
             y: 400,
             width: 100,
             height: 30
         }),
-        platform3 = new Platform({
+        new Platform({
             x: 200,
-            y: 200,
+            y: 240,
             width: 200,
             height: 300
         }),
         floor1 = new Platform({
             x: 0,
-            y: canvas.height - 200,
-            width: canvas.width + 2000, 
+            y: 750,
+            width: 2000, 
             height: 200
         }),
         floor2 = new Platform({
-            x: canvas.width + 2100,
-            y: canvas.height - 300,
+            x: 2200,
+            y: 700,
             width: 1000,
-            height: 300
-        })
+            height: 500
+        }),
+        floor3 = new Platform({
+            x: 3500,
+            y: 640,
+            width: 800,
+            height: 500
+        }),
+        platformNextToFloor3 = new Platform({
+            x: 4600,
+            y: 530,
+            width: 150,
+            height: 70
+        }),
+        new Platform({
+            x: 4900,
+            y: 380,
+            width: 150,
+            height: 70
+        }),
+        new Platform({
+            x: 5200,
+            y: 230,
+            width: 150,
+            height: 70
+        }),
+        new Platform({
+            x: 5500,
+            y: 380,
+            width: 150,
+            height: 70
+        }),
+        new Platform({
+            x: 5800,
+            y: 530,
+            width: 150,
+            height: 70
+        }),
     ];
     credits = [
         new Credits({
