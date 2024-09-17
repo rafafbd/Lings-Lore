@@ -60,20 +60,12 @@ function level1() {
     
     enemies = [
         new Jorge ({
-            x: 5500,
-            y: 380
+            x: 5850,
+            y: 100
         }),
         new Jorge ({
-            x: 5200,
-            y: 230
-        }),
-        new Jorge ({
-            x: 4900,
-            y: 380
-        }),
-        new Jorge ({
-            x: 500,
-            y: 300
+            x: 5550,
+            y: 100
         }),
         new Bob ({
             x: 300,
@@ -100,6 +92,18 @@ function level1() {
             y: 240,
             width: 200,
             height: 300
+        }),
+        new Platform({
+            x: 2400,
+            y: 500,
+            width: 600, 
+            height: 50
+        }),
+        new Platform({
+            x: 2550,
+            y: 300,
+            width: 300,
+            height: 50
         }),
         floor1 = new Platform({
             x: 0,
@@ -155,15 +159,33 @@ function level1() {
             x: -100,
             y: 550
         }, "positive"),
-    
         new Credits({
             x: 1120,
             y: 300
         }, "positive"),
-    
         new Credits({
             x: 270,
             y: 100
+        }, "positive"),
+        new Credits({
+            x: 2500,
+            y: 430
+        }, "positive"),
+        new Credits({
+            x: 2850,
+            y: 430
+        }, "positive"),
+        new Credits({
+            x: 2650,
+            y: 220
+        }, "positive"),
+        new Credits({
+            x: 4950,
+            y: 330
+        }, "positive"),
+        new Credits({
+            x: 5250,
+            y: 180
         }, "positive"),
     ];
     components = {

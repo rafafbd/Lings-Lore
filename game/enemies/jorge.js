@@ -22,7 +22,7 @@ class Jorge extends Enemy {
 
     update(){
         var currentTime = Date.now();
-        if (currentTime > this.nextThrowTime){
+        if (currentTime > this.nextThrowTime && Math.abs(this.position.x - player.position.x) < 900) {
             this.throw(this.playerWhere());
             this.nextThrowTime = currentTime + this.throwDelay;
         }
@@ -48,6 +48,8 @@ class Jorge extends Enemy {
             this.dead = true;
             ctx.restore();
         }
+
+        console.log(this.position)
 
         this.draw();
         ctx.restore();
