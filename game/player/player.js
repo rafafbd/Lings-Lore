@@ -55,8 +55,11 @@ class Player {
         // -------------------------------------
 
         // equipment
-        this.currentWeapon = "fork";
         this.fork = new Fork({
+            x: this.position.x,
+            y: this.position.y
+        });
+        this.chopsticks = new Chopsticks({
             x: this.position.x,
             y: this.position.y
         });

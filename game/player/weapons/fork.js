@@ -37,7 +37,7 @@ class Fork {
         this.knockBackTimer = d.getTime()/1000;
         this.knockBackCd = 0.3;
 
-        this.isEquiped = true; // var. to check if fork is being used
+        this.isEquipped = true; // var. to check if fork is being used
     }
 
     draw() {

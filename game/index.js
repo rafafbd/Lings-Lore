@@ -401,6 +401,9 @@ const keys = { // keys status (pressed or released)
     },
     attack: {
         pressed: false
+    },
+    shoot: {
+        pressed: false
     }
 }
 
@@ -499,6 +502,17 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
         case 'KeyJ':
             keys.attack.pressed = true;
             break;
+
+        case 'Key1':
+            if (!player.chopsticks.isEquipped) {
+                player.fork.isEquipped = true;
+            }
+            break;
+        case 'Key2':
+            if (!player.fork.isEquipped) {
+                player.chopsticks.isEquipped = true;
+            }
+            break;
     }
 })
 
@@ -533,6 +547,13 @@ addEventListener('keyup', ({ code }) => { // gets key released event
 
         case 'KeyJ':
             keys.attack.pressed = false;
+            break;
+
+        case 'Key1':
+            player.fork.isEquipped = false;
+            break;
+        case 'Key2':
+            player.chopsticks.isEquipped = false;
             break;
     }
 })
