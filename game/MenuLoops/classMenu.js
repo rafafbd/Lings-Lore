@@ -441,7 +441,6 @@ class Menus {
             }
             this.totalDistanceY = 0;
         }
-        console.log(this.totalDistanceY);
     }
 
     gameOver = () => {

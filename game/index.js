@@ -31,6 +31,8 @@ var heals = [];
 
 var notes = [];
 
+var sticks = [];
+
 var components = {};
 
 
@@ -503,12 +505,13 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
             keys.attack.pressed = true;
             break;
 
-        case 'Key1':
+        case '1':
             if (!player.chopsticks.isEquipped) {
                 player.fork.isEquipped = true;
             }
+            console.log("apertou")
             break;
-        case 'Key2':
+        case '2':
             if (!player.fork.isEquipped) {
                 player.chopsticks.isEquipped = true;
             }
@@ -549,10 +552,10 @@ addEventListener('keyup', ({ code }) => { // gets key released event
             keys.attack.pressed = false;
             break;
 
-        case 'Key1':
+        case '1':
             player.fork.isEquipped = false;
             break;
-        case 'Key2':
+        case '2':
             player.chopsticks.isEquipped = false;
             break;
     }

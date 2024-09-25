@@ -15,7 +15,7 @@ class Jorge extends Enemy {
             width: 100,
             height: 40,
             horizontalBool: true,
-            direction: direction
+            direction: direction // -1 for left, 1 for right
         });
         notes.push(note);
     }
@@ -48,9 +48,6 @@ class Jorge extends Enemy {
             this.dead = true;
             ctx.restore();
         }
-
-        console.log(this.position)
-
         this.draw();
         ctx.restore();
     }
