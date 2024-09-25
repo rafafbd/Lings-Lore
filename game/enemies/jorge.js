@@ -15,20 +15,22 @@ class Jorge extends Enemy {
             width: 100,
             height: 40,
             horizontalBool: true,
-            direction: direction
+            direction: direction // -1 for left, 1 for right
         });
         notes.push(note);
     }
 
     update(){
         var currentTime = Date.now();
-        if (currentTime > this.nextThrowTime){
+        if (currentTime > this.nextThrowTime && Math.abs(this.position.x - player.position.x) < 900) {
             this.throw(this.playerWhere());
             this.nextThrowTime = currentTime + this.throwDelay;
         }
 
         
         this.jump();
+
+        this.velocity.x *= 0.8;
         
 
         this.position.x += this.velocity.x;
@@ -46,7 +48,6 @@ class Jorge extends Enemy {
             this.dead = true;
             ctx.restore();
         }
-
         this.draw();
         ctx.restore();
     }
@@ -55,6 +56,4 @@ class Jorge extends Enemy {
         ctx.fillStyle = "brown";
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
-    // 360
-    // 60
 }

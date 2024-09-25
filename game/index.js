@@ -31,6 +31,8 @@ var heals = [];
 
 var notes = [];
 
+var sticks = [];
+
 var components = {};
 
 
@@ -41,7 +43,7 @@ function level1() {
         y: 0
     }
     player.position.x = 600;
-    player.position.y = 0;
+    player.position.y = 500;
     player.hp = 100;
     player.dead = false;
     player.socialCredits = 0;
@@ -55,64 +57,137 @@ function level1() {
         y: 564
     })
     ];
+
+    notes = [];
     
     enemies = [
-        new Bob({
-            x: 1200,
+        new Jorge ({
+            x: 5850,
             y: 100
         }),
-        new Jorge({
-            x: 1400,
-            y: 150
+        new Jorge ({
+            x: 5550,
+            y: 100
+        }),
+        new Bob ({
+            x: 300,
+            y: 400
         })
+
     ]  // creates enemy
     
     platforms = [
-        platform1 = new Platform({
+        new Platform({
             x: 800,
             y: 600,
             width: 200,
             height: 50
         }),
-        platform2 = new Platform({
+        new Platform({
             x: 1100,
             y: 400,
             width: 100,
             height: 30
         }),
-        platform3 = new Platform({
+        new Platform({
             x: 200,
-            y: 200,
+            y: 240,
             width: 200,
             height: 300
         }),
+        new Platform({
+            x: 2400,
+            y: 500,
+            width: 600, 
+            height: 50
+        }),
+        new Platform({
+            x: 2550,
+            y: 300,
+            width: 300,
+            height: 50
+        }),
         floor1 = new Platform({
             x: 0,
-            y: canvas.height - 200,
-            width: canvas.width + 2000, 
+            y: 750,
+            width: 2000, 
             height: 200
         }),
         floor2 = new Platform({
-            x: canvas.width + 2100,
-            y: canvas.height - 300,
+            x: 2200,
+            y: 700,
             width: 1000,
-            height: 300
-        })
+            height: 500
+        }),
+        floor3 = new Platform({
+            x: 3500,
+            y: 640,
+            width: 800,
+            height: 500
+        }),
+        platformNextToFloor3 = new Platform({
+            x: 4600,
+            y: 530,
+            width: 150,
+            height: 70
+        }),
+        new Platform({
+            x: 4900,
+            y: 380,
+            width: 150,
+            height: 70
+        }),
+        new Platform({
+            x: 5200,
+            y: 230,
+            width: 150,
+            height: 70
+        }),
+        new Platform({
+            x: 5500,
+            y: 380,
+            width: 150,
+            height: 70
+        }),
+        new Platform({
+            x: 5800,
+            y: 530,
+            width: 150,
+            height: 70
+        }),
     ];
     credits = [
         new Credits({
             x: -100,
             y: 550
         }, "positive"),
-    
         new Credits({
             x: 1120,
             y: 300
         }, "positive"),
-    
         new Credits({
             x: 270,
             y: 100
+        }, "positive"),
+        new Credits({
+            x: 2500,
+            y: 430
+        }, "positive"),
+        new Credits({
+            x: 2850,
+            y: 430
+        }, "positive"),
+        new Credits({
+            x: 2650,
+            y: 220
+        }, "positive"),
+        new Credits({
+            x: 4950,
+            y: 330
+        }, "positive"),
+        new Credits({
+            x: 5250,
+            y: 180
         }, "positive"),
     ];
     components = {
@@ -146,6 +221,8 @@ function level2() {
         y: 564
     })
     ];
+
+    notes = [];
 
     enemies = [
         new Bob({
@@ -211,6 +288,94 @@ function level2() {
 }
 
 function level3() {
+    player.velocity = { // player velocity
+        x: 0,
+        y: 0
+    }
+    player.position.x = 600;
+    player.position.y = 0;
+    player.hp = 100;
+    player.dead = false;
+    player.socialCredits = 0;
+
+    heals = [
+        new Heal(100, 700),
+        new Heal(900, 500),
+    ];
+    doors = [
+       door = new Door({
+        x: 2000,
+        y: 600
+    })
+    ];
+
+    notes = [];
+
+    enemies = [
+        new Bob({
+            x: 700,
+            y: 500
+        }),
+        new Bob({
+            x: 200,
+            y: 300
+        }),
+        new Jorge({
+            x: 1000,
+            y: 100 
+        })
+    ];
+
+    platforms = [
+        new Platform({
+            x: 300,
+            y: 500,
+            width: 240,
+            height: 100
+        }),
+        new Platform({
+            x: 700,
+            y: 400,
+            width: 200,
+            height: 50
+        }),
+        new Platform({
+            x: 1000,
+            y: 200,
+            width: 100,
+            height: 30
+        }),
+        new Platform({
+            x: 0,
+            y: canvas.height - 200,
+            width: canvas.width,
+            height: 200
+        })
+    ];
+
+    credits = [
+        new Credits({
+            x: 350,
+            y: 350
+        }, "positive"),
+        new Credits({
+            x: 750,
+            y: 250
+        }, "positive"),
+        new Credits({
+            x: 1050,
+            y: 150
+        }, "positive")
+    ];
+
+    components = {
+        platforms: platforms,
+        enemies: enemies,
+        credits: credits,
+        doors: doors,
+        heals: heals,
+        notes: notes
+    };
 }
 
 // world constants
@@ -237,6 +402,9 @@ const keys = { // keys status (pressed or released)
         pressed: false
     },
     attack: {
+        pressed: false
+    },
+    shoot: {
         pressed: false
     }
 }
@@ -332,16 +500,21 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
         case 'KeyK':
             keys.dash.pressed = true;
             break;
-
-        case 'KeyP':
-            enemies.push(new Bob({
-                x: 1200,
-                y: 100
-            }, 200))   
-            break;
         
         case 'KeyJ':
             keys.attack.pressed = true;
+            break;
+
+        case '1':
+            if (!player.chopsticks.isEquipped) {
+                player.fork.isEquipped = true;
+            }
+            console.log("apertou")
+            break;
+        case '2':
+            if (!player.fork.isEquipped) {
+                player.chopsticks.isEquipped = true;
+            }
             break;
     }
 })
@@ -366,6 +539,9 @@ addEventListener('keyup', ({ code }) => { // gets key released event
 
         case 'Space': 
             keys.jump.pressed = false;
+            if (player.jumped) {
+                player.velocity.y = 0;
+            }
             break;
 
         case 'KeyK':
@@ -374,6 +550,13 @@ addEventListener('keyup', ({ code }) => { // gets key released event
 
         case 'KeyJ':
             keys.attack.pressed = false;
+            break;
+
+        case '1':
+            player.fork.isEquipped = false;
+            break;
+        case '2':
+            player.chopsticks.isEquipped = false;
             break;
     }
 })

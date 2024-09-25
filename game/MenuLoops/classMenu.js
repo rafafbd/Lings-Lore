@@ -61,6 +61,9 @@ class Menus {
         this.firstLoadLevel = true;
         this.passedLevel = false;
 
+        this.totalDistanceX = 0;
+        this.totalDistanceY = 0;
+
         // Ensure ctx is available globally or passed in as needed
     }
 
@@ -172,12 +175,16 @@ class Menus {
 
     playerLoop = () => {
         if (this.firstLoadLevel || this.passedLevel) {
+            this.totalDistance = 0;
             switch (this.currentLevel) {
                 case 1:
                     level1();
                     break;
                 case 2:
                     level2();
+                    break;
+                case 3:
+                    level3();
                     break;
             }
             this.firstLoadLevel = false;
@@ -324,7 +331,6 @@ class Menus {
                 components.platforms[i].position.x -= player.velocity.x;
             }
             for (let i = 0; i < components.enemies.length; i++) {
-                components.enemies[i].originalPosition.x -= player.velocity.x;
                 components.enemies[i].position.x -= player.velocity.x;
             }
             for (let i = 0; i < components.credits.length; i++) {
@@ -339,14 +345,15 @@ class Menus {
             for (let i = 0; i < components.doors.length; i++) {
                 components.doors[i].position.x -= player.velocity.x;
             }
+
+            this.totalDistance += player.velocity.x;
             player.position.x = 850;
         }
-        else if (player.position.x < 450) {  // scrolling to the right
+        else if (player.position.x < 450 && this.totalDistance > -100) {  // scrolling to the right
             for (let i = 0; i < components.platforms.length; i++) {
                 components.platforms[i].position.x += -player.velocity.x;
             }
             for (let i = 0; i < components.enemies.length; i++) {
-                components.enemies[i].originalPosition.x += -player.velocity.x;
                 components.enemies[i].position.x += -player.velocity.x;
             }
             for (let i = 0; i < components.credits.length; i++) {
@@ -361,9 +368,79 @@ class Menus {
             for (let i = 0; i < components.doors.length; i++) {
                 components.doors[i].position.x += -player.velocity.x;
             }
+
+            this.totalDistance += player.velocity.x;
             player.position.x = 450;
         }
-    
+        
+        if (player.position.y < 200) {
+            for (let i = 0; i < components.platforms.length; i++) { // scrolling down
+                components.platforms[i].position.y += -player.velocity.y;
+            }
+            for (let i = 0; i < components.enemies.length; i++) {
+                components.enemies[i].position.y += -player.velocity.y;
+            }
+            for (let i = 0; i < components.credits.length; i++) {
+                components.credits[i].position.y += -player.velocity.y;
+            }
+            for (let i = 0; i < components.heals.length; i++) {
+                components.heals[i].position.y += -player.velocity.y;
+            }
+            for (let i = 0; i < components.notes.length; i++) {
+                components.notes[i].position.y += -player.velocity.y;
+            }
+            for (let i = 0; i < components.doors.length; i++) {
+                components.doors[i].position.y += -player.velocity.y;
+            }
+
+            this.totalDistanceY -= player.velocity.y;
+            player.position.y = 200;
+        }
+        else if (player.position.y > 500 && this.totalDistanceY > 4) { // scrolling up
+            for (let i = 0; i < components.platforms.length; i++) {
+                components.platforms[i].position.y -= player.velocity.y;
+            }
+            for (let i = 0; i < components.enemies.length; i++) {
+                components.enemies[i].position.y -= player.velocity.y;
+            }
+            for (let i = 0; i < components.credits.length; i++) {
+                components.credits[i].position.y -= player.velocity.y;
+            }
+            for (let i = 0; i < components.heals.length; i++) {
+                components.heals[i].position.y -= player.velocity.y;
+            }
+            for (let i = 0; i < components.notes.length; i++) {
+                components.notes[i].position.y -= player.velocity.y;
+            }
+            for (let i = 0; i < components.doors.length; i++) {
+                components.doors[i].position.y -= player.velocity.y;
+            }
+
+            this.totalDistanceY -= player.velocity.y;
+            player.position.y = 500;
+        }
+
+        if (this.totalDistanceY < 0) { // fixes the vertical scrolling bug
+            for (let i = 0; i < components.platforms.length; i++) {
+                components.platforms[i].position.y -= this.totalDistanceY;
+            }
+            for (let i = 0; i < components.enemies.length; i++) {
+                components.enemies[i].position.y -= this.totalDistanceY;
+            }
+            for (let i = 0; i < components.credits.length; i++) {
+                components.credits[i].position.y -= this.totalDistanceY;
+            }
+            for (let i = 0; i < components.heals.length; i++) {
+                components.heals[i].position.y -= this.totalDistanceY;
+            }
+            for (let i = 0; i < components.notes.length; i++) {
+                components.notes[i].position.y -= this.totalDistanceY;
+            }
+            for (let i = 0; i < components.doors.length; i++) {
+                components.doors[i].position.y -= this.totalDistanceY;
+            }
+            this.totalDistanceY = 0;
+        }
     }
 
     gameOver = () => {
