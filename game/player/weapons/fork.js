@@ -99,7 +99,7 @@ class Fork {
     
     update() {
         ctx.save();
-        if (this.isEquiped) {
+        if (this.isEquipped) {
             this.position.y = player.position.y;
             if (player.looking.left) {
                 this.position.x = player.position.x;

@@ -64,6 +64,8 @@ class Player {
             y: this.position.y
         });
 
+        this.currentWeapon = "fork";
+
         // dash vars
         this.setDashSpeed = 13;
         this.dashSpeed = this.setDashSpeed;
