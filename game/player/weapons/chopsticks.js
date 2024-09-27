@@ -18,7 +18,7 @@ class Chopsticks {
 
         this.isEquipped = false; // var. to check if chopsticks is being used
 
-        this.ammo = 10;
+        this.ammo = 2;
     }
 
     draw() {
@@ -29,47 +29,47 @@ class Chopsticks {
     attack(direction) {
         let d = new Date();
         let time = d.getTime()/1000;
-        if (time - this.attackTimer > this.cd){
+        if (time - this.attackTimer > this.cd && this.ammo > 0){
             ctx.save()
-
+            console.log(direction)
             switch (direction) {
-                case 'l':
+                case -1: // left
                     this.position.x -= 20;
                     this.position.y += 10;
                     sticks.push(new Stick({
                         x: this.position.x - 20,
                         y: this.position.y,
-                        direction: 'l'
+                        direction: direction
                     }));
                     break;
                 
-                case 'r':
+                case 1: // right
                     this.position.x += 20;
                     this.position.y += 10;
                     sticks.push(new Stick({
                         x: this.position.x + 20,
                         y: this.position.y,
-                        direction: 'r'
+                        direction: direction
                     }));
                     break;
                 
-                case 'u':
+                case -2: // up
                     this.position.x += 10;
                     this.position.y -= 20;
                     sticks.push(new Stick({
                         x: this.position.x,
                         y: this.position.y - 20,
-                        direction: 'u'
+                        direction: direction
                     }));
                     break;
                 
-                case 'd':
+                case 2: // down
                     this.position.x += 10;
                     this.position.y += 20;
                     sticks.push(new Stick({
                         x: this.position.x,
                         y: this.position.y + 20,
-                        direction: 'd'
+                        direction: direction
                     }));
                     break;
             }
@@ -88,7 +88,9 @@ class Chopsticks {
         ctx.save();
 
         setTimeout(() => {
-            this.ammo++;
+            if (this.ammo < 2) {
+                this.ammo++;
+            }
         }, 5000)
 
 

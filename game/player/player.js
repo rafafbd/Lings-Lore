@@ -37,6 +37,7 @@ class Player {
             up: false,
             down: false
         };
+        this.direction = 1;
 
         // ^^^^^^ positions and velocities^^^^^^^^
         // vvvvvv states vvvvvvvvv 
@@ -324,11 +325,13 @@ class Player {
                 this.velocity.x = -this.speed.x;
                 this.resetLookingDirection();
                 this.looking.left = true;
+                this.direction = -1;
             }
             else if (keys.right.pressed) {
                 this.velocity.x = this.speed.x;
                 this.resetLookingDirection();
                 this.looking.right = true;
+                this.direction = 1;
             }
             else {
                 this.velocity.x *= 0.8;
@@ -339,10 +342,12 @@ class Player {
         if (keys.up.pressed) {
             this.resetLookingDirection();
             this.looking.up = true;
+            this.direction = -2;
         }
         else if (keys.down.pressed) {
             this.resetLookingDirection();
             this.looking.down = true;
+            this.direction = 2;
         }
 
         //  if is on floor then does not fall (incredible)
