@@ -505,16 +505,15 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
             keys.attack.pressed = true;
             break;
 
-        case '1':
-            if (!player.chopsticks.isEquipped) {
-                player.fork.isEquipped = true;
-            }
-            console.log("apertou")
+        case 'Digit1':
+            player.fork.isEquipped = true;
+            player.chopsticks.isEquipped = false;
+            player.currentWeapon = "fork";
             break;
-        case '2':
-            if (!player.fork.isEquipped) {
-                player.chopsticks.isEquipped = true;
-            }
+        case 'Digit2':
+            player.chopsticks.isEquipped = true;
+            player.fork.isEquipped = false;
+            player.currentWeapon = "chopsticks";
             break;
     }
 })
@@ -550,13 +549,6 @@ addEventListener('keyup', ({ code }) => { // gets key released event
 
         case 'KeyJ':
             keys.attack.pressed = false;
-            break;
-
-        case '1':
-            player.fork.isEquipped = false;
-            break;
-        case '2':
-            player.chopsticks.isEquipped = false;
             break;
     }
 })

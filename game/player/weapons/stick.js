@@ -1,4 +1,4 @@
-class Note { // throwable used by Jorge
+class Stick {
     constructor({x, y, direction}){
         this.position = {
             x: x,

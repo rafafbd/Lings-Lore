@@ -54,7 +54,7 @@ class Menus {
             { text: "D         - Mirar/Andar para direita", x: 100, y: 390, maxW: 1000 },
             { text: "J         - Atacar", x: 100, y: 420, maxW: 1000 },
             { text: "K         - Dash", x: 100, y: 450, maxW: 1000 },
-            { text: "Space - Pular", x: 100, y: 480, maxW: 1000 }
+            { text: "Space     - Pular", x: 100, y: 480, maxW: 1000 }
         ];
 
         this.currentLevel = 1;
@@ -242,15 +242,27 @@ class Menus {
         };
     
         if (keys.attack.pressed) { // checks if the player is attacking
+            let enemy;
             switch (player.currentWeapon) { // different hitbox and damage based on current weapon
+                
                 case "fork":
-                    let enemy = weaponRectangleColision(player.fork, enemies); // returns list of enemies hit
+                    enemy = weaponRectangleColision(player.fork, enemies); // returns list of enemies hit
                     if (enemy != null) {
                         for (let j = 0; j<enemy.length; j++) {
                             player.fork.collided(enemies[enemy[j]]);
                             enemies[enemy[j]].collided(player.fork);
                         }
                     }
+                    break;
+                case "chopsticks":
+                    enemy = weaponRectangleColision(player.fork, enemies); // returns list of enemies hit
+                    if (enemy != null) {
+                        for (let j = 0; j<enemy.length; j++) {
+                            player.fork.collided(enemies[enemy[j]]);
+                            enemies[enemy[j]].collided(player.fork);
+                        }
+                    }
+                break;
             }
         }
 
