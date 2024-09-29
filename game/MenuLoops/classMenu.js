@@ -347,15 +347,15 @@ class Menus {
         // Credits
         for (let i = 0; i < components.credits.length; i++) {
             components.credits[i].update(); // updates the credits
-            if (components.credits[i].spliceThis) {
+            if (components.credits[i].remove) {
                 components.credits.splice(i, 1); // removes the credit from the array
                 i--;
             }
-        }
-        let credit = rectangleColision(player, components.credits); // returns collided credit's index
-        if (credit != null) {
-            player.collided(components.credits[credit]);
-            components.credits[credit].collided(player);
+            let credit = rectangleColision(player, components.credits); // returns collided credit's index
+            if (credit != null) {
+                player.collided(components.credits[credit]);
+                components.credits[credit].collided(player);
+            }
         }
     
         // ------------------------------------------------------

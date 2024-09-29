@@ -37,7 +37,7 @@ class Credits {
         // flags
 
         this.isCollected = false;
-        this.spliceThis = false;
+        this.remove = false;
 
     }
 
@@ -79,7 +79,7 @@ class Credits {
 
         if (this.isCollected) {
             setTimeout(() => {
-                this.spliceThis = true; // remove it from the array
+                this.remove = true; // remove it from the array
             }, 200)
         }
 
