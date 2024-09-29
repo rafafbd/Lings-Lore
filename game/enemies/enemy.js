@@ -127,11 +127,32 @@ class Enemy { // abstract class
                     this.isKnockback = false;
                 }, 100);
             }
+            else if (source instanceof Stick) { // knockback by stick attack
+                if (source.direction == -1) {
+                    this.velocity.x = -this.knockbackSpeed;
+                }
+                else if (source.direction == 1) {
+                    this.velocity.x = this.knockbackSpeed;
+                }
+                else if (source.direction == -2) {
+                    this.velocity.y = -this.knockbackSpeed;
+                }
+                else if (source.direction == 2) {
+                    this.velocity.y = this.knockbackSpeed;
+                }
+                setTimeout(() => {
+                    this.isKnockback = false;
+                }, 100);
+            }
         }
     }
 
     collided(source) {
         if (source instanceof Fork) {
+            this.takeDamage(source.damage);
+            this.knockBack(source);
+        }
+        else if (source instanceof Stick) {
             this.takeDamage(source.damage);
             this.knockBack(source);
         }

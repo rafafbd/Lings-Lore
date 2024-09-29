@@ -6,8 +6,8 @@ class Stick {
         }
 
         this.speed = {
-            x: 10,
-            y: 5
+            x: 20,
+            y: 10 // should be half of x speed
         };
 
         this.velocity = {
@@ -30,9 +30,17 @@ class Stick {
         if (Math.abs(this.direction) == 2) {
             this.width = 16;
             this.height = 64;
+            
         }
 
+        this.isDestroyed = false;
     }
+
+        collided(source) {
+            if (source instanceof Enemy) {
+                this.isDestroyed = true;
+            }
+        }
 
         horizontalMovement(){
             this.velocity.x = this.speed.x * this.direction;
@@ -47,6 +55,11 @@ class Stick {
             ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
             ctx.restore();
         }
+        rotate() {
+            ctx.translate(this.position.x, this.position.y);
+            ctx.rotate(Math.PI/2); 
+            ctx.translate(-this.position.x, -this.position.y);
+          }
 
         update() {
             switch (this.direction) {
@@ -58,16 +71,12 @@ class Stick {
                     break;
                 case -2:
                     ctx.save();
-                    ctx.translate(this.position.x, this.position.y);
-                    ctx.rotate(Math.PI/2); 
-                    ctx.translate(-this.position.x, -this.position.y);
+                    // this.rotate(); // only use if there is a sprite for the stick
                     this.verticalMovement();
                     break;
                 case 2:
                     ctx.save();
-                    ctx.translate(this.position.x, this.position.y);
-                    ctx.rotate(Math.PI/2); 
-                    ctx.translate(-this.position.x, -this.position.y);
+                    // this.rotate(); // only use if there is a sprite for the stick
                     this.verticalMovement();
                     break;
             }

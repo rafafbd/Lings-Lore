@@ -315,6 +315,12 @@ class Player {
         ctx.fillText("Social Credits: " + this.socialCredits, 10, 60);
     }
 
+    drawAmmo() {
+        ctx.font = "20px Times new Roman";
+        ctx.fillStyle = "white";
+        ctx.fillText("Ammo: " + this.chopsticks.ammo, 10, 80);
+    }
+
     update() {
         ctx.save();
         const currentTime = Date.now();
@@ -403,5 +409,6 @@ class Player {
         this.draw();
         this.drawLife();
         this.drawCredits();
+        this.drawAmmo();
     }
 }

@@ -270,8 +270,8 @@ class Menus {
 
         // Notes
         if (notes.length > 0){
-           for (let i=0; i<notes.length; i++){
-            notes[i].update();
+            for (let i=0; i<notes.length; i++){
+                notes[i].update();
             } 
             let whichNoteCollided = rectangleColision(player, notes); // checks collision between player and enemies
             if (whichNoteCollided != null) {
@@ -286,11 +286,18 @@ class Menus {
 
         if (sticks.length > 0) {
             for (let i = 0; i < sticks.length; i++) {
-                sticks[i].update();
-                let enemyHit = rectangleColision(sticks[i], enemies);
+                let enemyHit = rectangleColision(sticks[i], enemies); // checks wich enemy was hit by the stick
                 if (enemyHit != null) {
                     sticks[i].collided(enemies[enemyHit]);
                     enemies[enemyHit].collided(sticks[i]);
+                }
+
+                if (sticks[i].isDestroyed) { // removes stick from array if it was destroyed
+                    sticks.splice(i, 1);
+                    i--;
+                }
+                else {
+                    sticks[i].update();
                 }
             }
         }

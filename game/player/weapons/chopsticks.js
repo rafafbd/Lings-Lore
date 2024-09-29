@@ -5,9 +5,6 @@ class Chopsticks {
         this.image.src = "./Assets/spriteChopsticks/doisChopsticks.png";
 
         this.canPlay = false;
-        this.image.onload = () => {
-            this.canPlay = true;
-        }
 
         this.position = {
             x,
@@ -23,6 +20,8 @@ class Chopsticks {
 
         this.isEquipped = false; // var. to check if chopsticks is being used
 
+
+        this.canReload = true;
         this.ammo = 2;
     }
 
@@ -30,7 +29,6 @@ class Chopsticks {
         if (!this.canPlay) {
             return;
         }
-        ctx.scale(4, 4);
         ctx.drawImage(this.image, this.position.x, this.position.y);
         ctx.restore();
     }
@@ -96,11 +94,13 @@ class Chopsticks {
     update() {
         ctx.save();
 
-        setTimeout(() => {
-            if (this.ammo < 2) {
+        if (this.ammo < 2 && this.canReload) {
+            this.canReload = false;
+            setTimeout(() => {
                 this.ammo++;
-            }
-        }, 5000)
+                this.canReload = true;
+            }, 1500)
+        }
 
 
         if (keys.attack.pressed && this.isEquipped) {
