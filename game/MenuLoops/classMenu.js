@@ -282,6 +282,21 @@ class Menus {
 
         // ------------------------------------------------------
 
+        // Sticks
+
+        if (sticks.length > 0) {
+            for (let i = 0; i < sticks.length; i++) {
+                sticks[i].update();
+                let enemyHit = rectangleColision(sticks[i], enemies);
+                if (enemyHit != null) {
+                    sticks[i].collided(enemies[enemyHit]);
+                    enemies[enemyHit].collided(sticks[i]);
+                }
+            }
+        }
+
+        // ------------------------------------------------------
+
         // Door
         
         if (rectangleColision(player, doors) != null){
@@ -357,6 +372,9 @@ class Menus {
             for (let i = 0; i < components.doors.length; i++) {
                 components.doors[i].position.x -= player.velocity.x;
             }
+            for (let i = 0; i < components.sticks.length; i++) {
+                components.sticks[i].position.x -= player.velocity.x;
+            }
 
             this.totalDistance += player.velocity.x;
             player.position.x = 850;
@@ -379,6 +397,9 @@ class Menus {
             }
             for (let i = 0; i < components.doors.length; i++) {
                 components.doors[i].position.x += -player.velocity.x;
+            }
+            for (let i = 0; i < components.sticks.length; i++) {
+                components.sticks[i].position.x += -player.velocity.x;
             }
 
             this.totalDistance += player.velocity.x;
@@ -404,6 +425,9 @@ class Menus {
             for (let i = 0; i < components.doors.length; i++) {
                 components.doors[i].position.y += -player.velocity.y;
             }
+            for (let i = 0; i < components.sticks.length; i++) {
+                components.sticks[i].position.y += -player.velocity.y;
+            }
 
             this.totalDistanceY -= player.velocity.y;
             player.position.y = 200;
@@ -426,6 +450,9 @@ class Menus {
             }
             for (let i = 0; i < components.doors.length; i++) {
                 components.doors[i].position.y -= player.velocity.y;
+            }
+            for (let i = 0; i < components.sticks.length; i++) {
+                components.sticks[i].position.y -= player.velocity.y;
             }
 
             this.totalDistanceY -= player.velocity.y;
@@ -451,6 +478,10 @@ class Menus {
             for (let i = 0; i < components.doors.length; i++) {
                 components.doors[i].position.y -= this.totalDistanceY;
             }
+            for (let i = 0; i < components.sticks.length; i++) {
+                components.sticks[i].position.y -= this.totalDistanceY;
+            }
+
             this.totalDistanceY = 0;
         }
     }

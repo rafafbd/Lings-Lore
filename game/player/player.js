@@ -399,6 +399,7 @@ class Player {
         }
 
         this.fork.update();
+        this.chopsticks.update();
         this.draw();
         this.drawLife();
         this.drawCredits();

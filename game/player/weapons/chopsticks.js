@@ -2,7 +2,12 @@ class Chopsticks {
     constructor({x, y}) {
         const image = new Image();
         this.image = image;
-        this.image.src = "./Assets/spriteFork/forkMelhorado.png";
+        this.image.src = "./Assets/spriteChopsticks/doisChopsticks.png";
+
+        this.canPlay = false;
+        this.image.onload = () => {
+            this.canPlay = true;
+        }
 
         this.position = {
             x,
@@ -22,6 +27,10 @@ class Chopsticks {
     }
 
     draw() {
+        if (!this.canPlay) {
+            return;
+        }
+        ctx.scale(4, 4);
         ctx.drawImage(this.image, this.position.x, this.position.y);
         ctx.restore();
     }
@@ -31,7 +40,7 @@ class Chopsticks {
         let time = d.getTime()/1000;
         if (time - this.attackTimer > this.cd && this.ammo > 0){
             ctx.save()
-            console.log(direction)
+            
             switch (direction) {
                 case -1: // left
                     this.position.x -= 20;
@@ -94,7 +103,7 @@ class Chopsticks {
         }, 5000)
 
 
-        if (keys.shoot.pressed && this.isEquipped) {
+        if (keys.attack.pressed && this.isEquipped) {
             this.attack(player.direction);
         }
         

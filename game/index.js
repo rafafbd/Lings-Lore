@@ -59,6 +59,7 @@ function level1() {
     ];
 
     notes = [];
+    sticks = [];
     
     enemies = [
         new Jorge ({
@@ -196,7 +197,8 @@ function level1() {
         credits: credits,
         doors: doors,
         heals: heals,
-        notes: notes
+        notes: notes,
+        sticks: sticks
     }
 }
 
@@ -223,6 +225,7 @@ function level2() {
     ];
 
     notes = [];
+    sticks = [];
 
     enemies = [
         new Bob({
@@ -283,7 +286,8 @@ function level2() {
         credits: credits,
         doors: doors,
         heals: heals,
-        notes: notes
+        notes: notes,
+        sticks: sticks
     };
 }
 
@@ -310,6 +314,7 @@ function level3() {
     ];
 
     notes = [];
+    sticks = [];
 
     enemies = [
         new Bob({
@@ -374,7 +379,8 @@ function level3() {
         credits: credits,
         doors: doors,
         heals: heals,
-        notes: notes
+        notes: notes,
+        sticks: sticks
     };
 }
 
