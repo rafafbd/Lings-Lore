@@ -57,7 +57,6 @@ class Bob extends Enemy {
             this.dead = true;
             ctx.restore();
         }
-
         this.draw();
         ctx.restore();
     }

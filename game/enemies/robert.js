@@ -1,8 +1,19 @@
 class Robert extends Enemy {
     constructor({x, y}) {
-        super({x, y}, "./Assets/spriteEnemies/Bob-spritesheet.png", 50, 80, 4, 4, 15, 70, 15);
+        super({x, y}, "./Assets/spriteEnemies/robert-sprite.png", 64, 64, 3, 3, 15, 70, 15);
         this.seePlayerRange = 800;
         this.playerInRange = false;
+        this.enemiesSizes = {
+            spriteWidth: 64,
+            spriteHeight: 64,
+            scale: 1
+        }
+        this.isMovingHorizontally = false;
+        this.isMovingVertically = false;
+    }
+
+    increaseIndexX(){ // increases the index of the sprite sheet
+        return
     }
     
     collided(source) {
@@ -18,6 +29,9 @@ class Robert extends Enemy {
     }
 
     update() {
+        ctx.save();
+        this.isMovingHorizontally = false;
+        this.isMovingVertically = false;
         if (Math.abs(this.position.x - player.position.x) < this.seePlayerRange && Math.abs(this.position.y - player.position.y) < this.seePlayerRange && !this.playerInRange) {
             this.playerInRange = true;
         }
@@ -31,15 +45,13 @@ class Robert extends Enemy {
                 this.velocity.y = 0;
             }
             else if (this.playerInRange) {
-                let where = this.playerWhere();
+                var where = this.playerWhere();
                 if (where == -1) { // player is at left
+                    this.isMovingHorizontally = true;
                     this.velocity.x = -this.speed.x;
                 }
                 else if (where == 1){ // player is at right
-                    ctx.save();
-                    ctx.translate(this.position.x + this.width*2, this.position.y);
-                    ctx.scale(-1, 1); // inverts the context
-                    ctx.translate(-this.position.x, -this.position.y);
+                    this.isMovingHorizontally = true;
                     this.velocity.x = this.speed.x;
                 }
                 else {
@@ -47,12 +59,19 @@ class Robert extends Enemy {
                 }
                 if (this.isPlayerHigher()) {
                     this.velocity.y = -this.speed.y;
+                    this.isMovingVertically = true;
                 }
                 else if (this.position.y < player.position2.y && this.position2.y > player.position.y) {
                     this.velocity.y = 0;
                 }
                 else {
                     this.velocity.y = this.speed.y;
+                    this.isMovingVertically = true;
+                }
+
+                if (this.isMovingHorizontally && this.isMovingVertically) { // compensates the speed when moving diagonally
+                    this.velocity.x *= 0.7;
+                    this.velocity.y *= 0.7;
                 }
             }
         }
@@ -73,7 +92,9 @@ class Robert extends Enemy {
             this.dead = true;
             ctx.restore();
         }
-
+        if (this.dead) {
+            ctx.restore();
+        }
         this.draw();
         ctx.restore();
     }

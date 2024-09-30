@@ -67,9 +67,9 @@ class Enemy { // abstract class
 
     increaseIndexX(){ // increases the index of the sprite sheet
         if (this.indexX < 16)
-            this.indexX += 1
+            this.indexX += 1;
         else
-            this.indexX = 3
+            this.indexX = 3;
     }
 
     takeDamage(damage) {
@@ -252,6 +252,9 @@ class Enemy { // abstract class
                 }, "positive"));
             }
             this.dead = true;
+            ctx.restore();
+        }
+        if (this.dead) {
             ctx.restore();
         }
 
