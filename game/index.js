@@ -33,6 +33,8 @@ var notes = [];
 
 var sticks = [];
 
+var lines = [];
+
 var components = {};
 
 
@@ -307,9 +309,9 @@ function level3() {
         new Heal(900, 500),
     ];
     doors = [
-       door = new Door({
-        x: 2000,
-        y: 600
+        new Door({
+            x: 2000,
+            y: 600
     })
     ];
 
@@ -371,6 +373,38 @@ function level3() {
             x: 1050,
             y: 150
         }, "positive")
+    ];
+
+    components = {
+        platforms: platforms,
+        enemies: enemies,
+        credits: credits,
+        doors: doors,
+        heals: heals,
+        notes: notes,
+        sticks: sticks
+    };
+}
+
+function level4(){ // boss level
+    player.velocity = { // player velocity
+        x: 0,
+        y: 0
+    };
+    player.position.x = 600;
+    player.position.y = 0;
+    player.hp = 100;
+    player.dead = false;
+    player.socialCredits = 0;
+
+    platforms = [
+        new Platform({x: 0, y: 700, width: 2000, height: 500}),
+        new Platform({x: 500, y: 500, width: 200, height: 40}),
+        new Platform({x: 1200, y: 500, width: 200, height: 40})
+    ];
+
+    enemies = [
+        new TonaldDrump(1000, 200)
     ];
 
     components = {

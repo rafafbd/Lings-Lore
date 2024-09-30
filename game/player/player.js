@@ -93,7 +93,7 @@ class Player {
     // collision and damage functions
 
     collided(source){ // source is the object that collided with the player
-        if (source instanceof Enemy || source instanceof Note){
+        if (source instanceof Enemy || source instanceof Note || source instanceof Line){
             if (!this.isDashing){
                 this.takeDamage(source.damage, source);
             }
@@ -322,6 +322,7 @@ class Player {
     }
 
     update() {
+        console.log(this.position.y)
         ctx.save();
         const currentTime = Date.now();
 

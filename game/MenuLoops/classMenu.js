@@ -187,6 +187,7 @@ class Menus {
                     level3();
                     break;
             }
+            //level4();
             this.firstLoadLevel = false;
             this.passedLevel = false;
         }
@@ -305,11 +306,13 @@ class Menus {
         // ------------------------------------------------------
 
         // Door
-        
-        if (rectangleColision(player, doors) != null){
-           doors[0].passLevel(this.currentLevel);
+        if (doors.length > 0){
+            if (rectangleColision(player, doors) != null){
+                doors[0].passLevel(this.currentLevel);
+            }
+            doors[0].update();
         }
-        doors[0].update();
+        
 
         // ------------------------------------------------------
 
@@ -339,6 +342,11 @@ class Menus {
         if (playerEnemyCollision != null) {
             player.collided(enemies[playerEnemyCollision]);
             enemies[playerEnemyCollision].collided(player);
+        }
+
+        let whichLineCollided = rectangleColision(player, lines);
+        if (whichLineCollided != null) {
+            player.collided(lines[whichLineCollided]);
         }
         
         player.update();

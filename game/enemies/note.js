@@ -47,7 +47,7 @@ class Note { // throwable used by Jorge
                 this.horizontalMovement();
             }
             else {
-                fall();
+                this.fall();
             }
 
             this.position.x += this.velocity.x;
