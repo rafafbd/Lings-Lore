@@ -322,7 +322,6 @@ class Player {
     }
 
     update() {
-        console.log(this.position.y)
         ctx.save();
         const currentTime = Date.now();
 

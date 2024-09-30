@@ -1,26 +1,34 @@
-class Bob extends Enemy {
-    constructor({x, y}){
-        super({x, y}, "./Assets/spriteEnemies/Bob-spritesheet.png", 50, 80, 5, 0, 20, 100, 15 );
-        this.seePlayerRange = 400;
-        this.playerInRange = false; 
-        this.gettingUp = false;
+class Robert extends Enemy {
+    constructor({x, y}) {
+        super({x, y}, "./Assets/spriteEnemies/Bob-spritesheet.png", 50, 80, 4, 4, 15, 70, 15);
+        this.seePlayerRange = 800;
+        this.playerInRange = false;
+    }
+    
+    collided(source) {
+        if (source instanceof Fork) {
+            this.takeDamage(source.damage);
+            this.knockBack(source);
+        }
+        else if (source instanceof Stick) {
+            this.takeDamage(source.damage);
+            this.knockBack(source);
+        }
+        // no platform collision
     }
 
-    update(){
+    update() {
         if (Math.abs(this.position.x - player.position.x) < this.seePlayerRange && Math.abs(this.position.y - player.position.y) < this.seePlayerRange && !this.playerInRange) {
-            // play startup animation
-            this.gettingUp = true;
-            setTimeout(() =>{
-                this.playerInRange = true;
-            }, 1000);
+            this.playerInRange = true;
         }
-        else if(!this.gettingUp) {
+        else {
             this.playerInRange = false;
         }
 
         if (!this.isKnockback) {
             if (!this.playerInRange) {
                 this.velocity.x = 0;
+                this.velocity.y = 0;
             }
             else if (this.playerInRange) {
                 let where = this.playerWhere();
@@ -37,9 +45,17 @@ class Bob extends Enemy {
                 else {
                     this.velocity.x *= 0.7;
                 }
+                if (this.isPlayerHigher()) {
+                    this.velocity.y = -this.speed.y;
+                }
+                else if (this.position.y < player.position2.y && this.position2.y > player.position.y) {
+                    this.velocity.y = 0;
+                }
+                else {
+                    this.velocity.y = this.speed.y;
+                }
             }
         }
-        this.jump(); // applies gravity
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;

@@ -75,8 +75,11 @@ function level1() {
         new Bob ({
             x: 300,
             y: 400
+        }),
+        new Robert ({
+            x: 1000,
+            y: 200
         })
-
     ]  // creates enemy
     
     platforms = [
