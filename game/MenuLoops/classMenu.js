@@ -23,8 +23,13 @@ class Menus {
         this.buttonCommands = new Image();
         this.buttonCommands.src = "./Assets/spriteButtons/buttonCommands.png";
 
-        this.textLore = "vuafgregvrfvrfevrffsb";
+        this.textLore = "Na costa oeste dos Estados Unidos, um restaurante 'NOME DO RESTAURANTE' é um verdadeiro tesouro, conhecido por seus dumplings feitos com receitas passadas de geração em geração. Porém, a tranquilidade do local é ameaçada quando uma corporação Capitalista decide comprar o restaurante, prometendo modernização, mas na verdade, desrespeitando a tradição e o legado familiar."
+        this.textLore2 = "Ling, um dumpling que ganhou vida após um ritual da avó, se vê em uma luta desesperada para salvar seu lar. Junto a outros pratos tradicionais, Ling descobre que a Sabor Global não apenas visa o lucro, mas também pretende homogeneizar a cultura alimentar, substituindo sabores autênticos por opções industrializadas e sem alma. "
+        this.textLore3 = "Ao longo de sua jornada, Ling enfrenta os capangas da corporação capitaliasta e desmantela seus planos, revelando a importância da comida como símbolo de identidade e resistência. Cada batalha o aproxima da verdade sobre suas raízes e da força que a comunidade pode ter quando se une por um propósito comum, mas também do grande chefe do capitalismo.";
+        this.textLore4 = "Você será capaz de vencer o Capitalismo?"
         this.currentPage = "menu";
+        this.maxWidth = 600; // Maximum width of each line
+        this.lineHeight = 24;
 
         this.buttons = {
             playButton: {
@@ -77,7 +82,7 @@ class Menus {
     }
 
     menuLoop = () => {
-        ctx.clearRect(0, 0, 600, 800);
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     
         ctx.font = "50px Arial";
         ctx.fillText("Ling's Lore", 830, 200, 300);
@@ -149,11 +154,18 @@ class Menus {
     lorePage = () => {
     
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.fillStyle = "grey"
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        ctx.fillStyle = "black"
         ctx.font = "50px Arial";
-        ctx.fillText("Ling's Lore", 150, 200, 300);
+        ctx.fillText("Ling's Lore", 700, 200, 300);
         ctx.font = "15px Arial";
-        ctx.fillText(this.textLore, 150, 400, 300);
-        
+        this.wrapText(this.textLore, 550, 300, this.maxWidth, this.lineHeight)
+        this.wrapText(this.textLore2, 550, 450, this.maxWidth, this.lineHeight)
+        this.wrapText(this.textLore3, 550, 570, this.maxWidth, this.lineHeight)
+        ctx.font = "30px Arial";
+        ctx.fillText(this.textLore4, 550, 750, 1000);
+
         ctx.drawImage(this.buttonX, 10, 10);
 
         if (this.mouseClickPosition.x >= 10 &&
@@ -167,6 +179,26 @@ class Menus {
         if (currentPage == "lore"){
             requestAnimationFrame(this.lorePage);
         }
+    }
+
+    wrapText(text, x, y, maxWidth, lineHeight) {
+        const words = text.split(' ');
+        let line = '';
+    
+        for (let n = 0; n < words.length; n++) {
+            const testLine = line + words[n] + ' ';
+            const metrics = ctx.measureText(testLine);
+            const testWidth = metrics.width;
+    
+            if (testWidth > maxWidth && n > 0) {
+                ctx.fillText(line, x, y);
+                line = words[n] + ' ';
+                y += lineHeight; // Move to the next line
+            } else {
+                line = testLine;
+            }
+        }
+        ctx.fillText(line, x, y); // Draw the last line
     }
 
     drawBackground() {
