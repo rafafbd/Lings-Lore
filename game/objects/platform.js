@@ -43,12 +43,10 @@ class Platform {
     }
 
     draw() {
-        //ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
         if (this.isImageLoaded){ 
             const pattern = ctx.createPattern(this.image, "repeat")
-            ctx.rect(this.position.x, this.position.y, this.width, this.height)
             ctx.fillStyle = pattern
-            ctx.fill()
+            ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
         }
     }
 
@@ -58,8 +56,7 @@ class Platform {
     }
 
     update() {
-        //this.updatePlayerPositions(x, y)
-        this.draw() //DESCOMETAR O FILLRECT E COMENTAR O RESTO PARA DESCRASHAR
+        this.draw() 
         this.position2 = {
             x: this.position.x + this.width,
             y: this.position.y + this.height

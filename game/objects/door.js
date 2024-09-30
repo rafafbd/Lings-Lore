@@ -5,7 +5,7 @@ class Door {
             y: y
         };
         this.image = new Image();
-        this.image.src = "./Assets/door.png";
+        this.image.src = "./Assets/spriteDoors/DoorOriginal.png";
         this.height = 64;
         this.width = 64;
 
@@ -32,7 +32,12 @@ class Door {
 
     draw(){
         ctx.fillStyle = "yellow";
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-        //ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        //ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+        ctx.drawImage(this.image, this.x, this.y);
+
+
+        
+        
     }
 }
