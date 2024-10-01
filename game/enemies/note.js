@@ -1,6 +1,10 @@
 class Note { // throwable used by Jorge
     constructor({x, y, damage, width, height, horizontalBool, direction}){
         this.horizontal = horizontalBool;
+
+        const note = new Image;
+        note.src = "./Assets/spriteNote/note.png"
+        this.note = note
         this.position = {
             x: x,
             y: y
@@ -38,8 +42,7 @@ class Note { // throwable used by Jorge
         }
 
         draw(){
-            ctx.fillStyle = "lightgreen";
-            ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+            ctx.drawImage(this.note, this.position.x, this.position.y);
         }
 
         update() {
