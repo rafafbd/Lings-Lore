@@ -118,12 +118,12 @@ class Fork {
             }
             else if (player.looking.up) {
                 this.position.x = player.position.x + (this.height / 2);
-                this.position.y = player.position.y - this.height;
+                this.position.y = player.position.y - this.height + 5;
             }
             else if (player.looking.down) {
                 this.position.x = player.position.x + (this.height / 2);
                 this.position.y = player.position.y + this.height + player.height;
-                ctx.translate(this.position.x, this.position.y );
+                ctx.translate(this.position.x, this.position.y);
                 ctx.scale(1, -1);
                 ctx.translate(-this.position.x, -this.position.y);
             }
@@ -166,8 +166,13 @@ class Fork {
             }
         }
         else { // is not equiped
-            this.position.x = player.position.x;
+            this.position.x = player.position.x + player.width/4;
             this.position.y = player.position.y;
+
+            this.attackCoordinates.x = null;
+            this.attackCoordinates.x2 = null;
+            this.attackCoordinates.y = null;
+            this.attackCoordinates.y2 = null;
         }
         this.draw()
     }

@@ -1,7 +1,7 @@
 
 class Jorge extends Enemy {
     constructor({x, y}){
-        super({x, y}, "", 64, 128, 5, 13, 2, 101, 15)
+        super({x, y}, "", 64, 128, 5, 13, 2, 150, 45)
         this.throwDelay = 1200;
         this.nextThrowTime = 0;
     }

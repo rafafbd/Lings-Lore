@@ -1,5 +1,13 @@
 class Stick {
     constructor({x, y, direction}){
+        const image = new Image();
+        this.image = image;
+        this.image.src = "./Assets/spriteChopstick/chopstick-sprite.png";
+        this.canPlay = false;
+        this.image.onload = () => {
+            this.canPlay = true;
+        }
+
         this.position = {
             x: x,
             y: y
@@ -51,8 +59,10 @@ class Stick {
         }
 
         draw(){
-            ctx.fillStyle = "lightgreen";
-            ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+            if (!this.canPlay) {
+                return;
+            }
+            ctx.drawImage(this.image, this.position.x, this.position.y);
             ctx.restore();
         }
         rotate() {
