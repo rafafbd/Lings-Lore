@@ -1,6 +1,6 @@
 class Robert extends Enemy {
     constructor({x, y}) {
-        super({x, y}, "./Assets/spriteEnemies/robert-sprite.png", 64, 64, 3, 3, 15, 70, 15);
+        super({x, y}, "./Assets/spriteEnemies/robert-spritesheet.png", 64, 64, 3, 3, 15, 70, 15);
         this.seePlayerRange = 800;
         this.playerInRange = false;
         this.enemiesSizes = {
@@ -10,12 +10,9 @@ class Robert extends Enemy {
         }
         this.isMovingHorizontally = false;
         this.isMovingVertically = false;
+        this.canChangeFrame = true;
     }
 
-    increaseIndexX(){ // increases the index of the sprite sheet
-        return
-    }
-    
     collided(source) {
         if (source instanceof Fork) {
             this.takeDamage(source.damage);
@@ -26,6 +23,19 @@ class Robert extends Enemy {
             this.knockBack(source);
         }
         // no platform collision
+    }
+    
+    increaseIndexX(){ // increases the index of the sprite sheet
+        if (this.canChangeFrame) {
+            this.canChangeFrame = false;
+            setTimeout(() => {
+                if (this.indexX < 3)
+                    this.indexX += 1;
+                else
+                    this.indexX = 0;
+                this.canChangeFrame = true;
+            }, 200);
+        }
     }
 
     update() {
