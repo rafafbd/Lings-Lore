@@ -7,8 +7,8 @@ class Bob extends Enemy {
     }
 
     increaseIndexX(){ // increases the index of the sprite sheet
-        if (!this.getUp && !this.playerInRange) {
-            
+        if (this.getUp || !this.playerInRange) {
+            this.indexX = 0;
         }
         else {
             if (this.indexX < 16)
