@@ -95,6 +95,11 @@ class Stick {
                 x: this.position.x + this.width,
                 y: this.position.y + this.height
             }
+
+            if (this.position.x < -100 || this.position.x > canvas.width + 100 || this.position.y < -100 || this.position.y > canvas.height + 100) {
+                this.isDestroyed = true;
+            }
+
             this.draw();
         }
         
