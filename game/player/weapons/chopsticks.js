@@ -53,15 +53,15 @@ class Chopsticks {
                 
                 case -2: // up
                     sticks.push(new Stick({
-                        x: this.position.x + 40,
-                        y: this.position.y - 40,
+                        x: this.position.x + 60,
+                        y: this.position.y - 20,
                         direction: direction
                     }));
                     break;
                 
                 case 2: // down
                     sticks.push(new Stick({
-                        x: this.position.x + 40,
+                        x: this.position.x + 70,
                         y: this.position.y + 40,
                         direction: direction
                     }));

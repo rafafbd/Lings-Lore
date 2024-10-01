@@ -62,28 +62,30 @@ class Stick {
             ctx.drawImage(this.image, this.position.x, this.position.y);
             ctx.restore();
         }
-        rotate() {
+        rotate(direction) {
             ctx.translate(this.position.x, this.position.y);
-            ctx.rotate(Math.PI/2); 
+            ctx.rotate(Math.PI/2*direction); 
             ctx.translate(-this.position.x, -this.position.y);
-          }
+        }
 
         update() {
+            ctx.save();
             switch (this.direction) {
-                case -1:
+                case -1: // left
+                    ctx.translate(this.position.x + this.width, this.position.y);
+                    ctx.scale(-1, 1);
+                    ctx.translate(-this.position.x, -this.position.y);
                     this.horizontalMovement();
                     break;
-                case 1:
+                case 1: // right
                     this.horizontalMovement();
                     break;
-                case -2:
-                    ctx.save();
-                    // this.rotate(); // only use if there is a sprite for the stick
+                case -2: // up
+                    this.rotate(-1);
                     this.verticalMovement();
                     break;
-                case 2:
-                    ctx.save();
-                    // this.rotate(); // only use if there is a sprite for the stick
+                case 2: // down
+                    this.rotate(1);
                     this.verticalMovement();
                     break;
             }
@@ -98,6 +100,7 @@ class Stick {
 
             if (this.position.x < -100 || this.position.x > canvas.width + 100 || this.position.y < -100 || this.position.y > canvas.height + 100) {
                 this.isDestroyed = true;
+                ctx.restore();
             }
 
             this.draw();
