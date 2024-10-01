@@ -2,9 +2,7 @@ class Chopsticks {
     constructor({x, y}) {
         const image = new Image();
         this.image = image;
-        this.image.src = "./Assets/spriteChopsticks/doisChopsticks.png";
-
-        this.canPlay = false;
+        this.image.src = "./Assets/spriteChopstick/doisChopsticks.png";
 
         this.position = {
             x,
@@ -26,9 +24,6 @@ class Chopsticks {
     }
 
     draw() {
-        if (!this.canPlay) {
-            return;
-        }
         ctx.drawImage(this.image, this.position.x, this.position.y);
         ctx.restore();
     }
@@ -41,41 +36,33 @@ class Chopsticks {
             
             switch (direction) {
                 case -1: // left
-                    this.position.x -= 20;
-                    this.position.y += 10;
                     sticks.push(new Stick({
-                        x: this.position.x - 20,
-                        y: this.position.y,
+                        x: this.position.x - 10,
+                        y: this.position.y + 30,
                         direction: direction
                     }));
                     break;
                 
                 case 1: // right
-                    this.position.x += 20;
-                    this.position.y += 10;
                     sticks.push(new Stick({
-                        x: this.position.x + 20,
-                        y: this.position.y,
+                        x: this.position.x + 60,
+                        y: this.position.y + 30,
                         direction: direction
                     }));
                     break;
                 
                 case -2: // up
-                    this.position.x += 10;
-                    this.position.y -= 20;
                     sticks.push(new Stick({
-                        x: this.position.x,
-                        y: this.position.y - 20,
+                        x: this.position.x + 40,
+                        y: this.position.y - 40,
                         direction: direction
                     }));
                     break;
                 
                 case 2: // down
-                    this.position.x += 10;
-                    this.position.y += 20;
                     sticks.push(new Stick({
-                        x: this.position.x,
-                        y: this.position.y + 20,
+                        x: this.position.x + 40,
+                        y: this.position.y + 40,
                         direction: direction
                     }));
                     break;
@@ -107,8 +94,18 @@ class Chopsticks {
             this.attack(player.direction);
         }
         
-        this.position.x = player.position.x;
-        this.position.y = player.position.y;
+        this.position.x = player.position.x - player.width/4;
+        this.position.y = player.position.y - player.height/4;
+
+        if (this.ammo == 2) {
+            this.image.src = "./Assets/spriteChopstick/doisChopsticks.png"; // change image to 2 chopsticks
+        }
+        else if (this.ammo == 1) {
+            this.image.src = "./Assets/spriteChopstick/umChopstick.png"; // change image to 1 chopstick
+        }
+        else if (this.ammo == 0) {
+            this.image.src = "./Assets/spriteChopstick/zeroChopsticks.png"; // change image to 0 chopsticks
+        }
         this.draw()
     }
 }
