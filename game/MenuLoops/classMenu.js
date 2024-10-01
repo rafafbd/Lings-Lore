@@ -492,7 +492,7 @@ class Menus {
     
         // ------------------------------------------------------
         // scenery scrolling
-        if (this.currentLevel != 0){
+        if (this.currentLevel != 0) {
             if (player.position.x > 850) { // scrolls the scenery to the left
                 for (let i = 0; i < components.platforms.length; i++) {
                     components.platforms[i].position.x -= player.velocity.x;
@@ -631,53 +631,62 @@ class Menus {
                 this.totalDistanceY = 0;
             }
         }
+        
         else { // endless mode
             // draw wave number -> this.currentWave
             // display number of enemies left -> this.currentAmountOfEnemies
-            ctx.font = "20px Arial";
-            ctx.fillStyle = "black";
-            ctx.fillText(`Wave: ${this.currentWave}`, 10, 20);
-            ctx.fillText(`Enemies: ${this.currentAmountOfEnemies}`, 10, 40);
+            ctx.font = "64px Arial";
+            ctx.fillStyle = "white";
+            ctx.fillText(`Wave: ${this.currentWave}`, 1500, 110);
+            ctx.fillText(`Enemies: ${this.currentAmountOfEnemies}`, 1500, 180);
 
             // next wave
             if (this.nextEndlessWave) {
                 this.nextEndlessWave = false;
-                setTimeout(() => {
-                    this.numberOfEnemies = Math.floor(Math.random() * 4 * this.currentWave/2) + 1; 
-                    
-                    for (let i=0; i<this.numberOfEnemies; i++){
-                        let enemyType = Math.floor(Math.random() * 3);
-                        let enemyXposition = player.position.x;
-                        while (enemyXposition > player.position.x - 100 && enemyXposition < player.position.x + 100) {
-                            enemyXposition = Math.floor(Math.random() * 1000) + 100;
-                        }
-                        switch (enemyType) {
-                            case 0: // bob
-                                enemies.push(
-                                    new Bob(
-                                        {enemyXposition, y: 500},
-                                    )
+
+                this.numberOfEnemies = Math.floor(Math.random() * 4 * this.currentWave/5) + 1; 
+                for (let i=0; i<this.numberOfEnemies; i++){
+                    let enemyType = Math.floor(Math.random() * 3);
+                    let enemyXposition = 0;
+                    // while (enemyXposition > player.position.x - 100 && enemyXposition < player.position.x + 100) {
+                    enemyXposition = Number(Math.floor(Math.random() * 1000) + 100);
+                    // }
+                    console.log(enemyXposition);
+                    console.log(enemyType);
+                    switch (enemyType) {
+                        case 0: // bob
+                            enemies.push(
+                                new Bob(
+                                    {x: enemyXposition, y: 500},
                                 )
-                                break;
-                            case 1: // jorge
-                                enemies.push(
-                                    new Jorge(
-                                        {enemyXposition, y: 500},
-                                    )
+                            )
+                            break;
+                        case 1: // jorge
+                            enemies.push(
+                                new Jorge(
+                                    {x: enemyXposition, y: 500},
                                 )
-                                break;
-                            case 2: // robert
-                                enemies.push(
-                                    new Robert(
-                                        {enemyXposition, y: 500},
-                                    )
+                            )
+                            break;
+                        case 2: // robert
+                            enemies.push(
+                                new Robert(
+                                    {x: enemyXposition, y: 500},
                                 )
-                                break;
-                        }
+                            )
+                            break;
                     }
-                    player.heal(20);
-                    this.currentWave++;
-                }, 10000) // 10 seconds
+                }
+                player.heal(20);
+                this.currentWave++;
+                
+                let timeToNextWave = 5000 * this.currentWave/4;
+                if (timeToNextWave > 15000) {
+                    timeToNextWave = 15000;
+                }
+                setTimeout(() => {
+                    this.nextEndlessWave = true;
+                }, timeToNextWave) 
             }
             this.currentAmountOfEnemies = enemies.length;
         }
