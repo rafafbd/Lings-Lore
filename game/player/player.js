@@ -406,7 +406,7 @@ class Player {
             y: this.position.y + this.height
         }
 
-        if (this.hp <= 0 || this.position.y > canvas.height){
+        if (this.hp <= 0 || this.position.y > menus.deathZone || this.socialCredits <= - 50){
             menus.gameOver();
         }
 

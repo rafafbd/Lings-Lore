@@ -706,16 +706,20 @@ class Menus {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "red";
         ctx.font = "50px Arial";
-        ctx.fillText("Game Over", 150, 200, 300);
+        if (player.socialCredits <= -50) {
+            ctx.fillText("Game Over, cause of death: in debt with Xi Jinping.", 150, 200, 900);
+        }
+        else {
+            ctx.fillText("Game Over", 150, 200, 300);
+        }
         ctx.font = "20px Arial";
         this.firstLoadLevel = true;
         this.currentPage = "game over";
-        ctx.fillText("Press 'J' to restart", 150, 400, 300);
-        console.log(keys.attack.pressed)
+        ctx.fillText("Press 'Space' to restart", 150, 400, 300);
+        console.log(keys.jump.pressed)
         if (keys.attack.pressed) {
             this.firstLoadLevel = true;
             this.currentPage = "menu";
-            console.log(this.currentPage)
         }
         if (this.currentPage == "game over"){
             requestAnimationFrame(this.gameOver);

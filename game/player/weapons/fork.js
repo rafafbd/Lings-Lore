@@ -29,7 +29,7 @@ class Fork {
         this.originalWidth = this.attackRange.width;
         this.originalHeight = this.attackRange.height;
 
-        this.damage = 50;
+        this.damage = 70;
         let d = new Date();
         this.attackTimer = d.getTime()/1000;
         this.cd = 0.5; // fork attack colldown in seconds

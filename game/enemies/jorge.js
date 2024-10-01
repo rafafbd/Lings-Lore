@@ -13,7 +13,7 @@ class Jorge extends Enemy {
 
         let note = new Note({
             x: this.position.x,
-            y: this.position.y + this.height/2,
+            y: this.position.y + this.height/3,
             damage: 20,
             width: 100,
             height: 40,
@@ -24,6 +24,7 @@ class Jorge extends Enemy {
     }
 
     update(){
+        ctx.save()
         var currentTime = Date.now();
         if (currentTime > this.nextThrowTime && Math.abs(this.position.x - player.position.x) < 900) {
             this.throw(this.playerWhere());
@@ -57,16 +58,12 @@ class Jorge extends Enemy {
 
     draw(){
         if (this.playerWhere() == 1){
-            ctx.save()
-            ctx.translate(this.position + this.width*2, this.position.y);
+            ctx.translate(this.position.x + this.width, this.position.y);
             ctx.scale(-1, 1)
             ctx.translate(-this.position.x, -this.position.y)
-            ctx.restore()
-            ctx.drawImage(this.jorge, this.position.x, this.position.y)
         }
-        else{
-           ctx.drawImage(this.jorge, this.position.x, this.position.y); 
-        }
-        
+        ctx.fillStyle = "red";
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.drawImage(this.jorge, this.position.x, this.position.y); 
     }
 }

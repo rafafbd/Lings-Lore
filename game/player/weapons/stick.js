@@ -24,20 +24,13 @@ class Stick {
         };
 
         this.width = 64;
-        this.height = 16;
+        this.height = 8;
         this.position2 = {
             x: this.x + this.width,
             y: this.y + this.height
         };
-        this.damage = 30;
+        this.damage = 45;
         this.direction = direction; // -1 for left, 1 for right, -2 for up, 2 for down
-
-        if (Math.abs(this.direction) == 2) {
-            this.width = 16;
-            this.height = 64;
-            
-        }
-
         this.isDestroyed = false;
     }
 
@@ -61,6 +54,7 @@ class Stick {
             }
             ctx.drawImage(this.image, this.position.x, this.position.y);
             ctx.restore();
+
         }
         rotate(direction) {
             ctx.translate(this.position.x, this.position.y);
