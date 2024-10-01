@@ -505,14 +505,21 @@ function animationLoop(){
                 menus.menuLoop();
                 break;
 
-            case "game": 
-                menus.playerLoop();
+            case "selectGamemode": 
+                menus.chooseGamemode();
                 break;
             case "lore": 
                 menus.lorePage();
                 break;
             case "commands": 
                 menus.commandsPage();
+                break;
+            case "career":
+                menus.playerLoop();
+                break;
+            case "endless":
+                menus.currentLevel = 0
+                menus.playerLoop();
                 break;
         }
         mouseClickPosition.y = 0;

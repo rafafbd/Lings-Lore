@@ -16,12 +16,24 @@ class Menus {
 
         this.buttonX = new Image();
         this.buttonX.src = "./Assets/spriteButtons/buttonX.png";
+
         this.buttonPlay = new Image();
         this.buttonPlay.src = "./Assets/spriteButtons/buttonPlay.png";
+
         this.buttonLore = new Image();
         this.buttonLore.src = "./Assets/spriteButtons/buttonLore.png";
+
         this.buttonCommands = new Image();
         this.buttonCommands.src = "./Assets/spriteButtons/buttonCommands.png";
+
+        this.buttonCareer = new Image();
+        this.buttonCareer.src = "./Assets/spriteButtons/buttonCareer.png"
+
+        this.buttonEndless = new Image();
+        this.buttonEndless.src = "./Assets/spriteButtons/buttonEndless.png"
+
+        this.buttonMenu = new Image();
+        this.buttonMenu.src = "./Assets/spriteButtons/buttonMenu.png"
 
         this.textLore = "Na costa oeste dos Estados Unidos, o restaurante '變態的食物' é um verdadeiro tesouro, conhecido por seus dumplings feitos com receitas passadas de geração em geração. Porém, a tranquilidade do local é ameaçada quando uma corporação Capitalista decide comprar o restaurante, prometendo modernização, mas na verdade, desrespeitando a tradição e o legado familiar."
         this.textLore2 = "Ling, um dumpling que ganhou vida após um ritual da avó, se vê em uma luta desesperada para salvar seu lar. Junto a outros pratos tradicionais, Ling descobre que a Sabor Global não apenas visa o lucro, mas também pretende homogeneizar a cultura alimentar, substituindo sabores autênticos por opções industrializadas e sem alma. "
@@ -49,7 +61,26 @@ class Menus {
                 y: 650,
                 w: 400,
                 h: 100
-            }
+            },
+            careerButton: {
+                x: (canvas.width-400)/2,
+                y: 350,
+                w: 400,
+                h: 100
+            },
+            endlessButton: {
+                x: (canvas.width-400)/2,
+                y: 500,
+                w: 400,
+                h: 100
+            },
+            menuButton: {
+                x: (canvas.width-400)/2,
+                y: 650,
+                w: 400,
+                h: 100
+            },
+
         };
 
         this.commandArray = [
@@ -88,7 +119,7 @@ class Menus {
 
     menuLoop = () => {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    
+        ctx.fillStyle = "black"
         ctx.font = "50px Arial";
         ctx.fillText("Ling's Lore", 830, 200, 300);
     
@@ -104,7 +135,7 @@ class Menus {
             this.mouseClickPosition.x <= this.buttons.playButton.x + this.buttons.playButton.w &&
             this.mouseClickPosition.y >= this.buttons.playButton.y &&
             this.mouseClickPosition.y <= this.buttons.playButton.y + this.buttons.playButton.h){
-            this.currentPage = "game";
+            this.currentPage = "selectGamemode";
         }
     
         else if (this.mouseClickPosition.x >= this.buttons.loreButton.x &&
@@ -124,6 +155,46 @@ class Menus {
             requestAnimationFrame(this.menuLoop)
         }
         
+    }
+
+    chooseGamemode = () => {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        ctx.fillStyle  = "grey"
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        ctx.fillStyle = "black"
+        ctx.font = "50px Arial";
+        ctx.fillText("Ling's Lore", 800, 200, 300);
+
+        ctx.drawImage(this.buttonCareer, this.buttons.careerButton.x, this.buttons.careerButton.y/* , this.buttons.playButton.w, this.buttons.playButton.h*/);
+        
+        ctx.drawImage(this.buttonEndless, this.buttons.endlessButton.x, this.buttons.endlessButton.y/*, this.buttons.loreButton.w, this.buttons.loreButton.h */);
+
+        ctx.drawImage(this.buttonMenu, this.buttons.menuButton.x, this.buttons.menuButton.y)
+
+        if (this.mouseClickPosition.x >= this.buttons.playButton.x &&
+            this.mouseClickPosition.x <= this.buttons.playButton.x + this.buttons.playButton.w &&
+            this.mouseClickPosition.y >= this.buttons.playButton.y &&
+            this.mouseClickPosition.y <= this.buttons.playButton.y + this.buttons.playButton.h){
+            this.currentPage = "career";
+        }
+    
+        else if (this.mouseClickPosition.x >= this.buttons.loreButton.x &&
+            this.mouseClickPosition.x <= this.buttons.loreButton.x + this.buttons.loreButton.w &&
+            this.mouseClickPosition.y >= this.buttons.loreButton.y &&
+            this.mouseClickPosition.y <= this.buttons.loreButton.y + this.buttons.loreButton.h){
+            this.currentPage = "endless";
+        }
+        
+        else if (this.mouseClickPosition.x >= this.buttons.commandsButton.x &&
+            this.mouseClickPosition.x <= this.buttons.commandsButton.x + this.buttons.commandsButton.w &&
+            this.mouseClickPosition.y >= this.buttons.commandsButton.y &&
+            this.mouseClickPosition.y <= this.buttons.commandsButton.y + this.buttons.commandsButton.h){
+            this.currentPage = "menu";
+        }
+        if (this.currentPage == "selectGamemode"){
+            requestAnimationFrame(this.menuLoop)
+        }
+
     }
 
     commandsPage = () => {
@@ -349,21 +420,24 @@ class Menus {
         // ------------------------------------------------------
         
         //Door is created
-        if (enemies.length == 0){
-            doors[0].createDoor()
-        }
-        // Door collision to pass level
-        if (doors.length > 0 && enemies.length == 0){
-            if (rectangleColision(player, doors) != null){
-                doors[0].passLevel(this.currentLevel);
-
-                const door = new Music()
-                door.changeInd(3)
-                door.playSong()
+        if(this.currentLevel != 0){
+            if (enemies.length == 0){
+                doors[0].createDoor()
             }
-            doors[0].update();
-            
+            // Door collision to pass level
+            if (doors.length > 0 && enemies.length == 0){
+                if (rectangleColision(player, doors) != null){
+                    doors[0].passLevel(this.currentLevel);
+
+                    const door = new Music()
+                    door.changeInd(3)
+                    door.playSong()
+                }
+                doors[0].update();
+                
+            }
         }
+        
 
         // ------------------------------------------------------
 
@@ -618,11 +692,13 @@ class Menus {
         this.firstLoadLevel = true;
         this.currentPage = "game over";
         ctx.fillText("Press 'J' to restart", 150, 400, 300);
+        console.log(keys.attack.pressed)
         if (keys.attack.pressed) {
             this.firstLoadLevel = true;
-            this.currentPage = "game";
+            this.currentPage = "menu";
+            console.log(this.currentPage)
         }
-        if (this.currentPage == "gameover"){
+        if (this.currentPage == "game over"){
             requestAnimationFrame(this.gameOver);
         }
     }
