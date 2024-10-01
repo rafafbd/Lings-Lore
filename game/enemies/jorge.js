@@ -56,10 +56,12 @@ class Jorge extends Enemy {
     }
 
     draw(){
-        if (this.playerWhere == 1){
-            //ctx.translate(this.position + this.width*2, this.position.y);
+        if (this.playerWhere() == 1){
+            ctx.save()
+            ctx.translate(this.position + this.width*2, this.position.y);
             ctx.scale(-1, 1)
-            //ctx.translate(-this.position.x, -this.position.y)
+            ctx.translate(-this.position.x, -this.position.y)
+            ctx.restore()
             ctx.drawImage(this.jorge, this.position.x, this.position.y)
         }
         else{
