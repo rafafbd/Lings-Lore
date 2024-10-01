@@ -1,8 +1,8 @@
 
 class Jorge extends Enemy {
     constructor({x, y}){
-        super({x, y}, "", 64, 128, 5, 13, 2, 150, 45)
-        this.throwDelay = 1200;
+        super({x, y}, "", 64, 128, 5, 13, 2, 110, 45)
+        this.throwDelay = 2000;
         this.nextThrowTime = 0;
         const jorge = new Image();
         jorge.src = "./Assets/spriteEnemies/jorge.png"
@@ -52,18 +52,18 @@ class Jorge extends Enemy {
             this.dead = true;
             ctx.restore();
         }
-        this.draw();
+        else {
+            this.draw();
+        }
         ctx.restore();
     }
 
     draw(){
-        if (this.playerWhere() == 1){
+        if (this.playerWhere() == 1 ){
             ctx.translate(this.position.x + this.width, this.position.y);
             ctx.scale(-1, 1)
             ctx.translate(-this.position.x, -this.position.y)
         }
-        ctx.fillStyle = "red";
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
         ctx.drawImage(this.jorge, this.position.x, this.position.y); 
     }
 }

@@ -93,7 +93,7 @@ class Menus {
             { text: "Space     - Pular",                     x: 750, y: 660, maxW: 1000 }
         ];
 
-        this.currentLevel = 3;
+        this.currentLevel = 1;
         this.firstLoadLevel = true;
         this.passedLevel = false;
 
@@ -178,6 +178,7 @@ class Menus {
             this.mouseClickPosition.y >= this.buttons.playButton.y &&
             this.mouseClickPosition.y <= this.buttons.playButton.y + this.buttons.playButton.h){
             this.currentPage = "career";
+            this.currentLevel = 1;
         }
     
         else if (this.mouseClickPosition.x >= this.buttons.loreButton.x &&
@@ -345,6 +346,7 @@ class Menus {
         for (let i=0; i<enemies.length; i++){
             enemies[i].update();
             if (enemies[i].dead || enemies[i].position.y > this.deathZone) {
+                ctx.restore();
                 let deadEnemy = i;
                 enemies.splice(deadEnemy, 1); // removes dead enemy from array
                 if (i != 0) {
@@ -651,16 +653,14 @@ class Menus {
             ctx.fillText(`Enemies: ${this.currentAmountOfEnemies}`, 1500, 180);
 
             // next wave
-            if (this.nextEndlessWave) {
-                this.nextEndlessWave = false;
-
+            if (this.currentAmountOfEnemies == 0) {
                 this.numberOfEnemies = Math.floor(Math.random() * 4 * this.currentWave/5) + 1; 
                 for (let i=0; i<this.numberOfEnemies; i++){
                     let enemyType = Math.floor(Math.random() * 3);
-                    let enemyXposition = 0;
-                    // while (enemyXposition > player.position.x - 100 && enemyXposition < player.position.x + 100) {
-                    enemyXposition = Number(Math.floor(Math.random() * 1000) + 100);
-                    // }
+                    let enemyXposition = player.position.x;
+                    while (enemyXposition <= player.position2.x && enemyXposition + 100 >= player.position.x) {
+                        enemyXposition = Number(Math.floor(Math.random() * 1700) + 100);
+                    }
                     console.log(enemyXposition);
                     console.log(enemyType);
                     switch (enemyType) {
@@ -689,14 +689,6 @@ class Menus {
                 }
                 player.heal(20);
                 this.currentWave++;
-                
-                let timeToNextWave = 5000 * this.currentWave/4;
-                if (timeToNextWave > 15000) {
-                    timeToNextWave = 15000;
-                }
-                setTimeout(() => {
-                    this.nextEndlessWave = true;
-                }, timeToNextWave) 
             }
             this.currentAmountOfEnemies = enemies.length;
         }
@@ -716,8 +708,7 @@ class Menus {
         this.firstLoadLevel = true;
         this.currentPage = "game over";
         ctx.fillText("Press 'Space' to restart", 150, 400, 300);
-        console.log(keys.jump.pressed)
-        if (keys.attack.pressed) {
+        if (keys.jump.pressed) {
             this.firstLoadLevel = true;
             this.currentPage = "menu";
         }
