@@ -368,6 +368,10 @@ class Player {
             this.velocity.y = -this.speed.y;
             this.jumped = true;
             this.isOnFloor = false;
+
+            const jump_mus = new Music();
+            jump_mus.changeInd(5)
+            jump_mus.playSong()
         }
         else {
             this.velocity.y = 0;

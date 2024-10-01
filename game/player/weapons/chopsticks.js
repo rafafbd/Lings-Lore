@@ -72,7 +72,9 @@ class Chopsticks {
             this.ammo--;
 
             ctx.restore()
-            music.playMusic(3)
+            const chops_mus = new Music();
+            chops_mus.changeInd(3)
+            chops_mus.playSong()
             this.attackTimer = time;
         }
         
