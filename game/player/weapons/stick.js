@@ -32,9 +32,6 @@ class Stick {
         this.damage = 30;
         this.direction = direction; // -1 for left, 1 for right, -2 for up, 2 for down
 
-        this.image = new Image();
-        this.image.src = "";
-
         if (Math.abs(this.direction) == 2) {
             this.width = 16;
             this.height = 64;
