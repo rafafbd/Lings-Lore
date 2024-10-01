@@ -465,6 +465,8 @@ class Menus {
             }
             for (let i = 0; i < components.credits.length; i++) {
                 components.credits[i].position.y += -player.velocity.y;
+                components.credits[i].floatingHeight.min -= player.velocity.y;
+                components.credits[i].floatingHeight.max -= player.velocity.y;
             }
             for (let i = 0; i < components.heals.length; i++) {
                 components.heals[i].position.y += -player.velocity.y;
@@ -491,6 +493,8 @@ class Menus {
             }
             for (let i = 0; i < components.credits.length; i++) {
                 components.credits[i].position.y -= player.velocity.y;
+                components.credits[i].floatingHeight.min -= player.velocity.y;
+                components.credits[i].floatingHeight.max -= player.velocity.y;
             }
             for (let i = 0; i < components.heals.length; i++) {
                 components.heals[i].position.y -= player.velocity.y;
@@ -518,6 +522,8 @@ class Menus {
             }
             for (let i = 0; i < components.credits.length; i++) {
                 components.credits[i].position.y -= this.totalDistanceY;
+                components.credits[i].floatingHeight.min -= this.totalDistanceY;
+                components.credits[i].floatingHeight.max -= this.totalDistanceY;
             }
             for (let i = 0; i < components.heals.length; i++) {
                 components.heals[i].position.y -= this.totalDistanceY;
