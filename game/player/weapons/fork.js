@@ -80,7 +80,11 @@ class Fork {
                     break;
             }
             ctx.restore()
-            music.playMusic(3)
+
+            // Music ---------------------------
+            const audio = new Audio();
+            audio.src = "./Assets/Musics/forkHit.mp3"
+            audio.play()
             this.attackTimer = time;
         }
         

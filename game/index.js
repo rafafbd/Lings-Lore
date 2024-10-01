@@ -614,8 +614,8 @@ addEventListener("mousedown", function(){
 
 music.audio.addEventListener("ended", function(){
     //console.log("acabou")
-    music.changeSong(1)
-    music.audio.play()
+    music.netxSong()
+    music.playNextBackground()
 })
 
 addEventListener("click", () => {
