@@ -24,9 +24,31 @@ class Music{
             "/game/Assets/Musics/chinese-ancient-style-music.mp3",
             "/game/Assets/Musics/redSunInTheSkyLoopVer.mp3"
         ]
+
+        this.loseSocCred = [
+            "./Assets/Musics/loseSocialCreditsSFX/loseSocialCredits1.mp3",
+            "./Assets/Musics/loseSocialCreditsSFX/loseSocialCredits2.mp3",
+            "./Assets/Musics/loseSocialCreditsSFX/loseSocialCredits3.mp3",
+            "./Assets/Musics/loseSocialCreditsSFX/loseSocialCredits4.mp3",
+            "./Assets/Musics/loseSocialCreditsSFX/loseSocialCredits5.mp3",
+            "./Assets/Musics/loseSocialCreditsSFX/loseSocialCredits6.mp3",
+            "./Assets/Musics/loseSocialCreditsSFX/loseSocialCredits7.mp3"
+        ]
+
+        this.loseSocCredIndex = 0
         this.audio.src = this.loopGameMusics[2];
     }
 
+    playSocCredLooseSound(){
+        if (this.loseSocCredIndex == this.loseSocCred.length){
+            this.loseSocCredIndex = 0
+        }
+        else{
+            this.loseSocCredIndex += 1
+        }
+        this.audio.src = this.loseSocCred[this.loseSocCredIndex]
+        this.audio.play()
+    }
 
     tryPlayAudio(){
         // console.log("Aqui")

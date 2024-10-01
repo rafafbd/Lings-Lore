@@ -5,6 +5,9 @@ class Player {
         this.image = image
         this.image.src = "./Assets/spriteLing/freakiestLing.png";
 
+        const socCredSound = new Music();
+        this.socCredSound = socCredSound;
+
         this.width = 64;
         this.height = 64;
 
@@ -96,6 +99,7 @@ class Player {
         if (source instanceof Enemy || source instanceof Note || source instanceof Line){
             if (!this.isDashing){
                 this.takeDamage(source.damage, source);
+                this.socCredSound.playSocCredLooseSound()
             }
         }
         else if (source instanceof Credits){
