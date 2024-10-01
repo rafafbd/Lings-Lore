@@ -4,6 +4,9 @@ class Jorge extends Enemy {
         super({x, y}, "", 64, 128, 5, 13, 2, 150, 45)
         this.throwDelay = 1200;
         this.nextThrowTime = 0;
+        const jorge = new Image();
+        jorge.src = "./Assets/spriteEnemies/jorge.png"
+        this.jorge = jorge
     }
 
     throw(direction){
@@ -53,7 +56,15 @@ class Jorge extends Enemy {
     }
 
     draw(){
-        ctx.fillStyle = "brown";
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        if (this.playerWhere == 1){
+            //ctx.translate(this.position + this.width*2, this.position.y);
+            ctx.scale(-1, 1)
+            //ctx.translate(-this.position.x, -this.position.y)
+            ctx.drawImage(this.jorge, this.position.x, this.position.y)
+        }
+        else{
+           ctx.drawImage(this.jorge, this.position.x, this.position.y); 
+        }
+        
     }
 }
