@@ -20,7 +20,7 @@ class Door {
         this.image.onload = () => {
             this.canDraw = true
         }
-        this.height = 64;
+        this.height = 128;
         this.width = 64;
 
         this.position2 = {
