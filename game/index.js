@@ -36,7 +36,45 @@ var lines = [];
 
 var components = {};
 
+function endless() {
+    player.velocity = { // player velocity
+        x: 0,
+        y: 0
+    }
+    player.position.x = 600;
+    player.position.y = 500;
+    player.hp = 100;
+    player.dead = false;
+    player.socialCredits = 0;
 
+    heals = [];
+    doors = [];
+    notes = [];
+    sticks = [];
+
+    enemies = [];
+
+    platforms = [
+        new Platform({
+            x: 0,
+            y: canvas.height - 200,
+            width: canvas.width,
+            height: 200
+        })
+    ];
+
+    credits = [];
+
+    components = {
+        platforms: platforms,
+        enemies: enemies,
+        credits: credits,
+        doors: doors,
+        heals: heals,
+        notes: notes,
+        sticks: sticks
+    };
+} 
 
 function level1() {
     player.velocity = { // player velocity
