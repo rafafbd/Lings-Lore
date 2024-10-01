@@ -419,13 +419,14 @@ function level2() {
     player.chopsticks.ammo = 2;
 
     heals = [
-        new Heal(850, 664)
+        new Heal(850, 664),
+        new Heal(1600, 0)
     ];
     doors = [
        door = new Door({
-        x: 300,
-        y: 564,
-        currentLevel: 2,
+        x: 3393,
+        y: -1628,
+        currentLevel: 2
     })
     ];
 
@@ -444,6 +445,22 @@ function level2() {
         new Jorge ({
             x: 350,
             y: 0
+        }),
+        new Robert ({
+            x: 1400,
+            y: -340,
+        }),
+        new Robert ({
+            x: 2100,
+            y: -500,
+        }),
+        new Bob ({
+            x: 2780,
+            y: -790,
+        }),
+        new Robert ({
+            x: 3900,
+            y: -1400,
         }),
     ];
 
@@ -464,7 +481,7 @@ function level2() {
             x: 1000,
             y: 240,
             width: 100,
-            height: 30
+            height: 50
         }),
         up4 = new Platform({
             x: 300,
@@ -478,12 +495,79 @@ function level2() {
             width: 400,
             height: 75
         }),
+        up6 = new Platform({
+            x: 1000,
+            y: -110,
+            width: 100,
+            height: 50
+        }),
+        up7 = new Platform({
+            x: 1300,
+            y: -250,
+            width: 400,
+            height: 75
+        }),
+        up8 = new Platform({
+            x: 2000,
+            y: -410,
+            width: 300,
+            height: 60
+        }),
+        up9 = new Platform({
+            x: 2000,
+            y: -630,
+            width: 300,
+            height: 60
+        }),
+        up10 = new Platform({
+            x: 2700,
+            y: -750,
+            width: 500,
+            height: 70
+        }),
+        up11 = new Platform({
+            x: 3350,
+            y: -600,
+            width: 400,
+            height: 50
+        }),
+        wall1 = new Platform ({
+            x: 3900,
+            y: -1300,
+            width: 100,
+            height: 300
+        }),
+        wall2 = new Platform ({
+            x: 3900,
+            y: -750,
+            width: 100,
+            height: 300
+        }),
+        up12 = new Platform({
+            x: 4100,
+            y: -900,
+            width: 100,
+            height: 50
+        }),
+        up13 = new Platform({
+            x: 4100,
+            y: -1110,
+            width: 100,
+            height: 50
+        }),
+        up14 = new Platform({
+            x: 3150,
+            y: -1500,
+            width: 550,
+            height: 100
+        }),
         floor1 = new Platform({
             x: 0,
             y: 700,
             width: 2000,
             height: 400
         }),
+
     ];
 
     credits = [
@@ -494,11 +578,31 @@ function level2() {
         new Credits({
             x: 750,
             y: 250
-        }, "positive"),
+        }, "negative"),
         new Credits({
             x: 1050,
             y: 150
-        }, "positive")
+        }, "positive"),
+        new Credits ({
+            x: 425,
+            y: 25,
+        }, "positive"),
+        new Credits ({
+            x: 1425,
+            y: 25,
+        }, "negative"),
+        new Credits ({
+            x: 1500,
+            y: 600,
+        }, "positive"),
+        new Credits ({
+            x: 1350,
+            y: -300,
+        }, "negative"),
+        new Credits ({
+            x: 3400,
+            y: -750,
+        }, "negative"),
     ];
 
     components = {
@@ -524,13 +628,13 @@ function level3() {
     player.socialCredits = 0;
 
     heals = [
-        new Heal(100, 700),
+        new Heal(100, 600),
         new Heal(900, 500),
     ];
     doors = [
         new Door({
-            x: 2000,
-            y: 600,
+            x: 3800,
+            y: 672,
             currentLevel: 3
     })
     ];
@@ -540,7 +644,7 @@ function level3() {
 
     enemies = [
         new Bob({
-            x: 700,
+            x: 1000,
             y: 500
         }),
         new Bob({
@@ -550,34 +654,80 @@ function level3() {
         new Jorge({
             x: 1000,
             y: 100 
+        }),
+        new Robert({
+            x: 300,
+            y: 200
+        }),
+        new Robert({
+            x: 1300,
+            y: 200
+        }),
+        new Robert({
+            x: 2600,
+            y: 400
+        }),
+        new Jorge ({
+            x: 3300,
+            y: 400
         })
     ];
 
     platforms = [
-        new Platform({
+        up1 = new Platform({
             x: 300,
-            y: 500,
+            y: 540,
             width: 240,
-            height: 100
+            height: 60
         }),
-        new Platform({
+        up2 = new Platform({
             x: 700,
             y: 400,
             width: 200,
             height: 50
         }),
-        new Platform({
+        up3 = new Platform({
             x: 1000,
-            y: 200,
+            y: 220,
             width: 100,
             height: 30
         }),
-        new Platform({
+        floor1 = new Platform({
             x: 0,
-            y: canvas.height - 200,
-            width: canvas.width,
-            height: 200
-        })
+            y: 700,
+            width: 1600,
+            height: 300
+        }),
+        floor2 = new Platform({
+            x: 1900,
+            y: 580,
+            width: 400,
+            height: 500
+        }),
+        floor3 = new Platform({
+            x: 2500,
+            y: 500,
+            width: 400,
+            height: 500
+        }),
+        floor4 = new Platform({
+            x: 3100,
+            y: 420,
+            width: 400,
+            height: 500
+        }),
+        floor5 = new Platform({
+            x: 3700,
+            y: 340,
+            width: 450,
+            height: 300
+        }),
+        floor6 = new Platform({
+            x: 3700,
+            y: 800,
+            width: 450,
+            height: 150
+        }),
     ];
 
     credits = [
@@ -592,7 +742,27 @@ function level3() {
         new Credits({
             x: 1050,
             y: 150
-        }, "positive")
+        }, "positive"),
+        new Credits ({
+            x: 2100,
+            y: 500,
+        }, "negative"),
+        new Credits ({
+            x: 2650,
+            y: 400,
+        }, "negative"),
+        new Credits ({
+            x: 3930,
+            y: 300
+        }, "negative"),
+        new Credits ({
+            x: 4040,
+            y: 300
+        }, "negative"),
+        new Credits ({
+            x: 3820,
+            y: 300
+        }, "negative"),
     ];
 
     components = {

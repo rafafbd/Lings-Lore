@@ -93,7 +93,7 @@ class Menus {
             { text: "Space     - Pular",                     x: 750, y: 660, maxW: 1000 }
         ];
 
-        this.currentLevel = 2;
+        this.currentLevel = 3;
         this.firstLoadLevel = true;
         this.passedLevel = false;
 
@@ -344,14 +344,19 @@ class Menus {
             if (enemies[i].dead || enemies[i].position.y > this.deathZone) {
                 let deadEnemy = i;
                 enemies.splice(deadEnemy, 1); // removes dead enemy from array
+                if (i != 0) {
+                    i--;
+                }
             }
             // enemy collision with platforms
-            platform = rectangleColision(enemies[i], platforms); // returns collided platform's index
-            if (platform != null) {
-                enemies[i].collided(platforms[platform]);
-            }
-            else { // no collision detected
-                enemies[i].isOnFloor = false;
+            if (enemies.length > 0) {
+                platform = rectangleColision(enemies[i], platforms); // returns collided platform's index
+                if (platform != null) {
+                    enemies[i].collided(platforms[platform]);
+                }
+                else { // no collision detected
+                    enemies[i].isOnFloor = false;
+                }
             }
         };
     
