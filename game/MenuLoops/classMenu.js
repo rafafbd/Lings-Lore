@@ -302,6 +302,9 @@ class Menus {
                 case 3:
                     level3();
                     break;
+                case 4:
+                    level4();
+                    break;
             }
             //level4();
             this.firstLoadLevel = false;
