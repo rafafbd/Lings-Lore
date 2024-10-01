@@ -141,45 +141,55 @@ function level1() {
         new Robert ({
             x: 1000,
             y: 200
+        }),
+        new Robert({
+            x: 2700,
+            y: 200,
         })
     ]  // creates enemy
     
     platforms = [
-        new Platform({
-            x: 800,
-            y: 600,
-            width: 200,
-            height: 50
-        }),
-        new Platform({
-            x: 1100,
-            y: 400,
-            width: 100,
-            height: 30
-        }),
-        new Platform({
-            x: 200,
-            y: 240,
-            width: 200,
-            height: 300
-        }),
-        new Platform({
-            x: 2400,
-            y: 500,
-            width: 600, 
-            height: 50
-        }),
-        new Platform({
-            x: 2550,
-            y: 300,
-            width: 300,
-            height: 50
-        }),
         floor1 = new Platform({
             x: 0,
             y: 750,
             width: 2000, 
             height: 200
+        }),
+        middlePlatformInStart = new Platform({
+            x: 800,
+            y: 600,
+            width: 200,
+            height: 50
+        }),
+        rightOfMiddlePlatformInStart = new Platform({
+            x: 1100,
+            y: 400,
+            width: 100,
+            height: 30
+        }),
+        largePlatformInLeftOfStart = new Platform({
+            x: 200,
+            y: 240,
+            width: 200,
+            height: 300
+        }),
+        lowerLeftSecondBatch = new Platform({
+            x: 2400,
+            y: 500,
+            width: 200, 
+            height: 50
+        }),
+        lowerRightSecondBatch = new Platform({
+            x: 2800,
+            y: 500,
+            width: 200,
+            height: 50
+        }),
+        middlePlatformSecondBatch = new Platform({
+            x: 2550,
+            y: 300,
+            width: 300,
+            height: 50
         }),
         floor2 = new Platform({
             x: 2200,
