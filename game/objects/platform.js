@@ -1,7 +1,7 @@
 class Platform {
     constructor({x, y, width, height}) {
         const image = new Image()
-        image.src = "./Assets/spriteFloor/floor-sprite444.png";
+        image.src = "./Assets/spriteFloor/floor-sprite-8.png";
         this.image = image
         
         this.isImageLoaded = false
