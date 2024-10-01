@@ -53,13 +53,13 @@ class Menus {
         };
 
         this.commandArray = [
-            { text: "W         - Mirar para cima", x: 100, y: 300, maxW: 1000 },
-            { text: "A         - Mirar/Andar para esquerda", x: 100, y: 330, maxW: 1000 },
-            { text: "S         - Mirar para baixo", x: 100, y: 360, maxW: 1000 },
-            { text: "D         - Mirar/Andar para direita", x: 100, y: 390, maxW: 1000 },
-            { text: "J         - Atacar", x: 100, y: 420, maxW: 1000 },
-            { text: "K         - Dash", x: 100, y: 450, maxW: 1000 },
-            { text: "Space     - Pular", x: 100, y: 480, maxW: 1000 }
+            { text: "W         - Mirar para cima",           x: 750, y: 300, maxW: 1000 },
+            { text: "A         - Mirar/Andar para esquerda", x: 750, y: 360, maxW: 1000 },
+            { text: "S         - Mirar para baixo",          x: 750, y: 420, maxW: 1000 },
+            { text: "D         - Mirar/Andar para direita",  x: 750, y: 480, maxW: 1000 },
+            { text: "J         - Atacar",                    x: 750, y: 540, maxW: 1000 },
+            { text: "K         - Dash",                      x: 750, y: 600, maxW: 1000 },
+            { text: "Space     - Pular",                     x: 750, y: 660, maxW: 1000 }
         ];
 
         this.currentLevel = 1;
@@ -124,9 +124,12 @@ class Menus {
     commandsPage = () => {
 
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.fillStyle  = "grey"
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        ctx.fillStyle = "black"
         ctx.font = "50px Arial";
-        ctx.fillText("Ling's Lore", 150, 200, 300);
-        ctx.font = "15px Arial"
+        ctx.fillText("Ling's Lore", 800, 200, 300);
+        ctx.font = "25px Arial"
         for (let i = 0; i< 7 ; i++){
             ctx.fillText(this.commandArray[i].text,
                          this.commandArray[i].x, 

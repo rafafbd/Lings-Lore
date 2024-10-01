@@ -6,6 +6,11 @@ class Door {
         };
         this.image = new Image();
         this.image.src = "./Assets/spriteDoors/DoorOriginal.png";
+
+        this.canDraw = false
+        this.image.onload = () => {
+            this.canDraw = true
+        }
         this.height = 64;
         this.width = 64;
 
@@ -27,7 +32,9 @@ class Door {
             x: this.position.x + this.width,
             y: this.position.y + this.height
         };
-        this.draw();    
+        if (this.canDraw){
+            this.draw()
+        };    
     }
 
     draw(){
