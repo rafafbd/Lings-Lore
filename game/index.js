@@ -110,6 +110,7 @@ function level1() {
     player.hp = 100;
     player.dead = false;
     player.socialCredits = 0;
+    player.chopsticks.ammo = 2;
 
     heals = [
         new Heal(850, 664),
@@ -389,6 +390,10 @@ function level1() {
             x: 8600,
             y: 300
         }, "negative"),
+        new Credits({
+            x: 3825,
+            y: 580
+        }, "negative"),
     ];
     components = {
         platforms: platforms,
@@ -402,7 +407,6 @@ function level1() {
 }
 
 function level2() {
-    
     player.velocity = { // player velocity
         x: 0,
         y: 0
@@ -412,6 +416,7 @@ function level2() {
     player.hp = 100;
     player.dead = false;
     player.socialCredits = 0;
+    player.chopsticks.ammo = 2;
 
     heals = [
         new Heal(850, 664)
@@ -435,34 +440,50 @@ function level2() {
         new Bob({
             x: 900,
             y: 500
-        })
+        }),
+        new Jorge ({
+            x: 350,
+            y: 0
+        }),
     ];
 
     platforms = [
-        new Platform({
+        up1 = new Platform({
             x: 300,
-            y: 400,
+            y: 500,
             width: 150,
             height: 50
         }),
-        new Platform({
+        up2 = new Platform({
             x: 700,
-            y: 300,
+            y: 400,
             width: 200,
             height: 50
         }),
-        new Platform({
+        up3 = new Platform({
             x: 1000,
-            y: 200,
+            y: 240,
             width: 100,
             height: 30
         }),
-        new Platform({
+        up4 = new Platform({
+            x: 300,
+            y: 100,
+            width: 400,
+            height: 75
+        }),
+        up5 = new Platform({
+            x: 1300,
+            y: 100,
+            width: 400,
+            height: 75
+        }),
+        floor1 = new Platform({
             x: 0,
-            y: canvas.height - 200,
-            width: canvas.width,
-            height: 200
-        })
+            y: 700,
+            width: 2000,
+            height: 400
+        }),
     ];
 
     credits = [
@@ -595,6 +616,7 @@ function level4(){ // boss level
     player.hp = 100;
     player.dead = false;
     player.socialCredits = 0;
+    player.chopsticks.ammo = 2;
 
     platforms = [
         new Platform({x: 0, y: 700, width: 2000, height: 500}),
@@ -691,10 +713,10 @@ animationLoop(); // calls the game loop
 // // check collision between two rectangles function
 function rectangleColision(rect, rects) { // one element and array of elements
     for (let i=0; i<rects.length; i++) {
-        if (rects[i].dead == true) { // no collision if enemy is dead and still in array
+        if (rects[i].dead) { // no collision if enemy is dead and still in array
             continue;
         }
-        if (rect.position.x < rects[i].position2.x && rect.position2.x > rects[i].position.x && rect.position.y < rects[i].position2.y && rect.position2.y > rects[i].position.y) {
+        else if (rect.position.x < rects[i].position2.x && rect.position2.x > rects[i].position.x && rect.position.y < rects[i].position2.y && rect.position2.y > rects[i].position.y) {
             return i; // returns index
         }
     }

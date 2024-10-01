@@ -64,7 +64,7 @@ class Bob extends Enemy {
 
         this.updatePositions();
 
-        if (this.hp <= 0 || this.position.y > canvas.height) {
+        if (this.hp <= 0) {
             let howManyCredits = this.creditsValue / 10;
             for (let i = 1; i < howManyCredits; i++) {
                 components.credits.push(new Credits({ // creates a new positive credits object to make player lose credits

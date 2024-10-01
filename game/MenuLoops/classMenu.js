@@ -93,12 +93,14 @@ class Menus {
             { text: "Space     - Pular",                     x: 750, y: 660, maxW: 1000 }
         ];
 
-        this.currentLevel = 1;
+        this.currentLevel = 2;
         this.firstLoadLevel = true;
         this.passedLevel = false;
 
         this.totalDistanceX = 0;
         this.totalDistanceY = 0;
+
+        this.deathZone = 1000;
 
         // endless mode variables
         this.currentWave = 0;
@@ -339,12 +341,9 @@ class Menus {
     
         for (let i=0; i<enemies.length; i++){
             enemies[i].update();
-            if (enemies[i].dead) {
+            if (enemies[i].dead || enemies[i].position.y > this.deathZone) {
                 let deadEnemy = i;
-                setTimeout (() => {
-                    enemies.splice(deadEnemy, 1); // removes dead enemy from array
-                    i--;
-                }, 0);   
+                enemies.splice(deadEnemy, 1); // removes dead enemy from array
             }
             // enemy collision with platforms
             platform = rectangleColision(enemies[i], platforms); // returns collided platform's index
@@ -419,7 +418,7 @@ class Menus {
 
         // ------------------------------------------------------
         
-        //Door is created
+        //Door
         if(this.currentLevel != 0){
             if (enemies.length == 0){
                 doors[0].createDoor()
@@ -571,6 +570,7 @@ class Menus {
                     components.sticks[i].position.y += -player.velocity.y;
                 }
 
+                this.deathZone -= player.velocity.y;
                 this.totalDistanceY -= player.velocity.y;
                 player.position.y = 200;
             }
@@ -598,7 +598,8 @@ class Menus {
                 for (let i = 0; i < components.sticks.length; i++) {
                     components.sticks[i].position.y -= player.velocity.y;
                 }
-
+                
+                this.deathZone -= player.velocity.y;
                 this.totalDistanceY -= player.velocity.y;
                 player.position.y = 500;
             }
@@ -628,6 +629,7 @@ class Menus {
                     components.sticks[i].position.y -= this.totalDistanceY;
                 }
 
+                this.deathZone -= this.totalDistanceY;
                 this.totalDistanceY = 0;
             }
         }
