@@ -56,7 +56,8 @@ function level1() {
     doors = [
        door = new Door({
         x:4300,
-        y: 564
+        y: 564,
+        currentLevel: 1,
     })
     ];
 
@@ -225,7 +226,8 @@ function level2() {
     doors = [
        door = new Door({
         x: 300,
-        y: 564
+        y: 564,
+        currentLevel: 2,
     })
     ];
 
@@ -314,7 +316,8 @@ function level3() {
     doors = [
         new Door({
             x: 2000,
-            y: 600
+            y: 600,
+            currentLevel: 3
     })
     ];
 

@@ -1,11 +1,20 @@
 class Door {
-    constructor({x, y}){
+    constructor({x, y, currentLevel}){
         this.position = {
             x: x,
             y: y
         };
         this.image = new Image();
-        this.image.src = "./Assets/spriteDoors/DoorOriginal.png";
+        if(currentLevel == 1){
+            this.image.src = "./Assets/spriteDoors/Level2Door.png";
+        }
+        else if(currentLevel == 2){
+            this.image.src = "./Assets/spriteDoors/Level3Door.png";
+        }
+        else if(currentLevel == 3){
+            this.image.src = "./Assets/spriteDoors/FinalLevelDoor.png";
+        }
+        
 
         this.canDraw = false
         this.image.onload = () => {
@@ -41,7 +50,7 @@ class Door {
         ctx.fillStyle = "yellow";
         //ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
 
-        ctx.drawImage(this.image, this.x, this.y);
+        ctx.drawImage(this.image, this.position.x, this.position.y);
 
 
         
