@@ -3,19 +3,37 @@ class Bob extends Enemy {
         super({x, y}, "./Assets/spriteEnemies/Bob-spritesheet.png", 50, 80, 5, 0, 20, 100, 15 );
         this.seePlayerRange = 400;
         this.playerInRange = false; 
-        this.gettingUp = false;
+        this.getUp = true;
+    }
+
+    increaseIndexX(){ // increases the index of the sprite sheet
+        if (!this.getUp && !this.playerInRange) {
+            
+        }
+        else {
+            if (this.indexX < 16)
+                this.indexX += 1;
+            else
+                this.indexX = 3;
+        }
     }
 
     update(){
         if (Math.abs(this.position.x - player.position.x) < this.seePlayerRange && Math.abs(this.position.y - player.position.y) < this.seePlayerRange && !this.playerInRange) {
-            // play startup animation
-            this.gettingUp = true;
-            setTimeout(() =>{
-                this.playerInRange = true;
-            }, 1000);
-        }
-        else if(!this.gettingUp) {
-            this.playerInRange = false;
+            if (this.getUp) {
+                this.getUp = false;
+                this.indexX = 0;
+                setTimeout (() => {
+                    this.indexX = 1;
+                    setTimeout (() => {
+                        this.indexX = 2;
+                        setTimeout (() => {
+                            this.playerInRange = true;
+                        }, 500);
+                    }, 500);
+                }, 800);
+                
+            } 
         }
 
         if (!this.isKnockback) {
