@@ -1,9 +1,9 @@
 class Player {
-    constructor({x, y, imgSource}) {
+    constructor({x, y}) {
          
         const image = new Image()
         this.image = image
-        this.image.src = imgSource;
+        this.image.src = "./Assets/spriteLing/freakiestLing.png";
 
         this.width = 64;
         this.height = 64;
