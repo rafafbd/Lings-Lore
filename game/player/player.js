@@ -1,9 +1,9 @@
 class Player {
     constructor({x, y, imgSource}) {
          
-        // const image = new Image()
-        // this.image = image
-        // this.image.src = imgSource;
+        const image = new Image()
+        this.image = image
+        this.image.src = imgSource;
 
         this.width = 64;
         this.height = 64;
@@ -288,9 +288,7 @@ class Player {
     // update function
 
     draw() { // draws player every frame (called in a loop)
-        //ctx.drawImage(this.image, this.position.x, this.position.y)
-        ctx.fillStyle = 'gold';
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.drawImage(this.image, this.position.x, this.position.y)
         ctx.restore()
     }
 

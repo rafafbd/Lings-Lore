@@ -16,7 +16,7 @@ const music = new Music();
 const player = new Player({
     x: 600, 
     y: 0,
-    imgSource: "./Assets/Ling-remodel.png"
+    imgSource: "./Assets/spriteLing/Ling-remodel.png"
 }); // creates the player
 
 var enemies = []  // creates enemy
