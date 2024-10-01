@@ -57,10 +57,34 @@ function endless() {
     platforms = [
         new Platform({
             x: 0,
-            y: canvas.height - 200,
-            width: canvas.width,
-            height: 200
-        })
+            y: 700,
+            width: 2000,
+            height: 400
+        }),
+        new Platform({
+            x: 200,
+            y: 500,
+            width: 200,
+            height: 40
+        }),
+        new Platform({
+            x: 600,
+            y: 300,
+            width: 250,
+            height: 40
+        }),
+        new Platform({
+            x: 1000,
+            y: 500,
+            width: 200,
+            height: 40
+        }),
+        new Platform({
+            x: 1400,
+            y: 300,
+            width: 200,
+            height: 40
+        }),
     ];
 
     credits = [];
