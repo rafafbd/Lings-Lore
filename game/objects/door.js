@@ -15,7 +15,7 @@ class Door {
             this.image.src = "./Assets/spriteDoors/FinalLevelDoor.png";
         }
         
-
+        this.enemiesKilled = false
         this.canDraw = false
         this.image.onload = () => {
             this.canDraw = true
@@ -36,12 +36,16 @@ class Door {
         }
     }
 
+    createDoor(){
+        this.enemiesKilled = true
+    }
+
     update() {
         this.position2 = {
             x: this.position.x + this.width,
             y: this.position.y + this.height
         };
-        if (this.canDraw){
+        if (this.canDraw && this.enemiesKilled){
             this.draw()
         };    
     }

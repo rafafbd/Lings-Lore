@@ -339,9 +339,13 @@ class Menus {
         }
 
         // ------------------------------------------------------
-
-        // Door
-        if (doors.length > 0){
+        
+        //Door is created
+        if (enemies.length == 0){
+            doors[0].createDoor()
+        }
+        // Door collision to pass level
+        if (doors.length > 0 && enemies.length == 0){
             if (rectangleColision(player, doors) != null){
                 doors[0].passLevel(this.currentLevel);
             }
