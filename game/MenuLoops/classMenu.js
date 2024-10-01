@@ -72,6 +72,8 @@ class Menus {
         // endless mode variables
         this.currentWave = 0;
         this.nextEndlessWave = true;
+        this.numberOfEnemies = 0;
+        this.currentAmountOfEnemies = 0;
         // Ensure ctx is available globally or passed in as needed
     }
 
@@ -557,16 +559,53 @@ class Menus {
         }
         else { // endless mode
             // draw wave number -> this.currentWave
+            // display number of enemies left -> this.currentAmountOfEnemies
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText(`Wave: ${this.currentWave}`, 10, 20);
+            ctx.fillText(`Enemies: ${this.currentAmountOfEnemies}`, 10, 40);
 
-
+            // next wave
             if (this.nextEndlessWave) {
                 this.nextEndlessWave = false;
                 setTimeout(() => {
+                    this.numberOfEnemies = Math.floor(Math.random() * 4 * this.currentWave/2) + 1; 
                     
-                    // spawn enemies
+                    for (let i=0; i<this.numberOfEnemies; i++){
+                        let enemyType = Math.floor(Math.random() * 3);
+                        let enemyXposition = player.position.x;
+                        while (enemyXposition > player.position.x - 100 && enemyXposition < player.position.x + 100) {
+                            enemyXposition = Math.floor(Math.random() * 1000) + 100;
+                        }
+                        switch (enemyType) {
+                            case 0: // bob
+                                enemies.push(
+                                    new Bob(
+                                        {enemyXposition, y: 500},
+                                    )
+                                )
+                                break;
+                            case 1: // jorge
+                                enemies.push(
+                                    new Jorge(
+                                        {enemyXposition, y: 500},
+                                    )
+                                )
+                                break;
+                            case 2: // robert
+                                enemies.push(
+                                    new Robert(
+                                        {enemyXposition, y: 500},
+                                    )
+                                )
+                                break;
+                        }
+                    }
+                    player.heal(20);
+                    this.currentWave++;
                 }, 10000) // 10 seconds
             }
-            
+            this.currentAmountOfEnemies = enemies.length;
         }
     }
 
@@ -577,7 +616,7 @@ class Menus {
         ctx.fillText("Game Over", 150, 200, 300);
         ctx.font = "20px Arial";
         this.firstLoadLevel = true;
-        this.currentPage = "gameover";
+        this.currentPage = "game over";
         ctx.fillText("Press 'J' to restart", 150, 400, 300);
         if (keys.attack.pressed) {
             this.firstLoadLevel = true;
