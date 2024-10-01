@@ -348,8 +348,13 @@ class Menus {
         if (doors.length > 0 && enemies.length == 0){
             if (rectangleColision(player, doors) != null){
                 doors[0].passLevel(this.currentLevel);
+
+                const door = new Music()
+                door.changeInd(3)
+                door.playSong()
             }
             doors[0].update();
+            
         }
 
         // ------------------------------------------------------

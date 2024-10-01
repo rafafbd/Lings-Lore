@@ -13,9 +13,17 @@ class Music{
         this.musics = [
             "/game/Assets/Musics/chinese-beat-190047.mp3",
             "/game/Assets/Musics/chinese-ancient-style-music.mp3",
+            "/game/Assets/Musics/redSunInTheSkyLoopVer.mp3",
+            "/game/Assets/Musics/doorEntering.mp3",
+            "/game/Assets/Musics/forkHit.mp3"
+        ]
+
+        this.loopGameMusics = [
+            "/game/Assets/Musics/chinese-beat-190047.mp3",
+            "/game/Assets/Musics/chinese-ancient-style-music.mp3",
             "/game/Assets/Musics/redSunInTheSkyLoopVer.mp3"
         ]
-        this.audio.src = this.musics[2];
+        this.audio.src = this.loopGameMusics[2];
     }
 
 
@@ -36,14 +44,14 @@ class Music{
     }
 
     netxSong(){
-        if (this.currentSrc == (this.musics.length) - 1){
+        if (this.currentSrc == (this.loopGameMusics.length) - 1){
             this.currentSrc = 0
         }
         else{
             console.log("aumentou")
             this.currentSrc += 1
         }
-        this.audio.src = this.musics[this.currentSrc]
+        this.audio.src = this.loopGameMusics[this.currentSrc]
         this.playing = false
     }
 
@@ -71,6 +79,10 @@ class Music{
         
     }
 
+    playSong(){
+        this.audio.play()
+    }
+
     playNextBackground(){
         if (this.canPlay && this.playing == false){
             //console.log("Ta liberado");
@@ -94,8 +106,12 @@ class Music{
     }
 
     changeSong(index){
-        this.audio.src = this.musics[index]
+        this.audio.src = this.loopGameMusics[index]
         //console.log(this.audio.src)
+    }
+
+    changeInd(ind){
+        this.audio.src = this.musics[ind]
     }
 
     stopAudio() {
