@@ -86,7 +86,7 @@ class Chopsticks {
             setTimeout(() => {
                 this.ammo++;
                 this.canReload = true;
-            }, 1500)
+            }, 2000)
         }
 
 

@@ -226,12 +226,12 @@ class Player {
         else if (source === "enemy") { // knockback by enemy attack
             if (this.knockbackDirection === "right") {
                 this.velocity.x = this.knockbackSpeed;
-                this.position.y -= 10; // Adjusts the player's position to make the knockback look more natural
+                this.position.y -= 20; // Adjusts the player's position to make the knockback look more natural
                 this.velocity.y = -this.knockbackSpeed + 60;
             }
             else if (this.knockbackDirection === "left") {
                 this.velocity.x = -this.knockbackSpeed;
-                this.position.y -= 10; // Adjusts the player's position to make the knockback look more natural
+                this.position.y -= 20; // Adjusts the player's position to make the knockback look more natural
                 this.velocity.y = -this.knockbackSpeed + 60;
             }
             this.knockbackSpeed *= this.knockbackFriction;
