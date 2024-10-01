@@ -15,7 +15,8 @@ class Music{
             "/game/Assets/Musics/chinese-ancient-style-music.mp3",
             "/game/Assets/Musics/redSunInTheSkyLoopVer.mp3",
             "/game/Assets/Musics/doorEntering.mp3",
-            "/game/Assets/Musics/forkHit.mp3"
+            "/game/Assets/Musics/forkHit.mp3",
+            "/game/Assets/Musics/jump.mp3"
         ]
 
         this.loopGameMusics = [
@@ -53,30 +54,6 @@ class Music{
         }
         this.audio.src = this.loopGameMusics[this.currentSrc]
         this.playing = false
-    }
-
-    playMusic(music){
-        if (this.canPlay && this.playing == false){
-            //console.log("Ta liberado");
-            this.audio.play().then (()=>{
-                //console.log("foi")
-                this.playing = true;
-            }).catch((error) => {
-                console.error("Erro ao tentar reproduzir o áudio:", error);
-            })
-
-        }    
-        else{
-            this.audio.pause()
-            this.audio.src = this.musics[music]
-            this.audio.play().then (()=>{
-                //console.log("foi")
-                this.playing = true;
-            }).catch((error) => {
-                console.error("Erro ao tentar reproduzir o áudio:", error);
-            })
-        }
-        
     }
 
     playSong(){

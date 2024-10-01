@@ -629,6 +629,17 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
             player.fork.isEquipped = false;
             player.currentWeapon = "chopsticks";
             break;
+        case 'KeyI':
+            if (player.fork.isEquipped){
+                player.chopsticks.isEquipped = true;
+                player.fork.isEquipped = false;
+                player.currentWeapon = "chopsticks";
+            }
+            else{
+                player.fork.isEquipped = true;
+                player.chopsticks.isEquipped = false;
+                player.currentWeapon = "fork";
+            }
     }
 })
 
