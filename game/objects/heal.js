@@ -1,5 +1,9 @@
 class Heal { // classe de um objeto que o ling se cura quando passar por cima
     constructor(x, y){
+
+        const heal = new Image();
+        heal.src = "./Assets/spriteHeal/greenHeal.png"
+        this.heal = heal
         this.position = {
             x: x,
             y: y
@@ -35,6 +39,7 @@ class Heal { // classe de um objeto que o ling se cura quando passar por cima
 
     draw(){
         ctx.fillStyle = "green";
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        //ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.drawImage(this.heal, this.position.x, this.position.y)
     }
 }
