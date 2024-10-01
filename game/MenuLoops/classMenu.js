@@ -290,24 +290,24 @@ class Menus {
     playerLoop = () => {
         if (this.firstLoadLevel || this.passedLevel) {
             this.totalDistance = 0;
-            switch (this.currentLevel) {
-                case 0:
-                    endless();
-                    break;
-                case 1:
-                    level1();
-                    break;
-                case 2:
-                    level2();
-                    break;
-                case 3:
-                    level3();
-                    break;
-                case 4:
-                    level4();
-                    break;
-            }
-            //level4();
+            // switch (this.currentLevel) {
+            //     case 0:
+            //         endless();
+            //         break;
+            //     case 1:
+            //         level1();
+            //         break;
+            //     case 2:
+            //         level2();
+            //         break;
+            //     case 3:
+            //         level3();
+            //         break;
+            //     case 4:
+            //         level4();
+            //         break;
+            // }
+            level4();
             this.firstLoadLevel = false;
             this.passedLevel = false;
         }

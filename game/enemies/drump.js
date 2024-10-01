@@ -5,7 +5,7 @@ class TonaldDrump extends Enemy {
             x: x, 
             y: y,
         },
-            "", 64, 96, 9, 10, 30, 300, 100 
+            "./Assets/spriteEnemies/TonaldSpriteSheet.png", 64, 64, 9, 10, 30, 300, 100 
         )
 
         this.enemiesSizes = {
@@ -29,7 +29,8 @@ class TonaldDrump extends Enemy {
             attackReady: false,
             attackEnded: false
         };
-        this.endOfAttackAnimation = false;
+        this.timeNextAnimationFrame = 0;
+        this.delayNextAnimationFrame = 2000;
 
         this.dashDirection = 0; // if 0, it's not dashing
         this.timeEndDash = 0;
@@ -57,16 +58,16 @@ class TonaldDrump extends Enemy {
     // attacks -----------------------------------------------------------------------------
 
     specialAttack(){
-        let attack = this.specialAttacks[Math.floor(Math.random() * 4)];
+        let attack = Math.floor(Math.random() * 4);
         this.currentAttackStatus.whichAttack = attack;
     }
 
     drawRedLines(){ // draws lines with %50 opacity so that the player can prepare
-        ctx.fillStyle = 'rgb(255, 0, 0, 0.5)';
+        ctx.fillStyle = 'rgb(255, 255, 255)';
         ctx.fillRect(0, 1000, window.width, 50);
-        ctx.fillStyle = 'rgb(255, 0, 0, 0.5)';
+        ctx.fillStyle = 'rgb(255, 255, 255)';
         ctx.fillRect(0, 500, window.width, 50);
-        ctx.fillStyle = 'rgb(255, 0, 0, 0.5)';
+        ctx.fillStyle = 'rgb(255, 255, 255)';
         ctx.fillRect(0, 200, window.width, 50);
         this.shootRedLines = true;
         this.timeRedLines = Date.now() + 1500;
@@ -195,29 +196,32 @@ class TonaldDrump extends Enemy {
     }
 
     handleAnimationAttacking(){
-        if (this.currentAttackStatus.whichAnimationFrame === -1){
-            this.indexX = 0;
-            this.currentAttackStatus.whichAnimationFrame = 0;
-        }
-
-        else if (this.currentAttackStatus.whichAnimationFrame === 0){
-            this.indexX = 9;
-            this.currentAttackStatus.whichAnimationFrame = 9;
-        }
-
-        else {
-            switch (this.currentAttackStatus.whichAttack){
-                case 1: this.handleAnimationAttacking1(); break;
-                case 2: this.handleAnimationAttacking2(); break;
-                case 3: this.handleAnimationAttacking3(); break;
-                case 4: this.handleAnimationAttacking4();
+        if (Date.now() > this.timeNextAnimationFrame){
+            if (this.currentAttackStatus.whichAnimationFrame === -1){
+                this.indexX = 0;
+                this.currentAttackStatus.whichAnimationFrame = 0;
             }
+
+            else if (this.currentAttackStatus.whichAnimationFrame === 0){
+                this.indexX = 9;
+                this.currentAttackStatus.whichAnimationFrame = 9;
+            }
+
+            else {
+                switch (this.currentAttackStatus.whichAttack){
+                    case 1: this.handleAnimationAttacking1(); break;
+                    case 2: this.handleAnimationAttacking2(); break;
+                    case 3: this.handleAnimationAttacking3(); break;
+                    case 4: this.handleAnimationAttacking4();
+                }
+            }
+            this.timeNextAnimationFrame += this.delayNextAnimationFrame;
         }
     }
 
     // end animation handling -------------------------------------------------------
 
-    handleAttacks(direction){
+    handleAttacks(direction, currentTime){
         if (this.currentAttackStatus.attackReady === true){
 
             // moneyFall
@@ -276,6 +280,8 @@ class TonaldDrump extends Enemy {
     }
 
     update(){
+        console.log(this.position2.y)
+        //console.log(this.position.x, this.position.y)
         let direction = this.playerWhere();
         let currentTime = Date.now();
 
@@ -286,7 +292,7 @@ class TonaldDrump extends Enemy {
 
         if (this.currentAttackStatus.onAttack === true){
             this.handleAnimationAttacking();
-            this.handleAttacks(direction);
+            this.handleAttacks(direction, currentTime);
         }
 
         else {
@@ -296,6 +302,8 @@ class TonaldDrump extends Enemy {
         }
 
         if (direction === 1){
+            console.log("invertendo imagem");
+            ctx.save();
             ctx.translate(this.position.x + this.width*2, this.position.y);
             ctx.scale(-1, 1); // inverts the context
             ctx.translate(-this.position.x, -this.position.y);
