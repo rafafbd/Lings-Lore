@@ -295,6 +295,7 @@ class Menus {
         ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
     }
 
+
     playerLoop = () => {
         if (this.firstLoadLevel || this.passedLevel) {
             this.totalDistance = 0;
@@ -681,7 +682,7 @@ class Menus {
             if (this.currentAmountOfEnemies == 0) {
                 this.numberOfEnemies = Math.floor(Math.random() * 4 * this.currentWave/5) + 1; 
                 for (let i=0; i<this.numberOfEnemies; i++){
-                    let enemyType = Math.floor(Math.random() * 3);
+                    let enemyType = Math.floor(Math.random() * 4);
                     let enemyXposition = player.position.x;
                     while (enemyXposition <= player.position2.x && enemyXposition + 100 >= player.position.x) {
                         enemyXposition = Number(Math.floor(Math.random() * 1700) + 100);
@@ -710,9 +711,19 @@ class Menus {
                                 )
                             )
                             break;
+                        case 3: // fred
+                            enemies.push(
+                                new Fred(
+                                    {x: enemyXposition, y: 500},
+                                )
+                            )
+                            break;
                     }
                 }
-                player.heal(20);
+                if (this.currentWave % 5 == 0) {
+                    player.heal(30);
+                }
+                player.heal(25);
                 this.currentWave++;
             }
             this.currentAmountOfEnemies = enemies.length;
