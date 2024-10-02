@@ -14,8 +14,8 @@ class TonaldDrump extends Enemy {
             scale: 1
         };
 
-        this.delayAttack = 5000;
-        this.nextAttackTime = 0;
+        this.delayAttack = 8000;
+        this.nextAttackTime = Date.now() + 2500;
         this.specialAttacks = ["moneyFall", "redLines", "helpers", "dash"];
         // animation frames for each attack
         // 1: 0, 9, 3, 4
@@ -77,9 +77,10 @@ class TonaldDrump extends Enemy {
         ctx.fillRect(0, 620, 5000, 50);
         ctx.fillStyle = 'rgb(255, 0, 0)';
         ctx.fillRect(0, 250, 5000, 50);
-        // application
-        lines.push(new Line(620));
-        lines.push(new Line(250));
+    }
+
+    pushRedLines(){
+        lines.push(new Line(620), new Line(250));
     }
 
 
@@ -105,7 +106,8 @@ class TonaldDrump extends Enemy {
         let bob = new Bob({x: x, y: 20});
         let jorge = new Jorge({x: x, y: 20});
         let fred = new Fred({x: x, y: 20});
-        enemies.push(bob, jorge, fred);
+        let robert = new Robert({x: x, y: 20})
+        enemies.push(bob, jorge, robert, fred);
     }
 
     dash(direction){
@@ -230,33 +232,32 @@ class TonaldDrump extends Enemy {
 
             // red lines attack 
             else if (this.currentAttackStatus.whichAttack === 2){
-                if (this.currentAttackStatus.attackTriggered === false){
+                if (this.isFirstTime){
+                    this.timeRedLines = currentTime + 1500;
+                    this.timeActiveLines = currentTime + 2500;
+                    this.isFirstTime = false;
+                }
+
+                if (currentTime < this.timeRedLines){
                     this.drawRedLines();
-
-                    if (this.isFirstTime){
-                        this.timeRedLines = Date.now() + 1500;
-                        this.timeActiveLines = Date.now() + 2500;
-                        this.isFirstTime = false;
-                    }
-
-                    if (currentTime > this.timeRedLines){
-                        this.currentAttackStatus.attackTriggered = true;
-                    }
-
-                    else {
-                        this.currentAttackStatus.attackEnded = true;
-                    }
                 }
 
                 else {
+                    if (this.currentAttackStatus.attackTriggered === false){
+                        this.pushRedLines();
+                        this.currentAttackStatus.attackTriggered = true;
+                    }
+
                     if (currentTime < this.timeActiveLines){
                         this.drawFinalRedLines();
                     }
+
                     if (currentTime > this.timeActiveLines){
-                        for (let i=0; i<lines.length; i++){
+                        for (let i=0; i<=lines.length; i++){
                             lines.pop();
                         }
                         this.isFirstTime = true;
+                        this.currentAttackStatus.attackEnded = true;
                     }
                 }
             }
@@ -298,7 +299,6 @@ class TonaldDrump extends Enemy {
 
 
     update(){
-        //console.log(this.currentAttackStatus.attackEnded)
         let direction = this.playerWhere();
         let currentTime = Date.now();
 
