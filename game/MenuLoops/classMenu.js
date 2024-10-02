@@ -313,6 +313,10 @@ class Menus {
                     level3();
                     break;
                 case 4:
+                    this.currentWave = 0;
+                    this.nextEndlessWave = true;
+                    this.numberOfEnemies = 0;
+                    this.currentAmountOfEnemies = 0;
                     level4();
                     break;
             }
