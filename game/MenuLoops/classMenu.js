@@ -90,7 +90,10 @@ class Menus {
             { text: "D         - Mirar/Andar para direita",  x: 750, y: 480, maxW: 1000 },
             { text: "J         - Atacar",                    x: 750, y: 540, maxW: 1000 },
             { text: "K         - Dash",                      x: 750, y: 600, maxW: 1000 },
-            { text: "Space     - Pular",                     x: 750, y: 660, maxW: 1000 }
+            { text: "Space - Pular",                         x: 750, y: 660, maxW: 1000 },
+            { text: "I         - Trocar de arma",            x: 750, y: 720, maxW: 1000 },
+            { text: "1         - Equipar garfo",             x: 750, y: 780, maxW: 1000 },
+            { text: "2         - Equipar hashi",             x: 750, y: 840, maxW: 1000 }
         ];
 
         this.currentLevel = 1;
@@ -178,7 +181,7 @@ class Menus {
             this.mouseClickPosition.y >= this.buttons.playButton.y &&
             this.mouseClickPosition.y <= this.buttons.playButton.y + this.buttons.playButton.h){
             this.currentPage = "career";
-            this.currentLevel = 4;
+            this.currentLevel = 1;
         }
     
         else if (this.mouseClickPosition.x >= this.buttons.loreButton.x &&
@@ -212,7 +215,7 @@ class Menus {
         ctx.font = "50px Arial";
         ctx.fillText("Ling's Lore", 800, 200, 300);
         ctx.font = "25px Arial"
-        for (let i = 0; i< 7 ; i++){
+        for (let i = 0; i<this.commandArray.length ; i++){
             ctx.fillText(this.commandArray[i].text,
                          this.commandArray[i].x, 
                          this.commandArray[i].y,
@@ -295,24 +298,23 @@ class Menus {
     playerLoop = () => {
         if (this.firstLoadLevel || this.passedLevel) {
             this.totalDistance = 0;
-            // switch (this.currentLevel) {
-            //     case 0:
-            //         endless();
-            //         break;
-            //     case 1:
-            //         level1();
-            //         break;
-            //     case 2:
-            //         level2();
-            //         break;
-            //     case 3:
-            //         level3();
-            //         break;
-            //     case 4:
-            //         level4();
-            //         break;
-            // }
-            level4();
+            switch (this.currentLevel) {
+                case 0:
+                    endless();
+                    break;
+                case 1:
+                    level1();
+                    break;
+                case 2:
+                    level2();
+                    break;
+                case 3:
+                    level3();
+                    break;
+                case 4:
+                    level4();
+                    break;
+            }
             this.firstLoadLevel = false;
             this.passedLevel = false;
         }
@@ -724,15 +726,16 @@ class Menus {
         ctx.fillStyle = "red";
         ctx.font = "50px Arial";
         if (player.socialCredits <= -50) {
-            ctx.fillText("Game Over, cause of death: in debt of social credits", 150, 200, 900);
+            ctx.fillText("Game Over, causa de morte: dívida com governo chinês", 150, 200, 900);
         }
         else {
-            ctx.fillText("Game Over", 150, 200, 300);
+            ctx.fillText("Game Over", 800, 200, 300);
         }
         ctx.font = "20px Arial";
         this.firstLoadLevel = true;
         this.currentPage = "game over";
-        ctx.fillText("Press 'Space' to restart", 150, 400, 300);
+        ctx.fillStyle = "grey";
+        ctx.fillText("Aperte 'Space' para continuar", 800, 400, 300);
         if (keys.jump.pressed) {
             this.firstLoadLevel = true;
             this.currentPage = "menu";
