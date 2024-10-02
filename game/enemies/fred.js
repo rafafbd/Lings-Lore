@@ -11,7 +11,7 @@ class Fred extends Enemy {
     }
 
     update() {
-        if (!this.isKnockback && this.position.x > 0 && this.position.x < 1200) {
+        if (!this.isKnockback && this.position.x > 0 && Math.abs(this.position.x - player.position.x) < 800) {
             let where = this.playerWhere();
             if (where == -1) { // player is at left
                 this.velocity.x = -this.speed.x;
