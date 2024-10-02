@@ -890,7 +890,10 @@ function rectangleColision(rect, rects) { // one element and array of elements
         if (rects[i].dead) { // no collision if enemy is dead and still in array
             continue;
         }
-        else if (rect.position.x < rects[i].position2.x && rect.position2.x > rects[i].position.x && rect.position.y < rects[i].position2.y && rect.position2.y > rects[i].position.y) {
+        else if (rect.position.x < rects[i].position2.x &&  
+            rect.position2.x > rects[i].position.x && 
+            rect.position.y < rects[i].position2.y &&
+             rect.position2.y > rects[i].position.y) {
             return i; // returns index
         }
     }

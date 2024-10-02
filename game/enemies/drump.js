@@ -27,7 +27,8 @@ class TonaldDrump extends Enemy {
             whichAttack: 0,
             whichAnimationFrame: -1,
             attackReady: false,
-            attackEnded: false
+            attackEnded: false,
+            attackTriggered: false
         };
         this.timeNextAnimationFrame = 0;
         this.delayNextAnimationFrame = 2000;
@@ -37,9 +38,9 @@ class TonaldDrump extends Enemy {
         this.dashSpeed = 25;
 
         // lines attack
-        this.shootRedLines = false;
         this.timeRedLines = 0; 
         this.timeActiveLines = 0;
+        this.isFirstTime = true;
     }
     
     knockBack(){ // overrides knockback so that he doesnt get knock back
@@ -58,33 +59,30 @@ class TonaldDrump extends Enemy {
     // attacks -----------------------------------------------------------------------------
 
     specialAttack(){
-        let attack = Math.floor(Math.random() * 4);
-        this.currentAttackStatus.whichAttack = attack;
+        let attack = Math.ceil(Math.random() * 4);
+        //this.currentAttackStatus.whichAttack = attack;
+        this.currentAttackStatus.whichAttack = 2;
     }
 
     drawRedLines(){ // draws lines with %50 opacity so that the player can prepare
         ctx.fillStyle = 'rgb(255, 255, 255)';
-        ctx.fillRect(0, 1000, window.width, 50);
+        ctx.fillRect(0, 1000, 5000, 50);
         ctx.fillStyle = 'rgb(255, 255, 255)';
-        ctx.fillRect(0, 500, window.width, 50);
+        ctx.fillRect(0, 500, 5000, 50);
         ctx.fillStyle = 'rgb(255, 255, 255)';
-        ctx.fillRect(0, 200, window.width, 50);
-        this.shootRedLines = true;
-        this.timeRedLines = Date.now() + 1500;
-        this.timeActiveLines = Date.now() + 2500;
+        ctx.fillRect(0, 200, 5000, 50);
     }
 
     drawFinalRedLines(){
         // visual
-        ctx.fillStyle = 'rgb(255, 0, 0, 1)';
-        ctx.fillRect(0, 1000, window.width, 50);
-        ctx.fillStyle = 'rgb(255, 0, 0, 1)';
-        ctx.fillRect(0, 500, window.width, 50);
-        ctx.fillStyle = 'rgb(255, 0, 0, 1)';
-        ctx.fillRect(0, 200, window.width, 50);
+        ctx.fillStyle = 'rgb(255, 0, 0)';
+        ctx.fillRect(0, 650, 5000, 50);
+        ctx.fillStyle = 'rgb(255, 0, 0)';
+        ctx.fillRect(0, 500, 5000, 50);
+        ctx.fillStyle = 'rgb(255, 0, 0)';
+        ctx.fillRect(0, 200, 5000, 50);
         // application
-        this.shootRedLines = false;
-        lines.push(new Line(1000));
+        lines.push(new Line(650));
         lines.push(new Line(500));
         lines.push(new Line(200));
     }
@@ -230,24 +228,36 @@ class TonaldDrump extends Enemy {
                 this.currentAttackStatus.attackEnded = true;
             }
 
+
             // red lines attack 
             else if (this.currentAttackStatus.whichAttack === 2){
                 if (this.currentAttackStatus.attackTriggered === false){
                     this.drawRedLines();
-                    this.currentAttackStatus.attackTriggered = true;
+
+                    if (this.isFirstTime){
+                        this.timeRedLines = Date.now() + 1500;
+                        this.timeActiveLines = Date.now() + 2500;
+                        this.isFirstTime = false;
+                    }
+
+                    if (currentTime > this.timeRedLines){
+                        this.currentAttackStatus.attackTriggered = true;
+                    }
                 }
 
                 else {
-                    if (this.shootRedLines && currentTime > this.timeRedLines && currentTime < this.timeActiveLines){
+                    if (currentTime < this.timeActiveLines){
                         this.drawFinalRedLines();
                     }
                     if (currentTime > this.timeActiveLines){
                         for (let i=0; i<lines.length; i++){
                             lines.pop();
                         }
+                        this.isFirstTime = true;
                     }
                 }
             }
+
 
              // helpers
              else if (this.currentAttackStatus.whichAttack === 3){
@@ -255,6 +265,7 @@ class TonaldDrump extends Enemy {
                 this.currentAttackStatus.attackEnded = true;
              }
              
+
             // dash attack 
             else if (this.currentAttackStatus.whichAttack === 4){
                 if (this.currentAttackStatus.attackTriggered === false){
@@ -280,8 +291,6 @@ class TonaldDrump extends Enemy {
     }
 
     update(){
-        console.log(this.position2.y)
-        //console.log(this.position.x, this.position.y)
         let direction = this.playerWhere();
         let currentTime = Date.now();
 
