@@ -181,7 +181,9 @@ class Menus {
             this.mouseClickPosition.y >= this.buttons.playButton.y &&
             this.mouseClickPosition.y <= this.buttons.playButton.y + this.buttons.playButton.h){
             this.currentPage = "career";
-            this.currentLevel = 4;
+            if (this.currentLevel == 0) {
+                this.currentLevel = 1;
+            }
         }
     
         else if (this.mouseClickPosition.x >= this.buttons.loreButton.x &&
