@@ -25,7 +25,10 @@ class Music{
         this.loopGameMusics = [
             "/game/Assets/Musics/chinese-beat-190047.mp3",
             "/game/Assets/Musics/chinese-ancient-style-music.mp3",
-            "/game/Assets/Musics/redSunInTheSkyLoopVer.mp3"
+            "/game/Assets/Musics/redSunInTheSkyLoopVer.mp3",
+            "/game/Assets/Musics/backgroundSound1.mp3",
+            "/game/Assets/Musics/backgroundSound2.mp3",
+            "/game/Assets/Musics/backgroundSound3.mp3"
         ]
 
         this.loseSocCred = [
@@ -39,7 +42,7 @@ class Music{
         ]
 
         this.loseSocCredIndex = 0
-        this.audio.src = this.loopGameMusics[2];
+        this.audio.src = "./Assets/Musics/noMusic10s.mp3";
     }
 
     playSocCredLooseSound(){
@@ -126,6 +129,8 @@ class Music{
     changeState(){
         if (this.isMuted){
             this.isMuted = false
+            this.nextSong()
+            this.playNextBackground()
         }
         else{
             this.isMuted = true
