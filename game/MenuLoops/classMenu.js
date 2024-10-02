@@ -693,28 +693,28 @@ class Menus {
                         case 0: // bob
                             enemies.push(
                                 new Bob(
-                                    {x: enemyXposition, y: 500},
+                                    {x: enemyXposition, y: 0},
                                 )
                             )
                             break;
                         case 1: // jorge
                             enemies.push(
                                 new Jorge(
-                                    {x: enemyXposition, y: 500},
+                                    {x: enemyXposition, y: 0},
                                 )
                             )
                             break;
                         case 2: // robert
                             enemies.push(
                                 new Robert(
-                                    {x: enemyXposition, y: 500},
+                                    {x: enemyXposition, y: 0},
                                 )
                             )
                             break;
                         case 3: // fred
                             enemies.push(
                                 new Fred(
-                                    {x: enemyXposition, y: 500},
+                                    {x: enemyXposition, y: 0},
                                 )
                             )
                             break;
