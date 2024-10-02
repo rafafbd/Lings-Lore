@@ -23,7 +23,7 @@ class Bob extends Enemy {
             if (this.getUp) {
                 this.getUp = false;
                 this.indexX = 0;
-                setTimeout (() => {
+                setTimeout (() => {              // bob to start rolling cooldown
                     this.indexX = 1;
                     setTimeout (() => {
                         this.indexX = 2;

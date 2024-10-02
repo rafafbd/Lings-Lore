@@ -2,15 +2,16 @@ class Music{
     constructor(){
         
         const audio = new Audio();
-        this.audio = audio
+        this.audio = audio;
         this.audio.autoplay = true;
         this.playing = false;
         this.canPlay = false;
-        this.isMuted = false
-        this.currentSrc = 2
+        this.isMuted = false;
 
+        this.currentSrc = 2;
+        this.loseSocCredIndex = 0;
+        this.audio.src = "./Assets/Musics/noMusic10s.mp3";
         
-
         this.musics = [
             "/game/Assets/Musics/chinese-beat-190047.mp3",
             "/game/Assets/Musics/chinese-ancient-style-music.mp3",
@@ -24,7 +25,6 @@ class Music{
 
         this.loopGameMusics = [
             "/game/Assets/Musics/chinese-ancient-style-music.mp3",
-            //"/game/Assets/Musics/redSunInTheSkyLoopVer.mp3",
             "/game/Assets/Musics/backgroundSound1.mp3",
             "/game/Assets/Musics/backgroundSound2.mp3",
             "/game/Assets/Musics/backgroundSound3.mp3"
@@ -40,29 +40,23 @@ class Music{
             "./Assets/Musics/loseSocialCreditsSFX/loseSocialCredits7.mp3"
         ]
 
-        this.loseSocCredIndex = 0
-        this.audio.src = "./Assets/Musics/noMusic10s.mp3";
+        
     }
 
     playSocCredLooseSound(){
         if (this.loseSocCredIndex == this.loseSocCred.length){
-            this.loseSocCredIndex = 0
+            this.loseSocCredIndex = 0;
         }
         else{
-            this.loseSocCredIndex += 1
+            this.loseSocCredIndex += 1;
         }
-        this.audio.src = this.loseSocCred[this.loseSocCredIndex]
-        this.audio.play()
+        this.audio.src = this.loseSocCred[this.loseSocCredIndex];
+        this.audio.play();
     }
 
     tryPlayAudio(){
-        // console.log("Aqui")
-        // console.log(this.canPlay)
-        // console.log(this.playing)
         if (this.canPlay && this.playing == false && this.isMuted == false){
-            //console.log("Ta liberado");
             this.audio.play().then (()=>{
-                //console.log("foi")
                 this.playing = true;
             }).catch((error) => {
                 console.error("Erro ao tentar reproduzir o áudio:", error);
@@ -79,7 +73,6 @@ class Music{
             this.currentSrc = 0
         }
         else{
-            console.log("aumentou")
             this.currentSrc += 1
         }
         this.audio.src = this.loopGameMusics[this.currentSrc]
@@ -122,7 +115,6 @@ class Music{
 
     changeSong(index){
         this.audio.src = this.loopGameMusics[index]
-        //console.log(this.audio.src)
     }
 
     changeState(){
@@ -141,13 +133,10 @@ class Music{
     }
 
     stopAudio() {
-        //console.log("Tentou parar")
-        //console.log(this.playing)
         if (this.playing) {
             this.audio.pause();
             this.audio.currentTime = 0;
             this.playing = false;
-            //console.log("Música parada");
         }
     }
 
