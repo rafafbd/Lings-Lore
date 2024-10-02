@@ -151,7 +151,9 @@ class Menus {
             this.mouseClickPosition.y <= this.buttons.commandsButton.y + this.buttons.commandsButton.h){
             this.currentPage = "commands";
         }
+
         if (this.currentPage == "menu"){
+            
             requestAnimationFrame(this.menuLoop)
         }
         
@@ -192,9 +194,12 @@ class Menus {
             this.mouseClickPosition.y <= this.buttons.commandsButton.y + this.buttons.commandsButton.h){
             this.currentPage = "menu";
         }
+
+
         if (this.currentPage == "selectGamemode"){
             requestAnimationFrame(this.menuLoop)
         }
+
 
     }
 
@@ -225,6 +230,7 @@ class Menus {
         ){
             this.currentPage = "menu";
         }
+
         /*------------      Loop               --------------*/  
         if (this.currentPage == "commands"){
             requestAnimationFrame(this.commandsPage);
@@ -255,6 +261,7 @@ class Menus {
         ){
             this.currentPage = "menu";
         }
+
 
         if (currentPage == "lore"){
             requestAnimationFrame(this.lorePage);
