@@ -6,6 +6,7 @@ class Line {
             y: y
         }
 
+        this.damage = 100;
         this.width = 5000;
         this.height = 50;
 
