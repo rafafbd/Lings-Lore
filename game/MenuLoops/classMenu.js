@@ -178,7 +178,7 @@ class Menus {
             this.mouseClickPosition.y >= this.buttons.playButton.y &&
             this.mouseClickPosition.y <= this.buttons.playButton.y + this.buttons.playButton.h){
             this.currentPage = "career";
-            this.currentLevel = 1;
+            this.currentLevel = 4;
         }
     
         else if (this.mouseClickPosition.x >= this.buttons.loreButton.x &&
@@ -401,9 +401,10 @@ class Menus {
         if (notes.length > 0){
             for (let i=0; i<notes.length; i++){
                 notes[i].update();
-            } 
+            }
             let whichNoteCollided = rectangleColision(player, notes); // checks collision between player and enemies
             if (whichNoteCollided != null) {
+                console.log("colidiu com nota")
                 player.collided(notes[whichNoteCollided]);
             }
         }
@@ -434,7 +435,7 @@ class Menus {
         // ------------------------------------------------------
         
         //Door
-        if(this.currentLevel != 0){
+        if(this.currentLevel != 0 && this.currentLevel != 4){
             if (enemies.length == 0){
                 doors[0].createDoor()
             }
@@ -487,6 +488,23 @@ class Menus {
             player.collided(lines[whichLineCollided]);
         }
         
+        if (this.currentLevel === 4){
+            if (enemies[0] instanceof TonaldDrump){
+                ctx.fillStyle = "red";
+                ctx.font = "200px Arial";
+                ctx.fillText("Drump rebaixado", 600, 900, 400);
+        
+                ctx.fillStyle = "blue";
+                ctx.fillRect(1000, 900, enemies[0].hp, 100);
+            }
+            else {
+                ctx.fillStyle = "red";
+                ctx.font = "200px Arial";
+                ctx.fillText("Parabens, bagre!", 600, 900, 400);
+            }
+            
+        }
+
         player.update();
 
         // ------------------------------------------------------
@@ -704,7 +722,7 @@ class Menus {
         ctx.fillStyle = "red";
         ctx.font = "50px Arial";
         if (player.socialCredits <= -50) {
-            ctx.fillText("Game Over, cause of death: in debt with Xi Jinping.", 150, 200, 900);
+            ctx.fillText("Game Over, cause of death: in debt of social credits", 150, 200, 900);
         }
         else {
             ctx.fillText("Game Over", 150, 200, 300);

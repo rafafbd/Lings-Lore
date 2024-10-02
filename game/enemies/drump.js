@@ -5,7 +5,7 @@ class TonaldDrump extends Enemy {
             x: x, 
             y: y,
         },
-            "./Assets/spriteEnemies/TonaldSpriteSheet.png", 64, 64, 9, 10, 30, 300, 100 
+            "./Assets/spriteEnemies/TonaldSpriteSheet.png", 64, 64, 5, 20, 30, 1000, 100 
         )
 
         this.enemiesSizes = {
@@ -14,7 +14,7 @@ class TonaldDrump extends Enemy {
             scale: 1
         };
 
-        this.delayAttack = 8000;
+        this.delayAttack = 5000;
         this.nextAttackTime = 0;
         this.specialAttacks = ["moneyFall", "redLines", "helpers", "dash"];
         // animation frames for each attack
@@ -31,7 +31,7 @@ class TonaldDrump extends Enemy {
             attackTriggered: false
         };
         this.timeNextAnimationFrame = 0;
-        this.delayNextAnimationFrame = 2000;
+        this.delayNextAnimationFrame = 10000;
 
         this.dashDirection = 0; // if 0, it's not dashing
         this.timeEndDash = 0;
@@ -52,6 +52,7 @@ class TonaldDrump extends Enemy {
             whichAttack: 0,
             whichAnimationFrame: -1,
             attackReady: false,
+            attackEnded: false,
             attackTriggered: false
         };
     }
@@ -60,31 +61,25 @@ class TonaldDrump extends Enemy {
 
     specialAttack(){
         let attack = Math.ceil(Math.random() * 4);
-        //this.currentAttackStatus.whichAttack = attack;
-        this.currentAttackStatus.whichAttack = 2;
+        this.currentAttackStatus.whichAttack = attack;
     }
 
     drawRedLines(){ // draws lines with %50 opacity so that the player can prepare
         ctx.fillStyle = 'rgb(255, 255, 255)';
-        ctx.fillRect(0, 1000, 5000, 50);
+        ctx.fillRect(0, 620, 5000, 50);
         ctx.fillStyle = 'rgb(255, 255, 255)';
-        ctx.fillRect(0, 500, 5000, 50);
-        ctx.fillStyle = 'rgb(255, 255, 255)';
-        ctx.fillRect(0, 200, 5000, 50);
+        ctx.fillRect(0, 250, 5000, 50);
     }
 
     drawFinalRedLines(){
         // visual
         ctx.fillStyle = 'rgb(255, 0, 0)';
-        ctx.fillRect(0, 650, 5000, 50);
+        ctx.fillRect(0, 620, 5000, 50);
         ctx.fillStyle = 'rgb(255, 0, 0)';
-        ctx.fillRect(0, 500, 5000, 50);
-        ctx.fillStyle = 'rgb(255, 0, 0)';
-        ctx.fillRect(0, 200, 5000, 50);
+        ctx.fillRect(0, 250, 5000, 50);
         // application
-        lines.push(new Line(650));
-        lines.push(new Line(500));
-        lines.push(new Line(200));
+        lines.push(new Line(620));
+        lines.push(new Line(250));
     }
 
 
@@ -99,14 +94,14 @@ class TonaldDrump extends Enemy {
                 height: 100,
                 horizontalBool: false,
                 direction: 1
-            })// -1 for left, 1 for right)
+            })
             notes.push(note);
             positionX += distanceBetween;
         }
     }
 
     helpers(){
-        let x = Math.random() * 100;
+        let x = Math.random() * 500;
         let bob = new Bob({x: x, y: 20});
         let jorge = new Jorge({x: x, y: 20});
         let fred = new Fred({x: x, y: 20});
@@ -120,23 +115,30 @@ class TonaldDrump extends Enemy {
 
     // start animation handling ------------------------------------------------------------
 
+    changeIndexX(newIndexX){
+        if (Date.now() > this.timeNextAnimationFrame){
+            this.timeNextAnimationFrame += this.delayNextAnimationFrame;
+            this.indexX = newIndexX;
+        }
+    }
+
     handleAnimationNotAttacking(){
         if (this.indexX === 1){
-            this.indexX = 2;
+            this.changeIndexX(2);
         }
         else {
-            this.indexX = 1;
+            this.changeIndexX(1);
         }
     }
 
     handleAnimationAttacking1(){ // moneyFall
         if (this.currentAttackStatus.whichAnimationFrame === 9){
-            this.indexX = 3;
+            this.changeIndexX(3);
             this.currentAttackStatus.whichAnimationFrame = 3;
         }
 
         else if (this.currentAttackStatus.whichAnimationFrame === 3){
-            this.indexX = 4;
+            this.changeIndexX(4);
             this.currentAttackStatus.whichAnimationFrame = 4;
         }
 
@@ -147,7 +149,7 @@ class TonaldDrump extends Enemy {
 
     handleAnimationAttacking2(){ // redLines
         if (this.currentAttackStatus.whichAnimationFrame === 9){
-            this.indexX = 5;
+            this.changeIndexX(5);
             this.currentAttackStatus.whichAnimationFrame = 5;
         }
 
@@ -158,17 +160,17 @@ class TonaldDrump extends Enemy {
 
     handleAnimationAttacking3(){ // helpers
         if (this.currentAttackStatus.whichAnimationFrame === 9){
-            this.indexX = 6;
+            this.changeIndexX(6);
             this.currentAttackStatus.whichAnimationFrame = 6;
         }
 
         else if (this.currentAttackStatus.whichAnimationFrame === 6){
-            this.indexX = 7;
+            this.changeIndexX(7);
             this.currentAttackStatus.whichAnimationFrame = 7;
         }
 
         else if (this.currentAttackStatus.whichAnimationFrame === 7){
-            this.indexX = 8;
+            this.changeIndexX(8);
             this.currentAttackStatus.whichAnimationFrame = 8;
         }
 
@@ -179,12 +181,12 @@ class TonaldDrump extends Enemy {
 
     handleAnimationAttacking4(){ // dash
         if (this.currentAttackStatus.whichAnimationFrame === 9){
-            this.indexX = 10;
+            this.changeIndexX(10);
             this.currentAttackStatus.whichAnimationFrame = 10;
         }
 
         else if (this.currentAttackStatus.whichAnimationFrame === 10){
-            this.indexX = 11;
+            this.changeIndexX(11);
             this.currentAttackStatus.whichAnimationFrame = 11;
         }
 
@@ -194,26 +196,23 @@ class TonaldDrump extends Enemy {
     }
 
     handleAnimationAttacking(){
-        if (Date.now() > this.timeNextAnimationFrame){
-            if (this.currentAttackStatus.whichAnimationFrame === -1){
-                this.indexX = 0;
-                this.currentAttackStatus.whichAnimationFrame = 0;
-            }
+        if (this.currentAttackStatus.whichAnimationFrame === -1){
+            this.changeIndexX(0);
+            this.currentAttackStatus.whichAnimationFrame = 0;
+        }
 
-            else if (this.currentAttackStatus.whichAnimationFrame === 0){
-                this.indexX = 9;
-                this.currentAttackStatus.whichAnimationFrame = 9;
-            }
+        else if (this.currentAttackStatus.whichAnimationFrame === 0){
+            this.changeIndexX(9);
+            this.currentAttackStatus.whichAnimationFrame = 9;
+        }
 
-            else {
-                switch (this.currentAttackStatus.whichAttack){
-                    case 1: this.handleAnimationAttacking1(); break;
-                    case 2: this.handleAnimationAttacking2(); break;
-                    case 3: this.handleAnimationAttacking3(); break;
-                    case 4: this.handleAnimationAttacking4();
-                }
+        else {
+            switch (this.currentAttackStatus.whichAttack){
+                case 1: this.handleAnimationAttacking1(); break;
+                case 2: this.handleAnimationAttacking2(); break;
+                case 3: this.handleAnimationAttacking3(); break;
+                case 4: this.handleAnimationAttacking4();
             }
-            this.timeNextAnimationFrame += this.delayNextAnimationFrame;
         }
     }
 
@@ -243,6 +242,10 @@ class TonaldDrump extends Enemy {
                     if (currentTime > this.timeRedLines){
                         this.currentAttackStatus.attackTriggered = true;
                     }
+
+                    else {
+                        this.currentAttackStatus.attackEnded = true;
+                    }
                 }
 
                 else {
@@ -266,7 +269,7 @@ class TonaldDrump extends Enemy {
              }
              
 
-            // dash attack 
+            // dash 
             else if (this.currentAttackStatus.whichAttack === 4){
                 if (this.currentAttackStatus.attackTriggered === false){
                     this.dash(direction);
@@ -279,6 +282,7 @@ class TonaldDrump extends Enemy {
                     }
                     else {
                         this.dashDirection = 0;
+                        this.currentAttackStatus.attackEnded = true;
                     }
                 }
             }
@@ -290,7 +294,11 @@ class TonaldDrump extends Enemy {
         }
     }
 
+    // Boss UI
+
+
     update(){
+        //console.log(this.currentAttackStatus.attackEnded)
         let direction = this.playerWhere();
         let currentTime = Date.now();
 
@@ -311,7 +319,6 @@ class TonaldDrump extends Enemy {
         }
 
         if (direction === 1){
-            console.log("invertendo imagem");
             ctx.save();
             ctx.translate(this.position.x + this.width*2, this.position.y);
             ctx.scale(-1, 1); // inverts the context
@@ -323,9 +330,17 @@ class TonaldDrump extends Enemy {
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
+    
+        if (this.position.y > canvas.height){
+            this.position = {
+                x: 1000,
+                y: 200
+            };
+        }
+
         this.updatePositions();
 
-        if (this.hp <= 0 || this.position.y > canvas.height) {
+        if (this.hp <= 0) {
             let howManyCredits = this.creditsValue / 10;
             for (let i = 1; i < howManyCredits; i++) {
                 components.credits.push(new Credits({ // creates a new positive credits object to make player lose credits
