@@ -36,7 +36,7 @@ class Menus {
         this.buttonMenu.src = "./Assets/spriteButtons/buttonMenu.png"
 
         this.textLore = "Na costa oeste dos Estados Unidos, o restaurante '變態的食物' é um verdadeiro tesouro, conhecido por seus dumplings feitos com receitas passadas de geração em geração. Porém, a tranquilidade do local é ameaçada quando uma corporação Capitalista decide comprar o restaurante, prometendo modernização, mas na verdade, desrespeitando a tradição e o legado familiar."
-        this.textLore2 = "Ling, um dumpling que ganhou vida após um ritual da avó, se vê em uma luta desesperada para salvar seu lar. Junto a outros pratos tradicionais, Ling descobre que a Sabor Global não apenas visa o lucro, mas também pretende homogeneizar a cultura alimentar, substituindo sabores autênticos por opções industrializadas e sem alma. "
+        this.textLore2 = "Ling, um dumpling que ganhou vida após um ritual da avó, se vê em uma luta desesperada para salvar seu lar. Ling descobre que o Capitalisma não apenas visa o lucro, mas também pretende homogeneizar a cultura alimentar, substituindo sabores autênticos por opções industrializadas e sem alma. "
         this.textLore3 = "Ao longo de sua jornada, Ling enfrenta os capangas da corporação capitaliasta e desmantela seus planos, revelando a importância da comida como símbolo de identidade e resistência. Cada batalha o aproxima da verdade sobre suas raízes e da força que a comunidade pode ter quando se une por um propósito comum, mas também do grande chefe do capitalismo.";
         this.textLore4 = "Será Ling capaz de vencer o Capitalismo?"
         this.currentPage = "menu";
