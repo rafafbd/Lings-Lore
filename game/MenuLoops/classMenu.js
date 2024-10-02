@@ -503,7 +503,7 @@ class Menus {
             else {
                 ctx.fillStyle = "red";
                 ctx.font = "200px Arial";
-                ctx.fillText("Parabens, bagre!", 600, 900, 400);
+                ctx.fillText("Parabens, Zé!", 600, 900, 400);
             }
             
         }
