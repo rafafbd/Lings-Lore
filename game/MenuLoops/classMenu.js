@@ -295,6 +295,7 @@ class Menus {
         ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
     }
 
+
     playerLoop = () => {
         if (this.firstLoadLevel || this.passedLevel) {
             this.totalDistance = 0;
