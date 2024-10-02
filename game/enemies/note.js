@@ -12,7 +12,7 @@ class Note { // throwable used by Jorge
 
         this.speed = {
             x: 10,
-            y: 0.5
+            y: 0.1
         };
 
         this.velocity = {

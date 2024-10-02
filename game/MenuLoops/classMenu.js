@@ -181,7 +181,7 @@ class Menus {
             this.mouseClickPosition.y >= this.buttons.playButton.y &&
             this.mouseClickPosition.y <= this.buttons.playButton.y + this.buttons.playButton.h){
             this.currentPage = "career";
-            this.currentLevel = 1;
+            this.currentLevel = 4;
         }
     
         else if (this.mouseClickPosition.x >= this.buttons.loreButton.x &&
@@ -728,6 +728,9 @@ class Menus {
     gameOver = () => {
         if (this.currentLevel === 4){
             this.popHelpers();
+            for (let i=0; i<=lines.length; i++){
+                lines.pop();
+            }
         }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
