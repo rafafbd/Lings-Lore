@@ -21,7 +21,8 @@ class Music{
             "/game/Assets/Musics/jump.mp3",
             "/game/Assets/Musics/stickHit.mp3",
             "/game/Assets/Musics/stickBreaking.mp3",
-            "/game/Assets/Musics/lingDiying.mp3"
+            "/game/Assets/Musics/lingDiying.mp3",
+            "/game/Assets/Musics/gainSocialCredits.mp3"
         ]
 
         this.loopGameMusics = [
