@@ -18,7 +18,7 @@ class Enemy { // abstract class
             spriteWidth: 100,
             spriteHeight: 100,
             scale: 1
-        };
+        }; 
 
         this.width = width;
         this.height = height;

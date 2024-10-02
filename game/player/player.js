@@ -99,7 +99,6 @@ class Player {
         if (source instanceof Enemy || source instanceof Note || source instanceof Line){
             if (!this.isDashing){
                 this.takeDamage(source.damage, source);
-                this.socCredSound.playSocCredLooseSound()
             }
         }
         else if (source instanceof Credits){
@@ -167,10 +166,14 @@ class Player {
     }
 
     loseSocialCredits(amountLost){
+        this.socCredSound.playSocCredLooseSound()
         this.socialCredits += amountLost; // subtracts the amount lost
     }
 
     gainSocialCredits(amountGained){
+        const socCredSound = new Music();
+        socCredSound.changeInd(9);
+        socCredSound.playSong();
         this.socialCredits += amountGained; // adds the amount gained
     }
 
