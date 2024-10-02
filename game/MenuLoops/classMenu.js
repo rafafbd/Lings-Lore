@@ -495,17 +495,17 @@ class Menus {
         
         if (this.currentLevel === 4){
             if (enemies[0] instanceof TonaldDrump){
-                ctx.fillStyle = "red";
-                ctx.font = "200px Arial";
-                ctx.fillText("Drump rebaixado", 600, 900, 400);
+                ctx.fillStyle = "white";
+                ctx.font = "100px Arial";
+                ctx.fillText("Drump rebaixado", 300, 850, 400);
         
                 ctx.fillStyle = "blue";
-                ctx.fillRect(300, 700, enemies[0].hp, 60);
+                ctx.fillRect(800, 800, enemies[0].hp/2, 60);
             }
             else {
                 ctx.fillStyle = "red";
                 ctx.font = "200px Arial";
-                ctx.fillText("Parabens, bagre!", 600, 900, 400);
+                ctx.fillText("Parabens, Zé!", 600, 900, 400);
             }
             
         }
@@ -741,6 +741,9 @@ class Menus {
     gameOver = () => {
         if (this.currentLevel === 4){
             this.popHelpers();
+            for (let i=0; i<=lines.length; i++){
+                lines.pop();
+            }
         }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);

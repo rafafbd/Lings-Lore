@@ -83,6 +83,12 @@ class TonaldDrump extends Enemy {
         lines.push(new Line(620), new Line(250));
     }
 
+    popLines(){
+        for (let i=0; i<=lines.length; i++){
+            lines.pop();
+        }
+    }
+
 
     moneyFall(){
         let distanceBetween = 250;
@@ -253,9 +259,7 @@ class TonaldDrump extends Enemy {
                     }
 
                     if (currentTime > this.timeActiveLines){
-                        for (let i=0; i<=lines.length; i++){
-                            lines.pop();
-                        }
+                        this.popLines();
                         this.isFirstTime = true;
                         this.currentAttackStatus.attackEnded = true;
                     }
