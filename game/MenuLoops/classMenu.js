@@ -295,6 +295,7 @@ class Menus {
         ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
     }
 
+
     playerLoop = () => {
         if (this.firstLoadLevel || this.passedLevel) {
             this.totalDistance = 0;
@@ -406,7 +407,6 @@ class Menus {
             }
             let whichNoteCollided = rectangleColision(player, notes); // checks collision between player and enemies
             if (whichNoteCollided != null) {
-                console.log("colidiu com nota")
                 player.collided(notes[whichNoteCollided]);
             }
         }
@@ -487,6 +487,7 @@ class Menus {
 
         let whichLineCollided = rectangleColision(player, lines);
         if (whichLineCollided != null) {
+            console.log("Colidiu com uma linha")
             player.collided(lines[whichLineCollided]);
         }
         
@@ -497,7 +498,7 @@ class Menus {
                 ctx.fillText("Drump rebaixado", 600, 900, 400);
         
                 ctx.fillStyle = "blue";
-                ctx.fillRect(1000, 900, enemies[0].hp, 100);
+                ctx.fillRect(300, 700, enemies[0].hp, 60);
             }
             else {
                 ctx.fillStyle = "red";
@@ -719,8 +720,16 @@ class Menus {
         }
     }
 
+    popHelpers = () => {
+        for (let i=1; i<enemies.length; i++){
+            enemies.pop()
+        }
+    }
+
     gameOver = () => {
-        
+        if (this.currentLevel === 4){
+            this.popHelpers();
+        }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "red";

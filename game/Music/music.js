@@ -42,6 +42,10 @@ class Music{
             "./Assets/Musics/loseSocialCreditsSFX/loseSocialCredits7.mp3"
         ]
 
+        this.bossMusic = [
+            "./Assets/Musics/redSunInTheSkyLoopVer.mp3"
+        ]
+
         
     }
 
@@ -123,6 +127,10 @@ class Music{
 
     changeSong(index){
         this.audio.src = this.loopGameMusics[index]
+    }
+
+    bossLevel(){
+        this.audio.src = this.bossMusic[0]
     }
 
     changeState(){

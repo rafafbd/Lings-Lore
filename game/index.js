@@ -9,6 +9,7 @@ var mouseClickPosition = {
 }
 var currentPage = "menu"
 var canPlayMusics = true
+var firsBossLevelLoad = true
 
 const menus = new Menus(mouseClickPosition.x, mouseClickPosition.y)
 
@@ -806,7 +807,12 @@ function level3() {
 }
 
 function level4(){ // boss level
-
+    if (firsBossLevelLoad){
+        music.stopAudio();
+        music.bossLevel();
+        firsBossLevelLoad = false
+    }
+    
     
 
     player.velocity = { // player velocity
