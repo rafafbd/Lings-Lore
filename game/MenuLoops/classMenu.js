@@ -720,6 +720,9 @@ class Menus {
                             break;
                     }
                 }
+                if (this.currentWave % 5 == 0) {
+                    player.heal(20);
+                }
                 player.heal(20);
                 this.currentWave++;
             }
