@@ -23,9 +23,8 @@ class Music{
         ]
 
         this.loopGameMusics = [
-            "/game/Assets/Musics/chinese-beat-190047.mp3",
             "/game/Assets/Musics/chinese-ancient-style-music.mp3",
-            "/game/Assets/Musics/redSunInTheSkyLoopVer.mp3",
+            //"/game/Assets/Musics/redSunInTheSkyLoopVer.mp3",
             "/game/Assets/Musics/backgroundSound1.mp3",
             "/game/Assets/Musics/backgroundSound2.mp3",
             "/game/Assets/Musics/backgroundSound3.mp3"
