@@ -700,6 +700,8 @@ class Menus {
     }
 
     gameOver = () => {
+        
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "red";
         ctx.font = "50px Arial";

@@ -407,6 +407,9 @@ class Player {
         }
 
         if (this.hp <= 0 || this.position.y > menus.deathZone || this.socialCredits <= - 50){
+            const die_audio = new Music();
+            die_audio.changeInd(8)
+            die_audio.playSong()
             menus.gameOver();
         }
 
