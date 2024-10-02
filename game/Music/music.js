@@ -6,6 +6,7 @@ class Music{
         this.audio.autoplay = true;
         this.playing = false;
         this.canPlay = false;
+        this.isMuted = false
         this.currentSrc = 2
 
         
@@ -16,7 +17,9 @@ class Music{
             "/game/Assets/Musics/redSunInTheSkyLoopVer.mp3",
             "/game/Assets/Musics/doorEntering.mp3",
             "/game/Assets/Musics/forkHit.mp3",
-            "/game/Assets/Musics/jump.mp3"
+            "/game/Assets/Musics/jump.mp3",
+            "/game/Assets/Musics/stickHit.mp3",
+            "game/Assets/Musics/stickBreaking.mp3"
         ]
 
         this.loopGameMusics = [
@@ -54,7 +57,7 @@ class Music{
         // console.log("Aqui")
         // console.log(this.canPlay)
         // console.log(this.playing)
-        if (this.canPlay && this.playing == false){
+        if (this.canPlay && this.playing == false && this.isMuted == false){
             //console.log("Ta liberado");
             this.audio.play().then (()=>{
                 //console.log("foi")
@@ -63,10 +66,13 @@ class Music{
                 console.error("Erro ao tentar reproduzir o áudio:", error);
             });
             
-    }
+        }
+        else if(this.isMuted){
+            this.stopAudio()
+        }
     }
 
-    netxSong(){
+    nextSong(){
         if (this.currentSrc == (this.loopGameMusics.length) - 1){
             this.currentSrc = 0
         }
@@ -83,7 +89,7 @@ class Music{
     }
 
     playNextBackground(){
-        if (this.canPlay && this.playing == false){
+        if (this.canPlay && this.playing == false && this.isMuted == false){
             //console.log("Ta liberado");
             this.audio.play().then (()=>{
                 //console.log("foi")
@@ -92,21 +98,38 @@ class Music{
                 console.error("Erro ao tentar reproduzir o áudio:", error);
             })
 
-        }    
+        }
+        
+        else if(this.isMuted){
+            this.stopAudio()
+        }
+        
         else{
-            this.audio.pause()
-            this.audio.play().then (()=>{
-                //console.log("foi")
-                this.playing = true;
-            }).catch((error) => {
-                console.error("Erro ao tentar reproduzir o áudio:", error);
-            })
+            if (! this.isMuted){
+                this.audio.pause()
+                this.audio.play().then (()=>{
+                    //console.log("foi")
+                    this.playing = true;
+                }).catch((error) => {
+                    console.error("Erro ao tentar reproduzir o áudio:", error);
+                })
+            }
+            
         }
     }
 
     changeSong(index){
         this.audio.src = this.loopGameMusics[index]
         //console.log(this.audio.src)
+    }
+
+    changeState(){
+        if (this.isMuted){
+            this.isMuted = false
+        }
+        else{
+            this.isMuted = true
+        }
     }
 
     changeInd(ind){

@@ -8,6 +8,7 @@ var mouseClickPosition = {
     y:0
 }
 var currentPage = "menu"
+var canPlayMusics = true
 
 const menus = new Menus(mouseClickPosition.x, mouseClickPosition.y)
 
@@ -837,6 +838,9 @@ const keys = { // keys status (pressed or released)
     },
     shoot: {
         pressed: false
+    },
+    mute: {
+        pressed: false
     }
 }
 
@@ -964,6 +968,11 @@ addEventListener('keydown', ({ code }) => { // gets key pressed event
                 player.chopsticks.isEquipped = false;
                 player.currentWeapon = "fork";
             }
+            break;
+        case 'KeyM':
+            keys.mute.pressed = true
+            music.changeState()
+            break;
     }
 })
 
@@ -999,6 +1008,10 @@ addEventListener('keyup', ({ code }) => { // gets key released event
         case 'KeyJ':
             keys.attack.pressed = false;
             break;
+        
+        case 'KeyM':
+            keys.mute.pressed = false;
+            break;
     }
 })
 
@@ -1006,8 +1019,10 @@ addEventListener('keyup', ({ code }) => { // gets key released event
 
 addEventListener("keypress", function(){
     //console.log("Clicou")
+
     music.canPlay = true;
     music.tryPlayAudio()
+    
         
 })
 
@@ -1016,11 +1031,13 @@ addEventListener("mousedown", function(){
     music.canPlay = true;
     music.tryPlayAudio()
 
+    
+
 })
 
 music.audio.addEventListener("ended", function(){
     //console.log("acabou")
-    music.netxSong()
+    music.nextSong()
     music.playNextBackground()
 })
 

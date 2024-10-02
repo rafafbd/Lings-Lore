@@ -37,6 +37,9 @@ class Stick {
         collided(source) {
             if (source instanceof Enemy) {
                 this.isDestroyed = true;
+                const chopstickSound = new Music();
+                chopstickSound.changeInd(7)
+                chopstickSound.playSong()
             }
         }
 

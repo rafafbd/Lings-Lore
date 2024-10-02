@@ -124,9 +124,7 @@ class Menus {
         ctx.fillStyle = "black"
         ctx.font = "50px Arial";
         ctx.fillText("Ling's Lore", 830, 200, 300);
-    
-        
-        
+
         ctx.drawImage(this.buttonPlay, this.buttons.playButton.x, this.buttons.playButton.y/* , this.buttons.playButton.w, this.buttons.playButton.h*/);
         
         ctx.drawImage(this.buttonLore, this.buttons.loreButton.x, this.buttons.loreButton.y/*, this.buttons.loreButton.w, this.buttons.loreButton.h */);

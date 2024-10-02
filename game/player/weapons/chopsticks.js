@@ -73,7 +73,7 @@ class Chopsticks {
 
             ctx.restore()
             const chops_mus = new Music();
-            chops_mus.changeInd(3)
+            chops_mus.changeInd(6)
             chops_mus.playSong()
             this.attackTimer = time;
         }

@@ -29,9 +29,9 @@ class Bob extends Enemy {
                         this.indexX = 2;
                         setTimeout (() => {
                             this.playerInRange = true;
-                        }, 500);
-                    }, 500);
-                }, 800);
+                        }, 250);
+                    }, 250);
+                }, 400);
                 
             } 
         }
