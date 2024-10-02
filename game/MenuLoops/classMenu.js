@@ -204,8 +204,6 @@ class Menus {
         if (this.currentPage == "selectGamemode"){
             requestAnimationFrame(this.menuLoop)
         }
-
-
     }
 
     commandsPage = () => {

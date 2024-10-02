@@ -32,6 +32,7 @@ class TonaldDrump extends Enemy {
         };
         this.timeNextAnimationFrame = 0;
         this.delayNextAnimationFrame = 10000;
+        this.canChangeFrame = true;
 
         this.dashDirection = 0; // if 0, it's not dashing
         this.timeEndDash = 0;
@@ -131,23 +132,33 @@ class TonaldDrump extends Enemy {
     }
 
     handleAnimationNotAttacking(){
-        if (this.indexX === 1){
-            this.changeIndexX(2);
-        }
-        else {
-            this.changeIndexX(1);
+        if (this.canChangeFrame){
+            if (this.indexX === 1){
+                this.changeIndexX(2);
+            }
+            else {
+                this.changeIndexX(1);
+            }
         }
     }
 
     handleAnimationAttacking1(){ // moneyFall
         if (this.currentAttackStatus.whichAnimationFrame === 9){
+            this.canChangeFrame = false;
             this.changeIndexX(3);
             this.currentAttackStatus.whichAnimationFrame = 3;
+            setTimeout(() => {
+                this.canChangeFrame = true;
+            }, 2000);
         }
 
         else if (this.currentAttackStatus.whichAnimationFrame === 3){
+            this.canChangeFrame = false;
             this.changeIndexX(4);
             this.currentAttackStatus.whichAnimationFrame = 4;
+            setTimeout(() => {
+                this.canChangeFrame = true;
+            }, 2000);
         }
 
         else {
@@ -157,8 +168,12 @@ class TonaldDrump extends Enemy {
 
     handleAnimationAttacking2(){ // redLines
         if (this.currentAttackStatus.whichAnimationFrame === 9){
+            this.canChangeFrame = false;
             this.changeIndexX(5);
             this.currentAttackStatus.whichAnimationFrame = 5;
+            setTimeout(() => {
+                this.canChangeFrame = true;
+            }, 2000);
         }
 
         else {
@@ -168,18 +183,30 @@ class TonaldDrump extends Enemy {
 
     handleAnimationAttacking3(){ // helpers
         if (this.currentAttackStatus.whichAnimationFrame === 9){
+            this.canChangeFrame = false;
             this.changeIndexX(6);
             this.currentAttackStatus.whichAnimationFrame = 6;
+            setTimeout(() => {
+                this.canChangeFrame = true;
+            }, 2000);
         }
 
         else if (this.currentAttackStatus.whichAnimationFrame === 6){
+            this.canChangeFrame = false;
             this.changeIndexX(7);
             this.currentAttackStatus.whichAnimationFrame = 7;
+            setTimeout(() => {
+                this.canChangeFrame = true;
+            });
         }
 
         else if (this.currentAttackStatus.whichAnimationFrame === 7){
+            this.canChangeFrame = false;
             this.changeIndexX(8);
             this.currentAttackStatus.whichAnimationFrame = 8;
+            setTimeout(() => {
+                this.canChangeFrame = true;
+            });
         }
 
         else {
@@ -189,13 +216,21 @@ class TonaldDrump extends Enemy {
 
     handleAnimationAttacking4(){ // dash
         if (this.currentAttackStatus.whichAnimationFrame === 9){
+            this.canChangeFrame = false;
             this.changeIndexX(10);
             this.currentAttackStatus.whichAnimationFrame = 10;
+            setTimeout(() => {
+                this.canChangeFrame = true;
+            }, 2000);
         }
 
         else if (this.currentAttackStatus.whichAnimationFrame === 10){
+            this.canChangeFrame = false;
             this.changeIndexX(11);
             this.currentAttackStatus.whichAnimationFrame = 11;
+            setTimeout(() => {
+                this.canChangeFrame = true;
+            }, 2000);
         }
 
         else {
