@@ -20,7 +20,8 @@ class Music{
             "/game/Assets/Musics/forkHit.mp3",
             "/game/Assets/Musics/jump.mp3",
             "/game/Assets/Musics/stickHit.mp3",
-            "game/Assets/Musics/stickBreaking.mp3"
+            "/game/Assets/Musics/stickBreaking.mp3",
+            "/game/Assets/Musics/lingDiying.mp3"
         ]
 
         this.loopGameMusics = [
@@ -80,7 +81,13 @@ class Music{
     }
 
     playSong(){
-        this.audio.play()
+        console.log(this.playing)
+        if (this.playing == false){
+            this.audio.play();
+            this.playing = true;
+        }
+
+        
     }
 
     playNextBackground(){
