@@ -169,6 +169,14 @@ function level1() {
             x: 3850,
             y: 100
         }),
+        new Fred ({
+            x: 3960,
+            y: 620
+        }),
+        new Fred ({
+            x: 8590,
+            y: 620
+        })
         
     ]  // creates enemy
     
@@ -449,19 +457,27 @@ function level2() {
         }),
         new Robert ({
             x: 1400,
-            y: -340,
+            y: -340
         }),
         new Robert ({
             x: 2100,
-            y: -500,
+            y: -500
         }),
         new Bob ({
             x: 2780,
-            y: -790,
+            y: -790
         }),
         new Robert ({
             x: 3900,
-            y: -1400,
+            y: -1400
+        }),
+        new Fred ({
+            x: 1500,
+            y: 400
+        }),
+        new Fred ({
+            x: 3480,
+            y: -700
         }),
     ];
 
@@ -671,31 +687,43 @@ function level3() {
         new Jorge ({
             x: 3300,
             y: 400
+        }),
+        new Fred ({
+            x: 3500,
+            y: 620
+        }),
+        new Fred ({
+            x: 3350,
+            y: 100
+        }),
+        new Fred ({
+            x: 100,
+            y: 500
         })
     ];
 
     platforms = [
         up1 = new Platform({
             x: 300,
-            y: 540,
+            y: 580,
             width: 240,
             height: 60
         }),
         up2 = new Platform({
             x: 700,
-            y: 400,
+            y: 420,
             width: 200,
             height: 50
         }),
         up3 = new Platform({
             x: 1000,
-            y: 220,
+            y: 240,
             width: 100,
             height: 30
         }),
         floor1 = new Platform({
             x: 0,
-            y: 700,
+            y: 800,
             width: 1600,
             height: 300
         }),
