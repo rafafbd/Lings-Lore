@@ -721,9 +721,9 @@ class Menus {
                     }
                 }
                 if (this.currentWave % 5 == 0) {
-                    player.heal(20);
+                    player.heal(30);
                 }
-                player.heal(20);
+                player.heal(25);
                 this.currentWave++;
             }
             this.currentAmountOfEnemies = enemies.length;

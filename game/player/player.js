@@ -113,7 +113,7 @@ class Player {
             }
         }
         else if (source instanceof Heal){
-            this.heal(25);
+            this.heal(40);
         }
         else if (source instanceof Platform){
             // get diff between x/y from the two objects
