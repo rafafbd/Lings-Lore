@@ -778,6 +778,9 @@ function level3() {
 }
 
 function level4(){ // boss level
+
+    
+
     player.velocity = { // player velocity
         x: 0,
         y: 0
@@ -1021,8 +1024,6 @@ addEventListener('keyup', ({ code }) => { // gets key released event
 
 
 addEventListener("keypress", function(){
-    //console.log("Clicou")
-
     music.canPlay = true;
     music.tryPlayAudio()
     
@@ -1030,7 +1031,6 @@ addEventListener("keypress", function(){
 })
 
 addEventListener("mousedown", function(){
-    //console.log("Mexeu")
     music.canPlay = true;
     music.tryPlayAudio()
 
@@ -1039,7 +1039,6 @@ addEventListener("mousedown", function(){
 })
 
 music.audio.addEventListener("ended", function(){
-    //console.log("acabou")
     music.nextSong()
     music.playNextBackground()
 })
