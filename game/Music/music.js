@@ -129,6 +129,11 @@ class Music{
         this.audio.src = this.loopGameMusics[index]
     }
 
+    playBossMusic(){
+        this.audio.src = this.bossMusic[0]
+        this.audio.play()
+    }
+
     bossLevel(){
         this.audio.src = this.bossMusic[0]
     }

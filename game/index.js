@@ -1073,8 +1073,14 @@ addEventListener("mousedown", function(){
 })
 
 music.audio.addEventListener("ended", function(){
-    music.nextSong()
-    music.playNextBackground()
+    if(currentLevel < 4){
+        music.nextSong()
+        music.playNextBackground()
+    }
+    else{
+        music.playBossMusic()
+    }
+    
 })
 
 addEventListener("click", () => {
