@@ -1073,7 +1073,7 @@ addEventListener("mousedown", function(){
 })
 
 music.audio.addEventListener("ended", function(){
-    if(currentLevel < 4){
+    if(menus.currentLevel < 4){
         music.nextSong()
         music.playNextBackground()
     }

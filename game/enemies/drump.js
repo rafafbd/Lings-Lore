@@ -334,7 +334,6 @@ class TonaldDrump extends Enemy {
         }
     }
 
-    // Boss UI
 
 
     update(){

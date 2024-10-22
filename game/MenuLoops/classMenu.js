@@ -451,8 +451,15 @@ class Menus {
                     door.playSong()
                 }
                 doors[0].update();
-                
             }
+        }
+
+        if (enemies.length === 0 && this.currentLevel === 4){
+            setTimeout(() => {
+                this.currentLevel = 1;
+                this.currentPage = "menu";
+                console.log(`Current Level: ${this.currentLevel}, Current Page: ${this.currentPage}`);
+            }, 2500);
         }
         
 
