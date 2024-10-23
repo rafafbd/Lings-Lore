@@ -496,7 +496,6 @@ class Menus {
 
         let whichLineCollided = rectangleColision(player, lines);
         if (whichLineCollided != null) {
-            console.log("Colidiu com uma linha")
             player.collided(lines[whichLineCollided]);
         }
         
@@ -696,8 +695,6 @@ class Menus {
                     while (enemyXposition <= player.position2.x && enemyXposition + 100 >= player.position.x) {
                         enemyXposition = Number(Math.floor(Math.random() * 1700) + 100);
                     }
-                    console.log(enemyXposition);
-                    console.log(enemyType);
                     switch (enemyType) {
                         case 0: // bob
                             enemies.push(

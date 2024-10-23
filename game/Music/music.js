@@ -96,9 +96,7 @@ class Music{
 
     playNextBackground(){
         if (this.canPlay && this.playing == false && this.isMuted == false){
-            //console.log("Ta liberado");
             this.audio.play().then (()=>{
-                //console.log("foi")
                 this.playing = true;
             }).catch((error) => {
                 console.error("Erro ao tentar reproduzir o áudio:", error);
@@ -114,7 +112,7 @@ class Music{
             if (! this.isMuted){
                 this.audio.pause()
                 this.audio.play().then (()=>{
-                    //console.log("foi")
+
                     this.playing = true;
                 }).catch((error) => {
                     console.error("Erro ao tentar reproduzir o áudio:", error);
