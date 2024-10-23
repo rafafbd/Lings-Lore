@@ -14,7 +14,7 @@ class TonaldDrump extends Enemy {
             scale: 1
         };
 
-        this.delayAttack = 8000;
+        this.delayAttack = 6000;
         this.nextAttackTime = Date.now() + 2500;
         this.specialAttacks = ["moneyFall", "redLines", "helpers", "dash"];
         // animation frames for each attack
@@ -339,6 +339,13 @@ class TonaldDrump extends Enemy {
     update(){
         let direction = this.playerWhere();
         let currentTime = Date.now();
+
+        if (this.hp <= 600) {
+            this.delayAttack = 3000
+        }
+        else if (this.hp <= 300) {
+            this.delayAttack = 2000
+        }
 
         if (currentTime > this.nextAttackTime && this.currentAttackStatus.onAttack === false){
             this.specialAttack();

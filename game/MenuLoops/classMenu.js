@@ -105,6 +105,8 @@ class Menus {
 
         this.deathZone = 1000;
 
+        this.tonaldSpawned = false;
+
         // endless mode variables
         this.currentWave = 0;
         this.nextEndlessWave = true;
@@ -454,11 +456,11 @@ class Menus {
             }
         }
 
-        if (enemies.length === 0 && this.currentLevel === 4){
+        if (enemies.length === 0 && this.currentLevel === 4 && this.tonaldSpawned){
             setTimeout(() => {
+                this.passedLevel = true;
                 this.currentLevel = 1;
                 this.currentPage = "menu";
-                console.log(`Current Level: ${this.currentLevel}, Current Page: ${this.currentPage}`);
             }, 2500);
         }
         

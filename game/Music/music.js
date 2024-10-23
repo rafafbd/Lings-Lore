@@ -86,7 +86,6 @@ class Music{
     }
 
     playSong(){
-        console.log(this.playing)
         if (this.playing == false){
             this.audio.play();
             this.playing = true;

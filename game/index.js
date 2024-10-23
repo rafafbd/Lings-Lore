@@ -836,6 +836,8 @@ function level4(){ // boss level
         new TonaldDrump(1000, 200)
     ];
 
+    menus.tonaldSpawned = true;
+
     components = {
         platforms: platforms,
         enemies: enemies,
