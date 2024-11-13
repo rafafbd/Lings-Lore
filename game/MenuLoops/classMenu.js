@@ -436,36 +436,7 @@ class Menus {
             }
         }
 
-        // ------------------------------------------------------
-        
-        //Door
-        if(this.currentLevel != 0 && this.currentLevel != 4){
-            if (enemies.length == 0){
-                doors[0].createDoor()
-            }
-            // Door collision to pass level
-            if (doors.length > 0 && enemies.length == 0){
-                if (rectangleColision(player, doors) != null){
-                    doors[0].passLevel(this.currentLevel);
 
-                    const door = new Music()
-                    door.changeInd(3)
-                    door.playSong()
-                }
-                doors[0].update();
-            }
-        }
-
-        if (enemies.length === 0 && this.currentLevel === 4 && this.tonaldSpawned){
-            setTimeout(() => {
-                this.passedLevel = true;
-                this.currentLevel = 1;
-                this.currentPage = "menu";
-            }, 2500);
-        }
-        
-
-        // ------------------------------------------------------
 
         // Heal
 
@@ -509,13 +480,43 @@ class Menus {
                 ctx.fillRect(800, 800, enemies[0].hp/2, 60);
             }
             else {
+                this.currentLevel = 1;
                 ctx.fillStyle = "red";
                 ctx.font = "200px Arial";
                 ctx.fillText("Parabens, Zé!", 600, 900, 400);
             }
             
         }
+        // ------------------------------------------------------
+        
+        //Door
+        if(this.currentLevel != 0 && this.currentLevel != 4){
+            if (enemies.length == 0){
+                doors[0].createDoor()
+            }
+            // Door collision to pass level
+            if (doors.length > 0 && enemies.length == 0){
+                if (rectangleColision(player, doors) != null){
+                    doors[0].passLevel(this.currentLevel);
 
+                    const door = new Music()
+                    door.changeInd(3)
+                    door.playSong()
+                }
+                doors[0].update();
+            }
+        }
+
+        if (enemies.length === 0 && this.currentLevel === 4 && this.tonaldSpawned){
+            setTimeout(() => {
+                this.passedLevel = true;
+                this.currentLevel = 1;
+                this.currentPage = "menu";
+            }, 2500);
+        }
+        
+
+        // ------------------------------------------------------
         player.update();
 
         // ------------------------------------------------------
