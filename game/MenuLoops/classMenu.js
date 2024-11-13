@@ -509,6 +509,7 @@ class Menus {
                 ctx.fillRect(800, 800, enemies[0].hp/2, 60);
             }
             else {
+                this.currentLevel = 1;
                 ctx.fillStyle = "red";
                 ctx.font = "200px Arial";
                 ctx.fillText("Parabens, Zé!", 600, 900, 400);
